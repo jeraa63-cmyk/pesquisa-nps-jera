@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#00C1AD"          # Verde Jera (principal)
+backgroundColor = "#FFFFFF"       # Fundo da página
+secondaryBackgroundColor = "#F2F2F2" # “Off white” p/ blocos/side
+textColor = "#052B38"             # Azul-petróleo (texto)
+font = "sans serif"               # Fonte genérica (tipos vêm no CSS)
