@@ -61,25 +61,20 @@ st.markdown(
  section.main, div.block-container {
    background: var(--jera-light) !important;
    border-radius: 22px !important;
+
+   /* mantém sempre o mesmo layout em todas as telas */
+   max-width: 1200px;
    width: 96vw !important;
-   height: 96vh !important;
+   min-height: 96vh;
+
    margin: 2vh auto !important;
    padding: 4rem 6rem !important;
+
    box-shadow: 0 6px 18px rgba(0,0,0,.08);
    display: flex !important;
    flex-direction: column !important;
    justify-content: flex-start !important;
    align-items: center !important;
- }
-
- @media (max-width: 1024px){
-   section.main, div.block-container {
-     width: 100vw !important;
-     height: 100vh !important;
-     border-radius: 0 !important;
-     margin: 0 auto !important;
-     padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
-   }
  }
 
  /* ===================== TÍTULOS ===================== */
@@ -94,9 +89,6 @@ st.markdown(
 
  /* leve deslocamento do H1 em telas grandes */
  h1 { transform: translateX(18px); }
- @media (max-width: 1024px){
-   h1 { transform: none !important; }
- }
 
  /* ===================== TEXTOS ===================== */
  p, div, span, label {
@@ -154,7 +146,7 @@ st.markdown(
  .footer-fixed {
     position: fixed !important;
     bottom: calc(2vh + 0.5rem) !important;
-    left:  calc(1vw + 1rem) !important;
+    left: calc(1vw + 1rem) !important;
     font-size: 0.9rem !important;
     color: #7A8C94 !important;
     font-family: 'Ofelia Text', sans-serif !important;
@@ -172,10 +164,8 @@ BASE_DIR = Path(__file__).parent.resolve()
 ASSETS = BASE_DIR / "assets"
 LOGO_FULL = ASSETS / "jera-logo-full.png"
 
-
 def _img_data_uri(p: Path) -> str:
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
-
 
 # ===================== ESTADO INICIAL =====================
 if "step" not in st.session_state:
@@ -188,66 +178,46 @@ BLOCOS = [
     (
         "Qualidade do Relacionamento com a Equipe Jera",
         [
-            (
-                "Tempo de resolução às solicitações",
-                "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?",
-            ),
-            (
-                "Proatividade na comunicação",
-                "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?",
-            ),
+            ("Tempo de resolução às solicitações",
+             "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?"),
+            ("Proatividade na comunicação",
+             "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?"),
         ],
     ),
     (
         "Clareza e Relevância das Informações Prestadas",
         [
-            (
-                "Clareza das informações apresentadas",
-                "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?",
-            ),
-            (
-                "Compreensão dos resultados",
-                "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?",
-            ),
+            ("Clareza das informações apresentadas",
+             "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?"),
+            ("Compreensão dos resultados",
+             "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?"),
         ],
     ),
     (
         "Efetividade dos Encontros e Alinhamentos",
         [
-            (
-                "Frequência, formato e duração das reuniões",
-                "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?",
-            ),
-            (
-                "Relevância e efetividade das reuniões",
-                "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?",
-            ),
+            ("Frequência, formato e duração das reuniões",
+             "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?"),
+            ("Relevância e efetividade das reuniões",
+             "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?"),
         ],
     ),
     (
         "Percepção sobre o Desempenho da Carteira",
         [
-            (
-                "Satisfação com o retorno obtido",
-                "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?",
-            ),
-            (
-                "Alinhamento entre retorno e perfil de risco",
-                "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?",
-            ),
+            ("Satisfação com o retorno obtido",
+             "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?"),
+            ("Alinhamento entre retorno e perfil de risco",
+             "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?"),
         ],
     ),
     (
         "Compromisso com a Transparência e Integridade",
         [
-            (
-                "Independência nas recomendações",
-                "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?",
-            ),
-            (
-                "Transparência sobre custos e remunerações",
-                "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?",
-            ),
+            ("Independência nas recomendações",
+             "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?"),
+            ("Transparência sobre custos e remunerações",
+             "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?"),
         ],
     ),
 ]
@@ -264,7 +234,6 @@ def _validar_secao(notas):
         return False, "Por favor, selecione uma opção (1–5) para todas as perguntas desta seção."
     return True, ""
 
-
 def _append_to_excel(row_values):
     try:
         from openpyxl import Workbook, load_workbook
@@ -278,9 +247,7 @@ def _append_to_excel(row_values):
             if wb.active and wb.active.title != "Respostas":
                 wb.remove(wb.active)
 
-        ws = wb["Respostas"] if "Respostas" in wb.sheetnames else wb.create_sheet(
-            "Respostas"
-        )
+        ws = wb["Respostas"] if "Respostas" in wb.sheetnames else wb.create_sheet("Respostas")
 
         for col, header in enumerate(HEADERS, 1):
             ws.cell(row=1, column=col, value=header)
@@ -293,7 +260,6 @@ def _append_to_excel(row_values):
         return True, "Gravado no Excel local."
     except Exception as e:
         return False, str(e)
-
 
 # ===================== FLUXO DAS TELAS =====================
 step = st.session_state["step"]
@@ -311,10 +277,7 @@ if step == 1:
                 unsafe_allow_html=True,
             )
 
-        st.markdown(
-            "<h1>PESQUISA DE SATISFAÇÃO</h1>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<h1>PESQUISA DE SATISFAÇÃO</h1>", unsafe_allow_html=True)
 
         st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
@@ -363,10 +326,7 @@ elif 2 <= step <= 6:
 
     with col_meio:
 
-        st.markdown(
-            f"<h2>{titulo}</h2>",
-            unsafe_allow_html=True,
-        )
+        st.markdown(f"<h2>{titulo}</h2>", unsafe_allow_html=True)
 
         with st.form(f"form_{idx}"):
 
@@ -400,12 +360,9 @@ elif 2 <= step <= 6:
                         key=f"{titulo}_{i}",
                     )
 
-                # espaço extra entre um bloco de pergunta e o próximo
+                # espaço extra entre blocos de pergunta
                 if i < len(perguntas) - 1:
-                    st.markdown(
-                        "<div style='height:2.8rem;'></div>",
-                        unsafe_allow_html=True,
-                    )
+                    st.markdown("<div style='height:2.8rem;'></div>", unsafe_allow_html=True)
                 else:
                     st.markdown("<br>", unsafe_allow_html=True)
 
