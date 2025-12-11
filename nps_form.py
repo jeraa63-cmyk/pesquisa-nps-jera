@@ -6,10 +6,7 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
-LOCAL_XLSX_PATH = (
-    r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA"
-    r"\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
-)
+LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
 # ===================== PÁGINA + CSS =====================
@@ -19,196 +16,188 @@ st.markdown(
     """
 <style>
 
-/* ===================== FONTES ===================== */
-@font-face {
-  font-family: 'Ofelia Display';
-  src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
-  font-weight: 300;
-}
+ /* ===================== FONTES ===================== */
+ @font-face {
+   font-family: 'Ofelia Display';
+   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
+   font-weight: 700;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
+   font-weight: 400;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
+   font-weight: 500;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
+   font-weight: 300;
+ }
 
-/* ===================== VARIÁVEIS ===================== */
-:root {
-  --jera-primary:#00C1AD;
-  --jera-dark:#052B38;
-  --jera-bg:#052B38;
-  --jera-light:#FFFFFF;
-}
+ /* ===================== VARIÁVEIS ===================== */
+ :root {
+   --jera-primary:#00C1AD;
+   --jera-dark:#052B38;
+   --jera-bg:#052B38;
+   --jera-light:#FFFFFF;
+ }
 
-/* ===================== RESET / BACKGROUND ===================== */
-header[data-testid="stHeader"], footer {display:none !important;}
-html, body, .stApp {
-  background: var(--jera-bg) !important;
-  font-family: 'Ofelia Text', sans-serif !important;
-  color: var(--jera-dark);
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden !important;
-}
+ /* ===================== RESET / BACKGROUND ===================== */
+ header[data-testid="stHeader"], footer {display:none !important;}
+ html, body, .stApp {
+   background: var(--jera-bg) !important;
+   font-family: 'Ofelia Text', sans-serif !important;
+   color: var(--jera-dark);
+   margin: 0 !important;
+   padding: 0 !important;
+   overflow-x: hidden !important;
+ }
 
-/* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
-section.main, div.block-container {
-  background: var(--jera-light) !important;
-  border-radius: 22px !important;
-  width: 96vw !important;
-  height: 96vh !important;
-  margin: 2vh auto !important;
-  padding: 4rem 6rem !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: center !important;
-}
+ /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
+ section.main, div.block-container {
+   background: var(--jera-light) !important;
+   border-radius: 22px !important;
+   width: 96vw !important;
+   max-width: 1300px !important;
+   height: auto !important;
+   min-height: 94vh !important;
+   margin: 2vh auto !important;
+   padding: 3.5rem 4rem 4.5rem 4rem !important;
+   box-shadow: 0 6px 18px rgba(0,0,0,.08);
+   display: flex !important;
+   flex-direction: column !important;
+   justify-content: flex-start !important;
+   align-items: center !important;
+ }
 
-@media (max-width: 1024px){
-  section.main, div.block-container {
-    width: 100vw !important;
-    height: 100vh !important;
-    border-radius: 0 !important;
-    margin: 0 auto !important;
-    padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
-  }
-}
+ @media (max-width: 1024px){
+   section.main, div.block-container {
+     width: 100vw !important;
+     max-width: 100vw !important;
+     min-height: 100vh !important;
+     border-radius: 0 !important;
+     margin: 0 auto !important;
+     padding: 2.5rem 1.4rem 3.5rem 1.4rem !important;
+   }
+ }
 
-/* ===================== TÍTULOS ===================== */
-h1, h2, h3 {
-  font-family: 'Ofelia Display', sans-serif !important;
-  color: var(--jera-dark);
-  text-align: center !important;
-}
+ /* ===================== TÍTULOS ===================== */
+ h1, h2, h3 {
+   font-family: 'Ofelia Display', sans-serif !important;
+   color: var(--jera-dark);
+   text-align: center !important;
+ }
 
-h1 {
-  font-weight: 700 !important;
-  /* fonte se adapta ao tamanho da tela + sem quebra */
-  font-size: clamp(2.1rem, 4vw, 3.4rem) !important;
-  white-space: nowrap !important;
-}
+ h1 {
+   font-size: clamp(2.4rem, 3.4vw, 3.8rem) !important;
+   font-weight: 700 !important;
+   transform: translateX(18px);
+ }
 
-/* leve deslocamento do H1 em telas grandes */
-h1 { transform: translateX(18px); }
-@media (max-width: 1024px){
-  h1 { transform: none !important; }
-}
+ @media (max-width: 1024px){
+   h1 { transform: none !important; }
+ }
 
-/* =============== TÍTULOS / TEXTOS RESPONSIVOS SEM QUEBRA =============== */
+ h2 {
+   font-size: clamp(1.7rem, 2.4vw, 2.4rem) !important;
+   font-weight: 600 !important;
+   margin-bottom: 2.2rem !important;
+ }
 
-/* Título grande das seções (Clareza..., Qualidade..., etc.) */
-.fit-section-title {
-  text-align: center !important;
-  font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 700 !important;
-  white-space: nowrap !important;
-  font-size: clamp(1.6rem, 2.6vw, 2.4rem) !important;
-}
+ h3 {
+   font-size: clamp(1.4rem, 2.1vw, 2.0rem) !important;
+   font-weight: 500 !important;
+ }
 
-/* Título de cada pergunta (ex: Clareza das informações apresentadas) */
-.fit-title {
-  text-align: center !important;
-  font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 700 !important;
-  white-space: nowrap !important;
-  font-size: clamp(1.0rem, 1.6vw, 1.4rem) !important;
-}
+ /* ===================== TEXTOS GENÉRICOS ===================== */
+ p, div, span, label {
+   font-size: 1.1rem !important;
+   line-height: 1.7 !important;
+ }
 
-/* Texto da pergunta (descrição logo abaixo do título) */
-.fit-question {
-  text-align: center !important;
-  font-family: 'Ofelia Text', sans-serif !important;
-  white-space: nowrap !important;
-  font-size: clamp(0.75rem, 1.3vw, 1.15rem) !important;
-}
+ /* ===================== PERGUNTAS (TÍTULO + TEXTO) ===================== */
 
-/* Ajustes extras em telas muito pequenas (celular bem estreito) */
-@media (max-width: 480px) {
-  .fit-title {
-    font-size: clamp(0.9rem, 3vw, 1.1rem) !important;
-  }
-  .fit-question {
-    font-size: clamp(0.7rem, 2.6vw, 1.0rem) !important;
-  }
-  .fit-section-title {
-    font-size: clamp(1.4rem, 3vw, 1.8rem) !important;
-  }
-}
+ /* Título da pergunta (ex.: "Clareza das informações apresentadas") */
+ .pergunta-topico {
+   font-family: 'Ofelia Display', sans-serif;
+   font-weight: 700;
+   text-align: center;
+   margin: 0 0 0.35rem 0;
+   /* fonte que cresce em desktop e diminui em telas pequenas */
+   font-size: clamp(14px, 1.6vw, 22px);
+   white-space: nowrap;              /* NÃO quebra linha */
+ }
 
-/* ===================== TEXTOS GERAIS ===================== */
-p, div, span, label {
-  font-size: 1.2rem !important;
-  line-height: 1.7 !important;
-}
+ /* Texto da pergunta (ex.: "De 01 a 05, o quanto...") */
+ .pergunta-texto {
+   text-align: center;
+   margin-top: 0.1rem;
+   margin-bottom: 0.8rem;
+   font-size: clamp(11px, 1.4vw, 18px);
+   white-space: nowrap;              /* NÃO quebra linha */
+ }
 
-/* ===================== INPUT DA TELA 1 ===================== */
-.stTextInput {
-  display: flex !important;
-  justify-content: center !important;
-}
-.stTextInput > div {
-  width: fit-content !important;
-  margin: 0 auto !important;
-}
-.stTextInput input {
-  font-family: 'Ofelia Text', sans-serif !important;
-  font-size: 1.1rem !important;
-  text-align: center !important;
-  padding: 0.6rem 0.8rem !important;
-  border-radius: 8px !important;
-  background-color: #f6f6f6 !important;
-  width: 285px !important;
-}
+ /* ===================== INPUT DA TELA 1 ===================== */
+ .stTextInput {
+   display: flex !important;
+   justify-content: center !important;
+ }
+ .stTextInput > div {
+   width: fit-content !important;
+   margin: 0 auto !important;
+ }
+ .stTextInput input {
+   font-family: 'Ofelia Text', sans-serif !important;
+   font-size: 1.1rem !important;
+   text-align: center !important;
+   padding: 0.6rem 0.8rem !important;
+   border-radius: 8px !important;
+   background-color: #f6f6f6 !important;
+   width: 285px !important;
+ }
 
-/* ===================== BOTÕES ===================== */
-.stButton > button {
-  font-family: 'Ofelia Display', sans-serif !important;
-  background: #052B38 !important;
-  color: white !important;
-  border: 2px solid #052B38 !important;
-  border-radius: 12px !important;
-  font-weight: 600 !important;
-  font-size: 1.1rem !important;
-  min-width: 220px !important;
-  min-height: 50px !important;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 6px 14px rgba(0,0,0,.15);
-}
-.stButton > button:hover {
-  background: #00C1AD !important;
-  border-color: #00C1AD !important;
-  transform: translateY(-2px);
-}
+ /* ===================== BOTÕES ===================== */
+ .stButton > button {
+   font-family: 'Ofelia Display', sans-serif !important;
+   background: #052B38 !important;
+   color: white !important;
+   border: 2px solid #052B38 !important;
+   border-radius: 12px !important;
+   font-weight: 600 !important;
+   font-size: 1.1rem !important;
+   min-width: 220px !important;
+   min-height: 50px !important;
+   transition: all 0.25s ease-in-out;
+   box-shadow: 0 6px 14px rgba(0,0,0,.15);
+ }
+ .stButton > button:hover {
+   background: #00C1AD !important;
+   border-color: #00C1AD !important;
+   transform: translateY(-2px);
+ }
 
-/* remover borda padrão de forms */
-div[data-testid="stForm"] {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-}
+ /* remover borda padrão de forms */
+ div[data-testid="stForm"] {
+   border: none !important;
+   background: transparent !important;
+   padding: 0 !important;
+ }
 
-/* rodapé fixo */
-.footer-fixed {
-  position: fixed !important;
-  bottom: calc(2vh + 0.5rem) !important;
-  left:  calc(1vw + 1rem) !important;
-  font-size: 0.9rem !important;
-  color: #7A8C94 !important;
-  font-family: 'Ofelia Text', sans-serif !important;
-  z-index: 9999 !important;
-  pointer-events: none;
-}
+ /* rodapé fixo */
+ .footer-fixed {
+    position: fixed !important;
+    bottom: calc(2vh + 0.5rem) !important;
+    left:  calc(1vw + 1rem) !important;
+    font-size: 0.9rem !important;
+    color: #7A8C94 !important;
+    font-family: 'Ofelia Text', sans-serif !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+ }
 
 </style>
 """,
@@ -367,8 +356,7 @@ if step == 1:
         st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>"
-            "CÓDIGO DO CLIENTE</p>",
+            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
             unsafe_allow_html=True,
         )
 
@@ -412,9 +400,8 @@ elif 2 <= step <= 6:
 
     with col_meio:
 
-        # título da seção (sem quebra)
         st.markdown(
-            f"<h2 class='fit-section-title'>{titulo}</h2>",
+            f"<h2>{titulo}</h2>",
             unsafe_allow_html=True,
         )
 
@@ -424,14 +411,14 @@ elif 2 <= step <= 6:
 
             for i, (topico, texto) in enumerate(perguntas):
 
-                # título da pergunta (sem quebra)
+                # Título da pergunta (classe CSS com nowrap + clamp)
                 st.markdown(
-                    f"<p class='fit-title'>{topico}</p>",
+                    f"<p class='pergunta-topico'>{topico}</p>",
                     unsafe_allow_html=True,
                 )
-                # texto explicativo da pergunta (sem quebra)
+                # Texto da pergunta (classe CSS com nowrap + clamp)
                 st.markdown(
-                    f"<p class='fit-question'>{texto}</p>",
+                    f"<p class='pergunta-texto'>{texto}</p>",
                     unsafe_allow_html=True,
                 )
 
@@ -488,10 +475,7 @@ elif step == 7:
 
     with col_meio:
 
-        st.markdown(
-            "<h2 class='fit-section-title'>NPS</h2>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
 
         st.markdown(
             """
@@ -575,9 +559,7 @@ elif step == 7:
             if ok:
                 st.success("Respostas gravadas com sucesso no Excel! ✔")
             else:
-                st.warning(
-                    "Não foi possível gravar no Excel. As respostas foram salvas em responses.csv."
-                )
+                st.warning("Não foi possível gravar no Excel. As respostas foram salvas em responses.csv.")
 
             st.session_state["step"] = 8
             st.rerun()
@@ -595,13 +577,7 @@ elif step == 8:
     st.caption(
         f"Código do cliente: **{st.session_state['client_code']}** • "
         f"Enviado em {datetime.now().strftime('%d/%m/%Y %H:%M')}"
-    )
 
-    st.markdown(
-        "<p style='font-size:1.0rem; color:#052B38; margin-top:1.5rem;'>"
-        "Caso tenha qualquer dúvida ou queira conversar conosco, nossa equipe está sempre à disposição."
-        "</p>",
-        unsafe_allow_html=True,
     )
 
     if st.button("➕ Enviar nova resposta"):
