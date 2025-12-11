@@ -7,7 +7,7 @@ from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
-SHOW_INTERNAL_NPS = False  # deixe False para cliente
+SHOW_INTERNAL_NPS = False
 
 # ===================== PÁGINA + CSS =====================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
@@ -55,7 +55,6 @@ st.markdown(
    margin: 0 !important;
    padding: 0 !important;
    overflow-x: hidden !important;
-   font-size: 1.05rem;
  }
 
  /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
@@ -63,10 +62,11 @@ st.markdown(
    background: var(--jera-light) !important;
    border-radius: 22px !important;
    width: 96vw !important;
-   max-width: 1380px !important;
-   min-height: 96vh !important;
+   max-width: 1300px !important;
+   height: auto !important;
+   min-height: 94vh !important;
    margin: 2vh auto !important;
-   padding: 4rem 6rem 4.5rem 6rem !important;
+   padding: 3.5rem 4rem 4.5rem 4rem !important;
    box-shadow: 0 6px 18px rgba(0,0,0,.08);
    display: flex !important;
    flex-direction: column !important;
@@ -77,10 +77,11 @@ st.markdown(
  @media (max-width: 1024px){
    section.main, div.block-container {
      width: 100vw !important;
+     max-width: 100vw !important;
      min-height: 100vh !important;
      border-radius: 0 !important;
      margin: 0 auto !important;
-     padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
+     padding: 2.5rem 1.4rem 3.5rem 1.4rem !important;
    }
  }
 
@@ -90,19 +91,54 @@ st.markdown(
    color: var(--jera-dark);
    text-align: center !important;
  }
- h1 { font-size: 3.4rem !important; font-weight: 700 !important; }
- h2 { font-size: 2.4rem !important; font-weight: 600 !important; margin-bottom: 2.4rem !important; }
- h3 { font-size: 2.0rem !important; font-weight: 500 !important; }
 
- /* leve deslocamento do H1 em telas grandes */
- h1 { transform: translateX(18px); }
+ h1 {
+   font-size: clamp(2.4rem, 3.4vw, 3.8rem) !important;
+   font-weight: 700 !important;
+   transform: translateX(18px);
+ }
+
  @media (max-width: 1024px){
    h1 { transform: none !important; }
  }
 
- /* ===================== TEXTOS ===================== */
+ h2 {
+   font-size: clamp(1.7rem, 2.4vw, 2.4rem) !important;
+   font-weight: 600 !important;
+   margin-bottom: 2.2rem !important;
+ }
+
+ h3 {
+   font-size: clamp(1.4rem, 2.1vw, 2.0rem) !important;
+   font-weight: 500 !important;
+ }
+
+ /* ===================== TEXTOS GENÉRICOS ===================== */
  p, div, span, label {
-   line-height: 1.6 !important;
+   font-size: 1.1rem !important;
+   line-height: 1.7 !important;
+ }
+
+ /* ===================== PERGUNTAS (TÍTULO + TEXTO) ===================== */
+
+ /* Título da pergunta (ex.: "Clareza das informações apresentadas") */
+ .pergunta-topico {
+   font-family: 'Ofelia Display', sans-serif;
+   font-weight: 700;
+   text-align: center;
+   margin: 0 0 0.35rem 0;
+   /* fonte que cresce em desktop e diminui em telas pequenas */
+   font-size: clamp(14px, 1.6vw, 22px);
+   white-space: nowrap;              /* NÃO quebra linha */
+ }
+
+ /* Texto da pergunta (ex.: "De 01 a 05, o quanto...") */
+ .pergunta-texto {
+   text-align: center;
+   margin-top: 0.1rem;
+   margin-bottom: 0.8rem;
+   font-size: clamp(11px, 1.4vw, 18px);
+   white-space: nowrap;              /* NÃO quebra linha */
  }
 
  /* ===================== INPUT DA TELA 1 ===================== */
@@ -116,55 +152,12 @@ st.markdown(
  }
  .stTextInput input {
    font-family: 'Ofelia Text', sans-serif !important;
-   font-size: 1.05rem !important;
+   font-size: 1.1rem !important;
    text-align: center !important;
-   padding: 0.55rem 0.9rem !important;
+   padding: 0.6rem 0.8rem !important;
    border-radius: 8px !important;
    background-color: #f6f6f6 !important;
    width: 285px !important;
- }
-
- /* ===================== RÁDIOS (1–5 E 0–10) ===================== */
- div[role="radiogroup"] {
-   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
-   flex-wrap: wrap;
-   column-gap: 1.6rem;
-   row-gap: 0.35rem;
-   margin-top: 0.35rem !important;
- }
-
- div[role="radiogroup"] label {
-   margin: 0;
-   font-size: 1.0rem !important;
- }
-
- input[type="radio"]{
-   transform: scale(1.02);
-   accent-color: var(--jera-primary);
- }
-
- /* NPS (0–10) – linha única no desktop, um pouco mais compacto */
- form#form_nps div[role="radiogroup"],
- form[aria-label="form_nps"] div[role="radiogroup"]{
-   column-gap: 1.2rem;
- }
-
- form#form_nps div[role="radiogroup"] label,
- form[aria-label="form_nps"] div[role="radiogroup"] label{
-   font-size: 0.98rem !important;
- }
-
- @media (max-width: 1100px){
-   form#form_nps div[role="radiogroup"] label,
-   form[aria-label="form_nps"] div[role="radiogroup"] label{
-     font-size: 0.9rem !important;
-   }
-   form#form_nps div[role="radiogroup"],
-   form[aria-label="form_nps"] div[role="radiogroup"]{
-     column-gap: 0.9rem;
-   }
  }
 
  /* ===================== BOTÕES ===================== */
@@ -175,7 +168,7 @@ st.markdown(
    border: 2px solid #052B38 !important;
    border-radius: 12px !important;
    font-weight: 600 !important;
-   font-size: 1.05rem !important;
+   font-size: 1.1rem !important;
    min-width: 220px !important;
    min-height: 50px !important;
    transition: all 0.25s ease-in-out;
@@ -363,7 +356,7 @@ if step == 1:
         st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:1.15rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
             unsafe_allow_html=True,
         )
 
@@ -374,10 +367,10 @@ if step == 1:
         st.markdown(
             """
         <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
-            <p style='font-size:1.05rem; margin-bottom:0.8rem;'>
+            <p style='font-size:1.15rem; margin-bottom:0.8rem;'>
                 <strong>Esta é uma pesquisa identificada.</strong>
             </p>
-            <p style='font-size:1.0rem;'>
+            <p style='font-size:1.05rem;'>
                 Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
                 para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
             </p>
@@ -418,12 +411,14 @@ elif 2 <= step <= 6:
 
             for i, (topico, texto) in enumerate(perguntas):
 
+                # Título da pergunta (classe CSS com nowrap + clamp)
                 st.markdown(
-                    f"<p style='font-size:1.25rem;font-weight:700;text-align:center;margin-bottom:0.35rem;'>{topico}</p>",
+                    f"<p class='pergunta-topico'>{topico}</p>",
                     unsafe_allow_html=True,
                 )
+                # Texto da pergunta (classe CSS com nowrap + clamp)
                 st.markdown(
-                    f"<p style='text-align:center;margin-top:0.1rem;margin-bottom:0.8rem;'>{texto}</p>",
+                    f"<p class='pergunta-texto'>{texto}</p>",
                     unsafe_allow_html=True,
                 )
 
@@ -484,12 +479,12 @@ elif step == 7:
 
         st.markdown(
             """
-        <p style='font-size:1.2rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
+        <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
         Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
         atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
         em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
         </p>
-        <p style='font-size:1.05rem; text-align:center;'>
+        <p style='font-size:1.1rem; text-align:center;'>
             <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
         </p>
         """,
@@ -502,10 +497,10 @@ elif step == 7:
 
         st.markdown(
             """
-        <p style='font-size:1.1rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem; text-align:center;'>
+        <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
             Comentário final:
         </p>
-        <p style='font-size:1.0rem; margin-top:0; margin-bottom:0.5rem; text-align:center;'>
+        <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
             Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
         </p>
         """,
@@ -582,13 +577,7 @@ elif step == 8:
     st.caption(
         f"Código do cliente: **{st.session_state['client_code']}** • "
         f"Enviado em {datetime.now().strftime('%d/%m/%Y %H:%M')}"
-    )
 
-    st.markdown(
-        "<p style='font-size:1.0rem; color:#052B38; margin-top:1.5rem;'>"
-        "Caso tenha qualquer dúvida ou queira conversar conosco, nossa equipe está sempre à disposição."
-        "</p>",
-        unsafe_allow_html=True,
     )
 
     if st.button("➕ Enviar nova resposta"):
