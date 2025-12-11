@@ -63,8 +63,8 @@ st.markdown(
    border-radius: 22px !important;
    width: 96vw !important;
    max-width: 1400px !important;
-   min-height: 96vh !important;        /* <<< cresce conforme conteúdo */
-   height: auto !important;            /* <<< não é mais fixo */
+   min-height: 96vh !important;
+   height: auto !important;
    margin: 2vh auto !important;
    padding: 4rem 6rem !important;
    box-shadow: 0 6px 18px rgba(0,0,0,.08);
@@ -72,7 +72,7 @@ st.markdown(
    flex-direction: column !important;
    justify-content: flex-start !important;
    align-items: center !important;
-   overflow-y: auto !important;        /* se ficar muito alto, scroll dentro do branco */
+   overflow-y: auto !important;
  }
 
  @media (max-width: 1024px){
@@ -159,6 +159,7 @@ st.markdown(
  /* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
 
  .question-wrapper{
+   width: 100%;
    max-width: 1000px;
    margin: 0 auto;
  }
@@ -183,11 +184,14 @@ st.markdown(
 
  /* ===================== CENTRALIZAR TODAS AS RESPOSTAS (st.radio) ===================== */
 
- /* contêiner do radio */
+ /* contêiner do radio (ocupa a largura toda da caixa branca) */
  div[data-testid="stRadio"] {
    display: flex !important;
    justify-content: center !important;
-   margin-top: 0.4rem !important;
+   align-items: center !important;
+   width: 100% !important;
+   margin: 0 auto !important;
+   padding: 0 !important;
  }
 
  /* grupo interno das opções */
@@ -196,13 +200,17 @@ st.markdown(
    justify-content: center !important;
    align-items: center !important;
    gap: 0.9rem !important;
-   flex-wrap: nowrap !important;       /* <<< opções em linha única (1–5, 0–10) */
+   flex-wrap: nowrap !important;       /* 1 linha: 1–5 e 0–10 */
+   margin: 0 auto !important;
+   padding: 0 !important;
+   width: auto !important;             /* encolhe até caber no centro */
  }
 
  /* texto das opções */
  div[data-testid="stRadio"] label {
-   white-space: nowrap !important;     /* <<< sem quebra de texto na opção */
+   white-space: nowrap !important;     /* sem quebra de texto */
    font-size: 1.1rem !important;
+   text-align: center !important;
  }
 
  /* Responsividade extra para telas muito estreitas */
@@ -384,7 +392,6 @@ step = st.session_state["step"]
 # -------- TELA 1 --------
 if step == 1:
 
-    # tudo centralizado dentro do branco
     st.markdown("<div class='welcome-wrapper'>", unsafe_allow_html=True)
 
     if LOGO_FULL.exists():
@@ -424,7 +431,6 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    # botão centralizado dentro do branco
     _, col_btn, _ = st.columns([1, 1, 1])
     with col_btn:
         if st.button("Iniciar pesquisa", key="start_button"):
