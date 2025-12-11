@@ -62,7 +62,9 @@ st.markdown(
    background: var(--jera-light) !important;
    border-radius: 22px !important;
    width: 96vw !important;
-   height: 96vh !important;
+   max-width: 1400px !important;
+   min-height: 96vh !important;        /* <<< cresce conforme conteúdo */
+   height: auto !important;            /* <<< não é mais fixo */
    margin: 2vh auto !important;
    padding: 4rem 6rem !important;
    box-shadow: 0 6px 18px rgba(0,0,0,.08);
@@ -70,12 +72,15 @@ st.markdown(
    flex-direction: column !important;
    justify-content: flex-start !important;
    align-items: center !important;
+   overflow-y: auto !important;        /* se ficar muito alto, scroll dentro do branco */
  }
 
  @media (max-width: 1024px){
    section.main, div.block-container {
      width: 100vw !important;
-     height: 100vh !important;
+     max-width: 100vw !important;
+     min-height: 100vh !important;
+     height: auto !important;
      border-radius: 0 !important;
      margin: 0 auto !important;
      padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
@@ -143,15 +148,21 @@ st.markdown(
    transform: translateY(-2px);
  }
 
+ /* wrapper para centralizar conteúdo da tela 1 dentro do branco */
+ .welcome-wrapper{
+   width: 100%;
+   max-width: 900px;
+   margin: 0 auto;
+   text-align: center;
+ }
+
  /* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
 
- /* bloco das perguntas — largura limitada e centralizado */
  .question-wrapper{
    max-width: 1000px;
    margin: 0 auto;
  }
 
- /* cada pergunta */
  .question-block {
    margin-bottom: 2.4rem;
    text-align: center;
@@ -185,13 +196,23 @@ st.markdown(
    justify-content: center !important;
    align-items: center !important;
    gap: 0.9rem !important;
-   flex-wrap: wrap !important;
+   flex-wrap: nowrap !important;       /* <<< opções em linha única (1–5, 0–10) */
  }
 
  /* texto das opções */
  div[data-testid="stRadio"] label {
-   white-space: nowrap !important;
+   white-space: nowrap !important;     /* <<< sem quebra de texto na opção */
    font-size: 1.1rem !important;
+ }
+
+ /* Responsividade extra para telas muito estreitas */
+ @media (max-width: 480px){
+   div[data-testid="stRadio"] > div {
+     gap: 0.4rem !important;
+   }
+   div[data-testid="stRadio"] label {
+     font-size: 0.95rem !important;
+   }
  }
 
  /* remover borda padrão de forms */
@@ -199,6 +220,29 @@ st.markdown(
    border: none !important;
    background: transparent !important;
    padding: 0 !important;
+ }
+
+ /* ===================== PÁGINA NPS ===================== */
+ .nps-wrapper{
+   max-width: 1000px;
+   margin: 0 auto;
+   text-align: center;
+ }
+
+ .nps-wrapper p{
+   text-align: center !important;
+ }
+
+ /* ===================== RODAPÉ FIXO ===================== */
+ .footer-fixed {
+    position: fixed !important;
+    bottom: calc(2vh + 0.5rem) !important;
+    left:  calc(1vw + 1rem) !important;
+    font-size: 0.9rem !important;
+    color: #7A8C94 !important;
+    font-family: 'Ofelia Text', sans-serif !important;
+    z-index: 9999 !important;
+    pointer-events: none;
  }
 
 </style>
@@ -340,34 +384,34 @@ step = st.session_state["step"]
 # -------- TELA 1 --------
 if step == 1:
 
-    _, c2, _ = st.columns([1, 3, 1])
+    # tudo centralizado dentro do branco
+    st.markdown("<div class='welcome-wrapper'>", unsafe_allow_html=True)
 
-    with c2:
-        if LOGO_FULL.exists():
-            st.markdown(
-                f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-                "style='display:block;margin:0 auto;width:480px;max-width:95%;'/>",
-                unsafe_allow_html=True,
-            )
-
+    if LOGO_FULL.exists():
         st.markdown(
-            "<h1>PESQUISA DE SATISFAÇÃO</h1>",
+            f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
+            "style='display:block;margin:0 auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
-        st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
+    st.markdown(
+        "<h1>PESQUISA DE SATISFAÇÃO</h1>",
+        unsafe_allow_html=True,
+    )
 
-        st.markdown(
-            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
-            unsafe_allow_html=True,
-        )
+    st.markdown("<div style='height:3rem;'></div>", unsafe_allow_html=True)
 
-        st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
+    st.markdown(
+        "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+        unsafe_allow_html=True,
+    )
 
-        st.markdown("<div style='height:3rem;'></div>", unsafe_allow_html=True)
+    st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
 
-        st.markdown(
-            """
+    st.markdown("<div style='height:2.5rem;'></div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
         <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
             <p style='font-size:1.15rem; margin-bottom:0.8rem;'>
                 <strong>Esta é uma pesquisa identificada.</strong>
@@ -377,20 +421,20 @@ if step == 1:
                 para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
             </p>
         </div>""",
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-        left_spacer, col_btn, right_spacer = st.columns([4.8, 2, 4])
+    # botão centralizado dentro do branco
+    _, col_btn, _ = st.columns([1, 1, 1])
+    with col_btn:
+        if st.button("Iniciar pesquisa", key="start_button"):
+            if not st.session_state["client_code"].strip():
+                st.error("Por favor, preencha o código do cliente.")
+            else:
+                st.session_state["step"] = 2
+                st.rerun()
 
-        with col_btn:
-            st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
-
-            if st.button("Iniciar pesquisa", key="start_button"):
-                if not st.session_state["client_code"].strip():
-                    st.error("Por favor, preencha o código do cliente.")
-                else:
-                    st.session_state["step"] = 2
-                    st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -462,17 +506,20 @@ elif 2 <= step <= 6:
 # -------- PÁGINA NPS --------
 elif step == 7:
 
-    st.subheader("NPS")
+    st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
+
     st.markdown(
         """
-    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
-    Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
-    atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
-    em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
-    </p>
-    <p style='font-size:1.1rem; text-align:center;'>
-        <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
-    </p>
+    <div class='nps-wrapper'>
+        <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem;'>
+        Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
+        atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
+        em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
+        </p>
+        <p style='font-size:1.1rem;'>
+            <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
+        </p>
+    </div>
     """,
         unsafe_allow_html=True,
     )
@@ -481,12 +528,14 @@ elif step == 7:
 
     st.markdown(
         """
-    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
-        Comentário final:
-    </p>
-    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
-        Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
-    </p>
+    <div class='nps-wrapper'>
+        <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
+            Comentário final:
+        </p>
+        <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
+            Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
+        </p>
+    </div>
     """,
         unsafe_allow_html=True,
     )
@@ -583,18 +632,6 @@ elif step == 8:
 # -------- RODAPÉ FIXO --------
 st.markdown(
     """
-<style>
-.footer-fixed {
-    position: fixed !important;
-    bottom: calc(2vh + 0.5rem) !important;
-    left:  calc(1vw + 1rem) !important;
-    font-size: 0.9rem !important;
-    color: #7A8C94 !important;
-    font-family: 'Ofelia Text', sans-serif !important;
-    z-index: 9999 !important;
-    pointer-events: none;
-}
-</style>
 <div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>
 """,
     unsafe_allow_html=True,
