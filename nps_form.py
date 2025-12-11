@@ -151,7 +151,7 @@ st.markdown(
  }
 
  .question-block {
-   margin-bottom: 2.8rem;
+   margin-bottom: 3.0rem;
    text-align: center;
  }
 
@@ -164,8 +164,16 @@ st.markdown(
 
  .question-text {
    margin-top: 0.1rem;
-   margin-bottom: 1.0rem;
+   margin-bottom: 1.3rem;
    text-align: center !important;
+ }
+
+ /* legendas das escalas */
+ .scale-legend {
+   text-align: center;
+   margin-top: 0.4rem;
+   font-size: 0.95rem;
+   white-space: nowrap;
  }
 
  /* remover borda padrão de forms */
@@ -286,7 +294,7 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _validar_secao(notas):
     if any(v is None for v in notas.values()):
-        return False, "Por favor, selecione uma opção (1–5) para todas as perguntas desta seção."
+        return False, "Por favor, selecione uma nota de 1 a 5 para todas as perguntas desta seção."
     return True, ""
 
 
@@ -366,7 +374,6 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-        # botão dentro do fundo branco, centralizado
         left_spacer, col_btn, right_spacer = st.columns([4, 2, 4])
         with col_btn:
             st.markdown("<div style='height:2rem;'></div>", unsafe_allow_html=True)
@@ -406,21 +413,29 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            # centralização visual das respostas usando colunas
+            # slider centralizado numericamente
             left, center, right = st.columns([1, 4, 1])
             with center:
-                notas[topico] = st.radio(
+                nota = st.slider(
                     "",
-                    [
-                        "1 - Péssimo",
-                        "2 - Ruim",
-                        "3 - Regular",
-                        "4 - Bom",
-                        "5 - Excelente",
-                    ],
-                    horizontal=True,
-                    index=None,
+                    min_value=1,
+                    max_value=5,
+                    step=1,
                     key=f"{titulo}_{i}",
+                )
+                notas[topico] = nota
+
+                st.markdown(
+                    """
+                    <div class="scale-legend">
+                        1 - Péssimo &nbsp;&nbsp;&nbsp;
+                        2 - Ruim &nbsp;&nbsp;&nbsp;
+                        3 - Regular &nbsp;&nbsp;&nbsp;
+                        4 - Bom &nbsp;&nbsp;&nbsp;
+                        5 - Excelente
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
                 )
 
             st.markdown("</div>", unsafe_allow_html=True)
@@ -466,15 +481,25 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    # centralizar NPS visualmente
     left, center, right = st.columns([1, 4, 1])
     with center:
-        nps = st.radio(
+        nps = st.slider(
             "",
-            list(range(11)),
-            horizontal=True,
-            index=None,
+            min_value=0,
+            max_value=10,
+            step=1,
             key="nps",
+        )
+
+        # legenda NPS em linha única
+        st.markdown(
+            """
+            <div class="scale-legend">
+                0 &nbsp;&nbsp; 1 &nbsp;&nbsp; 2 &nbsp;&nbsp; 3 &nbsp;&nbsp; 4 &nbsp;&nbsp; 5 &nbsp;&nbsp;
+                6 &nbsp;&nbsp; 7 &nbsp;&nbsp; 8 &nbsp;&nbsp; 9 &nbsp;&nbsp; 10
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
     st.markdown(
@@ -504,10 +529,6 @@ elif step == 7:
         st.rerun()
 
     if enviar:
-
-        if nps is None:
-            st.error("Por favor, selecione uma nota de 0 a 10.")
-            st.stop()
 
         code = st.session_state["client_code"].strip()
 
