@@ -182,17 +182,42 @@ st.markdown(
    text-align: center !important;
  }
 
- /* ===================== OPÇÕES DO st.radio ===================== */
- /* não mexemos no layout, só no texto das opções */
- div[data-testid="stRadio"] label {
-   white-space: nowrap !important;   /* não quebra "1 - Péssimo" etc. */
+ /* ===================== OPÇÕES DO st.radio (CENTRALIZAR DE QUALQUER JEITO) ===================== */
+
+ /* contêiner externo típico do radio */
+ div.row-widget.stRadio {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   width: 100% !important;
+ }
+
+ /* grupo interno das opções */
+ div.row-widget.stRadio > div {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   width: auto !important;
+ }
+
+ /* acessório: se o Streamlit usar role="radiogroup" */
+ div[role="radiogroup"] {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   width: 100% !important;
+ }
+
+ /* texto das opções */
+ div.row-widget.stRadio label {
+   white-space: nowrap !important;
    font-size: 1.1rem !important;
    text-align: center !important;
    margin: 0 !important;
  }
 
  @media (max-width: 480px){
-   div[data-testid="stRadio"] label {
+   div.row-widget.stRadio label {
      font-size: 0.95rem !important;
    }
  }
@@ -445,7 +470,7 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            # --- radios centralizados na coluna do meio ---
+            # rádios centralizados (coluna do meio)
             col_esq, col_centro, col_dir = st.columns([1, 4, 1])
             with col_centro:
                 notas[topico] = st.radio(
@@ -507,7 +532,7 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    # --- radios 0–10 centralizados na coluna do meio ---
+    # radios 0–10 centralizados
     col_esq, col_centro, col_dir = st.columns([1, 4, 1])
     with col_centro:
         nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
