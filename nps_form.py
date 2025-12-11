@@ -182,38 +182,16 @@ st.markdown(
    text-align: center !important;
  }
 
- /* ===================== CENTRALIZAR TODAS AS RESPOSTAS (st.radio) ===================== */
-
- /* contêiner do radio ocupa toda a largura e centraliza o conteúdo interno */
- div[data-testid="stRadio"] {
-   width: 100% !important;
-   margin: 0 auto !important;
-   padding: 0 !important;
-   display: block !important;              /* deixa de ser flex */
-   text-align: center !important;          /* centraliza o filho inline-flex */
- }
-
- /* grupo interno das opções (1–5 & 0–10) */
- div[data-testid="stRadio"] > div {
-   display: inline-flex !important;        /* encolhe ao tamanho das opções */
-   justify-content: center !important;
-   align-items: center !important;
-   gap: 0.9rem !important;
-   flex-wrap: nowrap !important;           /* tudo na mesma linha */
- }
-
- /* texto das opções */
+ /* ===================== OPÇÕES DO st.radio ===================== */
+ /* não mexemos no layout, só no texto das opções */
  div[data-testid="stRadio"] label {
-   white-space: nowrap !important;         /* não quebra o texto */
+   white-space: nowrap !important;   /* não quebra "1 - Péssimo" etc. */
    font-size: 1.1rem !important;
    text-align: center !important;
    margin: 0 !important;
  }
 
  @media (max-width: 480px){
-   div[data-testid="stRadio"] > div {
-     gap: 0.4rem !important;
-   }
    div[data-testid="stRadio"] label {
      font-size: 0.95rem !important;
    }
@@ -467,19 +445,22 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            notas[topico] = st.radio(
-                "",
-                [
-                    "1 - Péssimo",
-                    "2 - Ruim",
-                    "3 - Regular",
-                    "4 - Bom",
-                    "5 - Excelente",
-                ],
-                horizontal=True,
-                index=None,
-                key=f"{titulo}_{i}",
-            )
+            # --- radios centralizados na coluna do meio ---
+            col_esq, col_centro, col_dir = st.columns([1, 4, 1])
+            with col_centro:
+                notas[topico] = st.radio(
+                    "",
+                    [
+                        "1 - Péssimo",
+                        "2 - Ruim",
+                        "3 - Regular",
+                        "4 - Bom",
+                        "5 - Excelente",
+                    ],
+                    horizontal=True,
+                    index=None,
+                    key=f"{titulo}_{i}",
+                )
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -526,7 +507,10 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
+    # --- radios 0–10 centralizados na coluna do meio ---
+    col_esq, col_centro, col_dir = st.columns([1, 4, 1])
+    with col_centro:
+        nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
 
     st.markdown(
         """
