@@ -1,15 +1,18 @@
 from pathlib import Path
 import base64
 import os
-import streamlit as st
-import pandas as pd
 from datetime import datetime
+
+import pandas as pd
+import streamlit as st
+
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
-SHOW_INTERNAL_NPS = False
+SHOW_INTERNAL_NPS = False  # deixa False para o cliente
 
-# ===================== PÁGINA + CSS =====================
+
+# ===================== CONFIG PÁGINA + CSS ==========================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
@@ -38,48 +41,43 @@ st.markdown(
    font-weight: 300;
  }
 
- /* ===================== VARIÁVEIS ===================== */
- :root {
+ :root{
    --jera-primary:#00C1AD;
    --jera-dark:#052B38;
-   --jera-bg:#052B38;
+   --jera-bg:#003746;
    --jera-light:#FFFFFF;
  }
 
  /* ===================== RESET / BACKGROUND ===================== */
- header[data-testid="stHeader"], footer {display:none !important;}
+ header[data-testid="stHeader"],
+ footer {display:none !important;}
+
  html, body, .stApp {
    background: var(--jera-bg) !important;
-   font-family: 'Ofelia Text', sans-serif !important;
+   font-family: 'Ofelia Text', system-ui, -apple-system, 'Segoe UI', sans-serif !important;
    color: var(--jera-dark);
-   margin: 0 !important;
-   padding: 0 !important;
-   overflow-x: hidden !important;
  }
 
- /* ===================== CONTÊINER PRINCIPAL ===================== */
- section.main, div.block-container {
+ /* ===================== CARTÃO BRANCO (TODAS AS TELAS) ===================== */
+ .main .block-container,
+ div.block-container{
    background: var(--jera-light) !important;
    border-radius: 22px !important;
-   width: 96vw !important;
+   width: 94vw !important;
    max-width: 1200px !important;
-   min-height: 92vh !important;
-   margin: 2vh auto 3vh auto !important;
-   padding: 4rem 4.5rem 4.5rem 4.5rem !important;
-   box-shadow: 0 6px 18px rgba(0,0,0,.08);
-   display: flex !important;
-   flex-direction: column !important;
-   justify-content: flex-start !important;
-   align-items: stretch !important;
+   margin: 2.3rem auto !important;
+   padding: 3.0rem 3.5rem 4.0rem 3.5rem !important;
+   box-shadow: 0 8px 22px rgba(0,0,0,.12);
  }
 
- @media (max-width: 1024px){
-   section.main, div.block-container {
+ @media (max-width: 992px){
+   .main .block-container,
+   div.block-container{
      width: 100vw !important;
-     min-height: 100vh !important;
+     max-width: 100vw !important;
      border-radius: 0 !important;
      margin: 0 auto !important;
-     padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
+     padding: 2.0rem 1.3rem 3.0rem 1.3rem !important;
    }
  }
 
@@ -89,29 +87,41 @@ st.markdown(
    color: var(--jera-dark);
    text-align: center !important;
  }
- h1 { font-size: 3.6rem !important; font-weight: 700 !important; margin-bottom: 2.2rem !important; }
- h2 { font-size: 2.4rem !important; font-weight: 600 !important; margin-bottom: 2.2rem !important; }
- h3 { font-size: 2.0rem !important; font-weight: 500 !important; }
 
- /* leve deslocamento do H1 em telas grandes */
- h1 { transform: translateX(18px); }
- @media (max-width: 1024px){
-   h1 { transform: none !important; font-size: 2.4rem !important; }
+ h1 {
+   font-size: clamp(2.6rem, 3.8vw, 3.8rem) !important;
+   font-weight: 700 !important;
+   margin-bottom: 1.6rem !important;
+ }
+
+ h2 {
+   font-size: clamp(2.0rem, 3.0vw, 2.6rem) !important;
+   font-weight: 600 !important;
+   margin-bottom: 2.0rem !important;
+ }
+
+ h3 {
+   font-size: clamp(1.5rem, 2.4vw, 2.0rem) !important;
+   font-weight: 500 !important;
  }
 
  /* ===================== TEXTOS ===================== */
  p, div, span, label {
-   font-size: 1.1rem !important;
+   font-size: clamp(1.0rem, 1.4vw, 1.2rem) !important;
    line-height: 1.6 !important;
  }
 
- .question-text {
-   max-width: 64rem;
-   margin: 0 auto 1.8rem auto;
+ .pergunta-topico{
+   font-size: clamp(1.1rem, 1.6vw, 1.3rem) !important;
+   font-weight: 700 !important;
+   text-align: center;
+   margin-bottom: 0.35rem;
  }
 
- @media (max-width: 1024px){
-   .question-text { max-width: 100%; }
+ .pergunta-texto{
+   text-align: center;
+   margin-top: 0.1rem;
+   margin-bottom: 0.8rem;
  }
 
  /* ===================== INPUT DA TELA 1 ===================== */
@@ -125,16 +135,16 @@ st.markdown(
  }
  .stTextInput input {
    font-family: 'Ofelia Text', sans-serif !important;
-   font-size: 1.1rem !important;
+   font-size: 1.05rem !important;
    text-align: center !important;
    padding: 0.6rem 0.8rem !important;
    border-radius: 8px !important;
    background-color: #f6f6f6 !important;
-   width: 285px !important;
+   width: 260px !important;
  }
 
  /* ===================== BOTÕES ===================== */
- .stButton > button, button[kind] {
+ .stButton > button {
    font-family: 'Ofelia Display', sans-serif !important;
    background: #052B38 !important;
    color: white !important;
@@ -142,12 +152,13 @@ st.markdown(
    border-radius: 12px !important;
    font-weight: 600 !important;
    font-size: 1.05rem !important;
-   min-width: 210px !important;
-   min-height: 48px !important;
+   min-width: 220px !important;
+   min-height: 50px !important;
    transition: all 0.25s ease-in-out;
-   box-shadow: 0 6px 14px rgba(0,0,0,.12);
+   box-shadow: 0 6px 14px rgba(0,0,0,.15);
  }
- .stButton > button:hover, button[kind]:hover {
+
+ .stButton > button:hover {
    background: #00C1AD !important;
    border-color: #00C1AD !important;
    transform: translateY(-2px);
@@ -160,46 +171,46 @@ st.markdown(
    padding: 0 !important;
  }
 
- /* rodapé fixo */
+ /* ===================== RODAPÉ FIXO ===================== */
  .footer-fixed {
     position: fixed !important;
     bottom: calc(2vh + 0.5rem) !important;
     left:  calc(1vw + 1rem) !important;
-    font-size: 0.9rem !important;
+    font-size: 0.85rem !important;
     color: #7A8C94 !important;
     font-family: 'Ofelia Text', sans-serif !important;
     z-index: 9999 !important;
     pointer-events: none;
  }
 
- /* ===================== NPS – TEXTO MAIS LARGO ===================== */
- .nps-wrapper{
-   max-width: 70rem;
-   margin: 0 auto 1.8rem auto;
-   text-align: left;
- }
- .nps-wrapper p{
-   margin-bottom: 0.8rem;
- }
- .nps-subtitle{
-   font-size: clamp(0.9rem, 1vw + 0.55rem, 1.05rem);
-   font-weight: 600;
-   text-align: center;
-   margin-top: 0.6rem;
+ /* ===================== RÁDIOS ===================== */
+ div[role="radiogroup"] label{
+   margin-right: 0.55rem;
  }
 
- /* Escala 0–10 em ÚNICA LINHA no NPS */
- form#form_nps div[role="radiogroup"],
- form[aria-label="form_nps"] div[role="radiogroup"]{
-   display: flex;
-   justify-content: center;
-   flex-wrap: nowrap;
-   gap: 0.85rem;
-   white-space: nowrap;
+ @media (min-width: 1100px){
+   div[role="radiogroup"] label{
+     white-space: nowrap;      /* evita quebra feia nos rótulos longos */
+   }
  }
- form#form_nps div[role="radiogroup"] label,
- form[aria-label="form_nps"] div[role="radiogroup"] label{
-   font-size: 0.95rem !important;
+
+ /* ===================== PÁGINA FINAL NPS ===================== */
+ .nps-wrapper{
+   max-width: 70rem;
+   margin: 0 auto 2.2rem;
+ }
+
+ .nps-question{
+   text-align: center;
+   font-size: clamp(1.0rem, 1.6vw, 1.2rem);
+   line-height: 1.5;
+   margin-bottom: 0.9rem;
+ }
+
+ .nps-subnote{
+   text-align: center;
+   font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+   margin-bottom: 1.5rem;
  }
 
 </style>
@@ -207,7 +218,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ===================== LOGO =====================
+# ===================== LOGO E ASSETS =====================
 BASE_DIR = Path(__file__).parent.resolve()
 ASSETS = BASE_DIR / "assets"
 LOGO_FULL = ASSETS / "jera-logo-full.png"
@@ -222,6 +233,7 @@ if "step" not in st.session_state:
     st.session_state["step"] = 1
 if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
+
 
 # ===================== BLOCOS DE PERGUNTAS =====================
 BLOCOS = [
@@ -298,6 +310,7 @@ HEADERS = (
     + ["coment_final"]
 )
 
+
 # ===================== FUNÇÕES AUXILIARES =====================
 def _validar_secao(notas):
     if any(v is None for v in notas.values()):
@@ -347,7 +360,7 @@ if step == 1:
         if LOGO_FULL.exists():
             st.markdown(
                 f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-                "style='display:block;margin:0 auto 1.2rem auto;width:480px;max-width:95%;'/>",
+                "style='display:block;margin:0 auto;width:480px;max-width:95%;'/>",
                 unsafe_allow_html=True,
             )
 
@@ -356,32 +369,35 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-        st.markdown("<div style='height:3.2rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:3.5rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:1.25rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+            "<p style='font-size:1.15rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
             unsafe_allow_html=True,
         )
 
         st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
 
-        st.markdown("<div style='height:2.8rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:3rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
             """
-        <p class='question-text' style='text-align:center;margin-top:0;'>
-          <strong>Esta é uma pesquisa identificada.</strong><br/>
-          Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
-          para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
-        </p>
-        """,
+        <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
+            <p style='font-size:1.05rem; margin-bottom:0.8rem;'>
+                <strong>Esta é uma pesquisa identificada.</strong>
+            </p>
+            <p style='font-size:1.0rem;'>
+                Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
+                para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
+            </p>
+        </div>""",
             unsafe_allow_html=True,
         )
 
         left_spacer, col_btn, right_spacer = st.columns([4.8, 2, 4])
 
         with col_btn:
-            st.markdown("<div style='height:3.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height:3.5rem;'></div>", unsafe_allow_html=True)
 
             if st.button("Iniciar pesquisa", key="start_button"):
                 if not st.session_state["client_code"].strip():
@@ -412,14 +428,15 @@ elif 2 <= step <= 6:
             for i, (topico, texto) in enumerate(perguntas):
 
                 st.markdown(
-                    f"<p style='font-size:1.25rem;font-weight:700;text-align:center;margin-bottom:0.35rem;'>{topico}</p>",
+                    f"<p class='pergunta-topico'>{topico}</p>",
                     unsafe_allow_html=True,
                 )
                 st.markdown(
-                    f"<p class='question-text' style='text-align:center;margin-top:0.1rem;margin-bottom:0.8rem;'>{texto}</p>",
+                    f"<p class='pergunta-texto'>{texto}</p>",
                     unsafe_allow_html=True,
                 )
 
+                # centraliza o radio usando colunas
                 c1, c2, c3 = st.columns([1, 3, 1])
                 with c2:
                     notas[topico] = st.radio(
@@ -436,6 +453,7 @@ elif 2 <= step <= 6:
                         key=f"{titulo}_{i}",
                     )
 
+                # espaço extra entre um bloco de pergunta e o próximo
                 if i < len(perguntas) - 1:
                     st.markdown(
                         "<div style='height:2.8rem;'></div>",
@@ -475,102 +493,96 @@ elif step == 7:
 
         st.markdown(
             """
-        <div class="nps-wrapper">
-          <p>
-            Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
-            atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
-            em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
-          </p>
-          <p class="nps-subtitle">
-            (0 = Não recomendaria de forma alguma &nbsp;|&nbsp; 10 = Recomendaria com total confiança)
-          </p>
-        </div>
+            <div class="nps-wrapper">
+              <p class="nps-question">
+                Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
+                atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
+                em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
+              </p>
+              <p class="nps-subnote">
+                (0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        c1, c2, c3 = st.columns([1, 3, 1])
+        with c2:
+            nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
+
+        st.markdown(
+            """
+        <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
+            Comentário final:
+        </p>
+        <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
+            Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
+        </p>
         """,
             unsafe_allow_html=True,
         )
 
-        with st.form("form_nps"):
+        coment_final = st.text_area("", placeholder="", key="coment_final")
 
-            c1, c2, c3 = st.columns([1, 3, 1])
-            with c2:
-                nps = st.radio(
-                    "",
-                    list(range(11)),
-                    horizontal=True,
-                    index=None,
-                    key="nps",
+        col1, col2, col3 = st.columns([2, 7, 3])
+
+        with col1:
+            voltar = st.button("◀ Voltar")
+
+        with col3:
+            enviar = st.button("Enviar respostas ✅")
+
+        if voltar:
+            st.session_state["step"] -= 1
+            st.rerun()
+
+        if enviar:
+
+            if nps is None:
+                st.error("Por favor, selecione uma nota de 0 a 10.")
+                st.stop()
+
+            code = st.session_state["client_code"].strip()
+
+            if not code:
+                st.error("O campo CÓDIGO DO CLIENTE é obrigatório.")
+                st.stop()
+
+            row = {
+                "timestamp": datetime.now().isoformat(timespec="seconds"),
+                "client_code": code,
+                "NPS": nps,
+            }
+
+            for i, (_, perguntas) in enumerate(BLOCOS):
+                respostas = st.session_state.get(f"respostas_{i}", {})
+                for topico, _ in perguntas:
+                    row[topico] = respostas.get(topico)
+
+            row["coment_final"] = coment_final
+
+            # CSV local
+            try:
+                df_old = pd.read_csv("responses.csv")
+                df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
+            except FileNotFoundError:
+                df = pd.DataFrame([row])
+
+            df.to_csv("responses.csv", index=False)
+
+            # Excel local
+            ok, msg = _append_to_excel([row.get(h) for h in HEADERS])
+
+            if ok:
+                st.success("Respostas gravadas com sucesso no Excel! ✔")
+            else:
+                st.warning(
+                    "Não foi possível gravar no Excel. As respostas foram salvas em responses.csv."
                 )
 
-            st.markdown(
-                """
-            <p style='font-size:1.2rem; font-weight:700; margin-top:2.1rem; margin-bottom:0.3rem; text-align:left;'>
-                Comentário final:
-            </p>
-            <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem; text-align:left;'>
-                Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
-            </p>
-            """,
-                unsafe_allow_html=True,
-            )
-
-            coment_final = st.text_area("", placeholder="", key="coment_final")
-
-            col1, col2, col3 = st.columns([2, 7, 3])
-
-            with col1:
-                voltar = st.form_submit_button("◀ Voltar")
-
-            with col3:
-                enviar = st.form_submit_button("Enviar respostas ✅")
-
-            if voltar:
-                st.session_state["step"] -= 1
-                st.rerun()
-
-            if enviar:
-
-                if nps is None:
-                    st.error("Por favor, selecione uma nota de 0 a 10.")
-                    st.stop()
-
-                code = st.session_state["client_code"].strip()
-
-                if not code:
-                    st.error("O campo CÓDIGO DO CLIENTE é obrigatório.")
-                    st.stop()
-
-                row = {
-                    "timestamp": datetime.now().isoformat(timespec="seconds"),
-                    "client_code": code,
-                    "NPS": nps,
-                }
-
-                for i, (_, perguntas) in enumerate(BLOCOS):
-                    respostas = st.session_state.get(f"respostas_{i}", {})
-                    for topico, _ in perguntas:
-                        row[topico] = respostas.get(topico)
-
-                row["coment_final"] = coment_final
-
-                try:
-                    df_old = pd.read_csv("responses.csv")
-                    df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
-                except FileNotFoundError:
-                    df = pd.DataFrame([row])
-
-                df.to_csv("responses.csv", index=False)
-
-                ok, msg = _append_to_excel([row.get(h) for h in HEADERS])
-
-                if ok:
-                    st.success("Respostas gravadas com sucesso no Excel! ✔")
-                else:
-                    st.warning(
-                        "Não foi possível gravar no Excel. As respostas foram salvas em responses.csv."
-                    )
-
-                st.session_state["step"] = 8
-                st.rerun()
+            st.session_state["step"] = 8
+            st.rerun()
 
 # -------- CONFIRMAÇÃO FINAL --------
 elif step == 8:
