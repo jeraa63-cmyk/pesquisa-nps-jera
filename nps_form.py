@@ -92,6 +92,7 @@ st.markdown(
  h2 { font-size: 2.4rem !important; font-weight: 600 !important; margin-bottom: 2.2rem !important; }
  h3 { font-size: 2.0rem !important; font-weight: 500 !important; }
 
+ /* leve deslocamento do H1 em telas grandes */
  h1 { transform: translateX(18px); }
  @media (max-width: 1024px){
    h1 { transform: none !important; }
@@ -99,8 +100,8 @@ st.markdown(
 
  /* ===================== TEXTOS ===================== */
  p, div, span, label {
-   font-size: 1.1rem !important;
-   line-height: 1.6 !important;
+   font-size: 1.2rem !important;
+   line-height: 1.7 !important;
  }
 
  /* ===================== INPUT DA TELA 1 ===================== */
@@ -143,59 +144,55 @@ st.markdown(
  }
 
  /* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
-
  .question-wrapper{
    max-width: 1000px;
    margin: 0 auto;
  }
-
  .question-block {
-   margin-bottom: 3.0rem;
+   margin-bottom: 2.4rem;
    text-align: center;
  }
-
  .question-topic {
    font-size: 1.25rem !important;
    font-weight: 700 !important;
    margin-bottom: 0.35rem !important;
    text-align: center !important;
  }
-
  .question-text {
    margin-top: 0.1rem;
-   margin-bottom: 1.3rem;
+   margin-bottom: 0.8rem;
    text-align: center !important;
  }
 
- /* ===================== RÉGUAS NPS ===================== */
-
- .scale-legend-11 {
-   display: grid;
-   grid-template-columns: repeat(11, 1fr);
-   width: 100%;
-   max-width: 600px;
-   margin: 0.4rem auto 0 auto;
-   text-align: center;
-   font-size: 0.95rem;
- }
-
- /* remover borda padrão de forms */
+ /* ===================== REMOVER BORDA FORM ===================== */
  div[data-testid="stForm"] {
    border: none !important;
    background: transparent !important;
    padding: 0 !important;
  }
 
- /* ===================== RODAPÉ FIXO ===================== */
- .footer-fixed {
-    position: fixed !important;
-    bottom: calc(2vh + 0.5rem) !important;
-    left:  calc(1vw + 1rem) !important;
-    font-size: 0.9rem !important;
-    color: #7A8C94 !important;
-    font-family: 'Ofelia Text', sans-serif !important;
-    z-index: 9999 !important;
-    pointer-events: none;
+ /* ===================== SLIDERS CENTRALIZADOS ===================== */
+ div[data-baseweb="slider"] {
+   max-width: 620px;
+   margin: 0.3rem auto 0.2rem auto;
+ }
+
+ /* Escala 1–5: legendas abaixo */
+ .scale-1-5-labels {
+   display: flex;
+   justify-content: space-between;
+   max-width: 620px;
+   margin: 0.15rem auto 0.4rem auto;
+   font-size: 0.95rem !important;
+ }
+
+ /* NPS 0–10: legendas abaixo */
+ .scale-nps-labels {
+   display: flex;
+   justify-content: space-between;
+   max-width: 620px;
+   margin: 0.35rem auto 0.4rem auto;
+   font-size: 1.0rem !important;
  }
 
 </style>
@@ -297,7 +294,7 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _validar_secao(notas):
     if any(v is None for v in notas.values()):
-        return False, "Por favor, selecione uma nota de 1 a 5 para todas as perguntas desta seção."
+        return False, "Por favor, selecione uma nota (1–5) para todas as perguntas desta seção."
     return True, ""
 
 
@@ -331,40 +328,62 @@ def _append_to_excel(row_values):
         return False, str(e)
 
 
-def escala_circulos_1a5(pergunta_key: str):
+# -------- Escala 1–5 com slider centralizado --------
+def escala_1a5(pergunta_key: str):
     """
-    Renderiza 5 círculos (números de 1 a 5) que preenchem quando selecionados
-    e retorna a nota inteira correspondente.
+    Retorna nota de 1 a 5 usando select_slider,
+    com legendas '1 - Péssimo' ... '5 - Excelente' alinhadas embaixo.
     """
+    labels = {
+        1: "Péssimo",
+        2: "Ruim",
+        3: "Regular",
+        4: "Bom",
+        5: "Excelente",
+    }
+    valores = list(labels.keys())
 
-    # estado atual
-    current = st.session_state.get(pergunta_key, None)
+    default = st.session_state.get(pergunta_key, 3)
 
-    # símbolos unicode: círculos ocos vs preenchidos
-    unselected = ["①", "②", "③", "④", "⑤"]
-    selected = ["❶", "❷", "❸", "❹", "❺"]
-    valores = [1, 2, 3, 4, 5]
-    descricoes = ["Péssimo", "Ruim", "Regular", "Bom", "Excelente"]
+    nota = st.select_slider(
+        "",
+        options=valores,
+        value=default,
+        key=pergunta_key,
+        label_visibility="collapsed",
+    )
 
-    # linha dos "botões" (círculos)
-    cols_circulos = st.columns(5)
-    for col, v, sym_uns, sym_sel in zip(cols_circulos, valores, unselected, selected):
-        with col:
-            label = sym_sel if current == v else sym_uns
-            if st.button(label, key=f"{pergunta_key}_btn_{v}"):
-                current = v
-                st.session_state[pergunta_key] = v
+    # Legendas alinhadas sob o slider
+    html = "<div class='scale-1-5-labels'>"
+    for v in valores:
+        html += f"<div>{v} - {labels[v]}</div>"
+    html += "</div>"
+    st.markdown(html, unsafe_allow_html=True)
 
-    # linha das descrições (abaixo, alinhadas)
-    cols_labels = st.columns(5)
-    for col, v, desc in zip(cols_labels, valores, descricoes):
-        with col:
-            st.markdown(
-                f"<div style='text-align:center;font-size:0.95rem;'>{v} - {desc}</div>",
-                unsafe_allow_html=True,
-            )
+    return nota
 
-    return current
+
+# -------- Escala NPS 0–10 com slider centralizado --------
+def escala_nps_0a10(key: str):
+    valores = list(range(11))
+    default = st.session_state.get(key, 10)
+
+    nota = st.select_slider(
+        "",
+        options=valores,
+        value=default,
+        key=key,
+        label_visibility="collapsed",
+    )
+
+    html = "<div class='scale-nps-labels'>"
+    for v in valores:
+        html += f"<div>{v}</div>"
+    html += "</div>"
+    st.markdown(html, unsafe_allow_html=True)
+
+    return nota
+
 
 # ===================== FLUXO DAS TELAS =====================
 step = st.session_state["step"]
@@ -412,9 +431,11 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-        left_spacer, col_btn, right_spacer = st.columns([4, 2, 4])
+        left_spacer, col_btn, right_spacer = st.columns([4.8, 2, 4])
+
         with col_btn:
-            st.markdown("<div style='height:2rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
+
             if st.button("Iniciar pesquisa", key="start_button"):
                 if not st.session_state["client_code"].strip():
                     st.error("Por favor, preencha o código do cliente.")
@@ -451,10 +472,8 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            pergunta_id = f"{titulo}_{i}"
-
-            # círculos ocos que preenchem (1 a 5)
-            nota = escala_circulos_1a5(pergunta_id)
+            pergunta_key = f"{titulo}_{i}"
+            nota = escala_1a5(pergunta_key)
             notas[topico] = nota
 
             st.markdown("</div>", unsafe_allow_html=True)
@@ -484,11 +503,10 @@ elif 2 <= step <= 6:
 # -------- PÁGINA NPS --------
 elif step == 7:
 
-    st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
-
+    st.subheader("NPS")
     st.markdown(
         """
-    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:center;'>
+    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
     Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
     atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
     em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
@@ -500,41 +518,14 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    _, c_centro, _ = st.columns([1, 4, 1])
-    with c_centro:
-        nps = st.slider(
-            "",
-            min_value=0,
-            max_value=10,
-            step=1,
-            key="nps",
-        )
+    nps = escala_nps_0a10("nps")
 
     st.markdown(
         """
-        <div class="scale-legend-11">
-            <div>0</div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-            <div>10</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem; text-align:center;'>
+    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
         Comentário final:
     </p>
-    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem; text-align:center;'>
+    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
         Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
     </p>
     """,
@@ -633,6 +624,18 @@ elif step == 8:
 # -------- RODAPÉ FIXO --------
 st.markdown(
     """
+<style>
+.footer-fixed {
+    position: fixed !important;
+    bottom: calc(2vh + 0.5rem) !important;
+    left:  calc(1vw + 1rem) !important;
+    font-size: 0.9rem !important;
+    color: #7A8C94 !important;
+    font-family: 'Ofelia Text', sans-serif !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+}
+</style>
 <div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>
 """,
     unsafe_allow_html=True,
