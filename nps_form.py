@@ -62,9 +62,7 @@ st.markdown(
    background: var(--jera-light) !important;
    border-radius: 22px !important;
    width: 96vw !important;
-   max-width: 1400px !important;
-   min-height: 96vh !important;
-   height: auto !important;
+   height: 96vh !important;
    margin: 2vh auto !important;
    padding: 4rem 6rem !important;
    box-shadow: 0 6px 18px rgba(0,0,0,.08);
@@ -72,15 +70,12 @@ st.markdown(
    flex-direction: column !important;
    justify-content: flex-start !important;
    align-items: center !important;
-   overflow-y: auto !important;
  }
 
  @media (max-width: 1024px){
    section.main, div.block-container {
      width: 100vw !important;
-     max-width: 100vw !important;
-     min-height: 100vh !important;
-     height: auto !important;
+     height: 100vh !important;
      border-radius: 0 !important;
      margin: 0 auto !important;
      padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
@@ -105,8 +100,8 @@ st.markdown(
 
  /* ===================== TEXTOS ===================== */
  p, div, span, label {
-   font-size: 1.2rem !important;
-   line-height: 1.7 !important;
+   font-size: 1.1rem !important;
+   line-height: 1.6 !important;
  }
 
  /* ===================== INPUT DA TELA 1 ===================== */
@@ -148,24 +143,15 @@ st.markdown(
    transform: translateY(-2px);
  }
 
- /* wrapper para centralizar conteúdo da tela 1 dentro do branco */
- .welcome-wrapper{
-   width: 100%;
-   max-width: 900px;
-   margin: 0 auto;
-   text-align: center;
- }
-
  /* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
 
  .question-wrapper{
-   width: 100%;
-   max-width: 900px;
+   max-width: 1000px;
    margin: 0 auto;
  }
 
  .question-block {
-   margin-bottom: 2.4rem;
+   margin-bottom: 2.8rem;
    text-align: center;
  }
 
@@ -178,41 +164,8 @@ st.markdown(
 
  .question-text {
    margin-top: 0.1rem;
-   margin-bottom: 0.8rem;
+   margin-bottom: 1.0rem;
    text-align: center !important;
- }
-
- /* ================== CENTRALIZAR TODAS AS RESPOSTAS (st.radio) ================== */
-
- /* contêiner principal do radio */
- div[data-testid="stRadio"] {
-   width: 100% !important;              /* ocupa a largura útil toda */
- }
-
- /* bloco interno onde ficam as opções */
- div[data-testid="stRadio"] > div {
-   display: flex !important;
-   justify-content: center !important;  /* centraliza o grupo */
-   align-items: center !important;
-   gap: 1.8rem !important;              /* espaço entre opções */
-   flex-wrap: wrap !important;          /* quebra em mais linhas no mobile */
- }
-
- /* texto das opções */
- div[data-testid="stRadio"] label {
-   white-space: nowrap !important;      /* não quebra "1 - Péssimo" */
-   font-size: 1.1rem !important;
-   text-align: center !important;
-   margin: 0 !important;
- }
-
- @media (max-width: 768px){
-   div[data-testid="stRadio"] > div {
-     gap: 1.2rem !important;
-   }
-   div[data-testid="stRadio"] label {
-     font-size: 0.95rem !important;
-   }
  }
 
  /* remover borda padrão de forms */
@@ -220,17 +173,6 @@ st.markdown(
    border: none !important;
    background: transparent !important;
    padding: 0 !important;
- }
-
- /* ===================== PÁGINA NPS ===================== */
- .nps-wrapper{
-   max-width: 900px;
-   margin: 0 auto;
-   text-align: center;
- }
-
- .nps-wrapper p{
-   text-align: center !important;
  }
 
  /* ===================== RODAPÉ FIXO ===================== */
@@ -384,33 +326,34 @@ step = st.session_state["step"]
 # -------- TELA 1 --------
 if step == 1:
 
-    st.markdown("<div class='welcome-wrapper'>", unsafe_allow_html=True)
+    _, c2, _ = st.columns([1, 3, 1])
 
-    if LOGO_FULL.exists():
+    with c2:
+        if LOGO_FULL.exists():
+            st.markdown(
+                f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
+                "style='display:block;margin:0 auto;width:480px;max-width:95%;'/>",
+                unsafe_allow_html=True,
+            )
+
         st.markdown(
-            f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:0 auto;width:480px;max-width:95%;'/>",
+            "<h1>PESQUISA DE SATISFAÇÃO</h1>",
             unsafe_allow_html=True,
         )
 
-    st.markdown(
-        "<h1>PESQUISA DE SATISFAÇÃO</h1>",
-        unsafe_allow_html=True,
-    )
+        st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='height:3rem;'></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+            unsafe_allow_html=True,
+        )
 
-    st.markdown(
-        "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
-        unsafe_allow_html=True,
-    )
+        st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
 
-    st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
+        st.markdown("<div style='height:3rem;'></div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='height:2.5rem;'></div>", unsafe_allow_html=True)
-
-    st.markdown(
-        """
+        st.markdown(
+            """
         <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
             <p style='font-size:1.15rem; margin-bottom:0.8rem;'>
                 <strong>Esta é uma pesquisa identificada.</strong>
@@ -420,19 +363,19 @@ if step == 1:
                 para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
             </p>
         </div>""",
-        unsafe_allow_html=True,
-    )
+            unsafe_allow_html=True,
+        )
 
-    _, col_btn, _ = st.columns([1, 1, 1])
-    with col_btn:
-        if st.button("Iniciar pesquisa", key="start_button"):
-            if not st.session_state["client_code"].strip():
-                st.error("Por favor, preencha o código do cliente.")
-            else:
-                st.session_state["step"] = 2
-                st.rerun()
-
-    st.markdown("</div>", unsafe_allow_html=True)
+        # botão dentro do fundo branco, centralizado
+        left_spacer, col_btn, right_spacer = st.columns([4, 2, 4])
+        with col_btn:
+            st.markdown("<div style='height:2rem;'></div>", unsafe_allow_html=True)
+            if st.button("Iniciar pesquisa", key="start_button"):
+                if not st.session_state["client_code"].strip():
+                    st.error("Por favor, preencha o código do cliente.")
+                else:
+                    st.session_state["step"] = 2
+                    st.rerun()
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -463,19 +406,22 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            notas[topico] = st.radio(
-                "",
-                [
-                    "1 - Péssimo",
-                    "2 - Ruim",
-                    "3 - Regular",
-                    "4 - Bom",
-                    "5 - Excelente",
-                ],
-                horizontal=True,
-                index=None,
-                key=f"{titulo}_{i}",
-            )
+            # centralização visual das respostas usando colunas
+            left, center, right = st.columns([1, 4, 1])
+            with center:
+                notas[topico] = st.radio(
+                    "",
+                    [
+                        "1 - Péssimo",
+                        "2 - Ruim",
+                        "3 - Regular",
+                        "4 - Bom",
+                        "5 - Excelente",
+                    ],
+                    horizontal=True,
+                    index=None,
+                    key=f"{titulo}_{i}",
+                )
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -508,32 +454,37 @@ elif step == 7:
 
     st.markdown(
         """
-    <div class='nps-wrapper'>
-        <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem;'>
-        Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
-        atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
-        em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
-        </p>
-        <p style='font-size:1.1rem;'>
-            <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
-        </p>
-    </div>
+    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:center;'>
+    Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
+    atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
+    em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
+    </p>
+    <p style='font-size:1.1rem; text-align:center;'>
+        <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
+    </p>
     """,
         unsafe_allow_html=True,
     )
 
-    nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
+    # centralizar NPS visualmente
+    left, center, right = st.columns([1, 4, 1])
+    with center:
+        nps = st.radio(
+            "",
+            list(range(11)),
+            horizontal=True,
+            index=None,
+            key="nps",
+        )
 
     st.markdown(
         """
-    <div class='nps-wrapper'>
-        <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
-            Comentário final:
-        </p>
-        <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
-            Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
-        </p>
-    </div>
+    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem; text-align:center;'>
+        Comentário final:
+    </p>
+    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem; text-align:center;'>
+        Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
+    </p>
     """,
         unsafe_allow_html=True,
     )
