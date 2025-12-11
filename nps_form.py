@@ -160,7 +160,7 @@ st.markdown(
 
  .question-wrapper{
    width: 100%;
-   max-width: 1000px;
+   max-width: 900px;           /* mais estreito pra ficar elegante e central */
    margin: 0 auto;
  }
 
@@ -182,42 +182,35 @@ st.markdown(
    text-align: center !important;
  }
 
- /* ===================== OPÇÕES DO st.radio (CENTRALIZAR DE QUALQUER JEITO) ===================== */
+ /* ===================== RADIO-CENTER: CENTRALIZA O st.radio ===================== */
 
- /* contêiner externo típico do radio */
- div.row-widget.stRadio {
-   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
-   width: 100% !important;
+ .radio-center {
+   width: 100%;
+   display: flex;
+   justify-content: center;
  }
 
- /* grupo interno das opções */
- div.row-widget.stRadio > div {
-   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
-   width: auto !important;
+ .radio-center .row-widget.stRadio {
+   margin: 0 auto !important;
  }
 
- /* acessório: se o Streamlit usar role="radiogroup" */
- div[role="radiogroup"] {
-   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
-   width: 100% !important;
+ .radio-center .row-widget.stRadio > div {
+   margin: 0 auto !important;
  }
 
  /* texto das opções */
- div.row-widget.stRadio label {
+ .radio-center label {
    white-space: nowrap !important;
    font-size: 1.1rem !important;
    text-align: center !important;
    margin: 0 !important;
  }
 
- @media (max-width: 480px){
-   div.row-widget.stRadio label {
+ @media (max-width: 768px){
+   .question-wrapper{
+     max-width: 100%;
+   }
+   .radio-center label {
      font-size: 0.95rem !important;
    }
  }
@@ -231,7 +224,7 @@ st.markdown(
 
  /* ===================== PÁGINA NPS ===================== */
  .nps-wrapper{
-   max-width: 1000px;
+   max-width: 900px;
    margin: 0 auto;
    text-align: center;
  }
@@ -470,22 +463,22 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            # rádios centralizados (coluna do meio)
-            col_esq, col_centro, col_dir = st.columns([1, 4, 1])
-            with col_centro:
-                notas[topico] = st.radio(
-                    "",
-                    [
-                        "1 - Péssimo",
-                        "2 - Ruim",
-                        "3 - Regular",
-                        "4 - Bom",
-                        "5 - Excelente",
-                    ],
-                    horizontal=True,
-                    index=None,
-                    key=f"{titulo}_{i}",
-                )
+            # ---- RADIO CENTRALIZADO ----
+            st.markdown("<div class='radio-center'>", unsafe_allow_html=True)
+            notas[topico] = st.radio(
+                "",
+                [
+                    "1 - Péssimo",
+                    "2 - Ruim",
+                    "3 - Regular",
+                    "4 - Bom",
+                    "5 - Excelente",
+                ],
+                horizontal=True,
+                index=None,
+                key=f"{titulo}_{i}",
+            )
+            st.markdown("</div>", unsafe_allow_html=True)
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -532,10 +525,10 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    # radios 0–10 centralizados
-    col_esq, col_centro, col_dir = st.columns([1, 4, 1])
-    with col_centro:
-        nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
+    # ---- RADIO 0–10 CENTRALIZADO ----
+    st.markdown("<div class='radio-center'>", unsafe_allow_html=True)
+    nps = st.radio("", list(range(11)), horizontal=True, index=None, key="nps")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
         """
