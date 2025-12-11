@@ -184,36 +184,32 @@ st.markdown(
 
  /* ===================== CENTRALIZAR TODAS AS RESPOSTAS (st.radio) ===================== */
 
- /* contêiner do radio (ocupa a largura toda da caixa branca) */
+ /* contêiner do radio ocupa toda a largura e centraliza o conteúdo interno */
  div[data-testid="stRadio"] {
-   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
    width: 100% !important;
    margin: 0 auto !important;
    padding: 0 !important;
+   display: block !important;              /* deixa de ser flex */
+   text-align: center !important;          /* centraliza o filho inline-flex */
  }
 
- /* grupo interno das opções */
+ /* grupo interno das opções (1–5 & 0–10) */
  div[data-testid="stRadio"] > div {
-   display: flex !important;
+   display: inline-flex !important;        /* encolhe ao tamanho das opções */
    justify-content: center !important;
    align-items: center !important;
    gap: 0.9rem !important;
-   flex-wrap: nowrap !important;       /* 1 linha: 1–5 e 0–10 */
-   margin: 0 auto !important;
-   padding: 0 !important;
-   width: auto !important;             /* encolhe até caber no centro */
+   flex-wrap: nowrap !important;           /* tudo na mesma linha */
  }
 
  /* texto das opções */
  div[data-testid="stRadio"] label {
-   white-space: nowrap !important;     /* sem quebra de texto */
+   white-space: nowrap !important;         /* não quebra o texto */
    font-size: 1.1rem !important;
    text-align: center !important;
+   margin: 0 !important;
  }
 
- /* Responsividade extra para telas muito estreitas */
  @media (max-width: 480px){
    div[data-testid="stRadio"] > div {
      gap: 0.4rem !important;
