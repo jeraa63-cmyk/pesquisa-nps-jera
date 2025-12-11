@@ -168,12 +168,26 @@ st.markdown(
    text-align: center !important;
  }
 
- /* legendas das escalas */
- .scale-legend {
+ /* ===================== RÉGUAS DAS ESCALAS ===================== */
+
+ .scale-legend-5 {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   width: 100%;
+   max-width: 500px;
+   margin: 0.4rem auto 0 auto;
    text-align: center;
-   margin-top: 0.4rem;
    font-size: 0.95rem;
-   white-space: nowrap;
+ }
+
+ .scale-legend-11 {
+   display: grid;
+   grid-template-columns: repeat(11, 1fr);
+   width: 100%;
+   max-width: 600px;
+   margin: 0.4rem auto 0 auto;
+   text-align: center;
+   font-size: 0.95rem;
  }
 
  /* remover borda padrão de forms */
@@ -413,7 +427,6 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            # slider centralizado numericamente
             left, center, right = st.columns([1, 4, 1])
             with center:
                 nota = st.slider(
@@ -425,14 +438,15 @@ elif 2 <= step <= 6:
                 )
                 notas[topico] = nota
 
+                # RÉGUA 1–5 ALINHADA
                 st.markdown(
                     """
-                    <div class="scale-legend">
-                        1 - Péssimo &nbsp;&nbsp;&nbsp;
-                        2 - Ruim &nbsp;&nbsp;&nbsp;
-                        3 - Regular &nbsp;&nbsp;&nbsp;
-                        4 - Bom &nbsp;&nbsp;&nbsp;
-                        5 - Excelente
+                    <div class="scale-legend-5">
+                        <div>1 - Péssimo</div>
+                        <div>2 - Ruim</div>
+                        <div>3 - Regular</div>
+                        <div>4 - Bom</div>
+                        <div>5 - Excelente</div>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -491,12 +505,21 @@ elif step == 7:
             key="nps",
         )
 
-        # legenda NPS em linha única
+        # RÉGUA 0–10 ALINHADA
         st.markdown(
             """
-            <div class="scale-legend">
-                0 &nbsp;&nbsp; 1 &nbsp;&nbsp; 2 &nbsp;&nbsp; 3 &nbsp;&nbsp; 4 &nbsp;&nbsp; 5 &nbsp;&nbsp;
-                6 &nbsp;&nbsp; 7 &nbsp;&nbsp; 8 &nbsp;&nbsp; 9 &nbsp;&nbsp; 10
+            <div class="scale-legend-11">
+                <div>0</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -574,7 +597,7 @@ elif step == 8:
     st.success(
         "Agradecemos por dedicar seu tempo para responder à nossa pesquisa. "
         "Suas respostas são muito importantes para que possamos aprimorar continuamente "
-        "a qualidade dos nossos serviços e o relacionamento com você."
+        " a qualidade dos nossos serviços e o relacionamento com você."
     )
 
     st.caption(
