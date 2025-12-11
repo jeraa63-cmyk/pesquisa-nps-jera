@@ -92,7 +92,6 @@ st.markdown(
  h2 { font-size: 2.4rem !important; font-weight: 600 !important; margin-bottom: 2.2rem !important; }
  h3 { font-size: 2.0rem !important; font-weight: 500 !important; }
 
- /* leve deslocamento do H1 em telas grandes */
  h1 { transform: translateX(18px); }
  @media (max-width: 1024px){
    h1 { transform: none !important; }
@@ -168,17 +167,7 @@ st.markdown(
    text-align: center !important;
  }
 
- /* ===================== RÉGUAS DAS ESCALAS ===================== */
-
- .scale-legend-5 {
-   display: grid;
-   grid-template-columns: repeat(5, 1fr);
-   width: 100%;
-   max-width: 500px;
-   margin: 0.4rem auto 0 auto;
-   text-align: center;
-   font-size: 0.95rem;
- }
+ /* ===================== RÉGUAS NPS ===================== */
 
  .scale-legend-11 {
    display: grid;
@@ -342,6 +331,41 @@ def _append_to_excel(row_values):
         return False, str(e)
 
 
+def escala_circulos_1a5(pergunta_key: str):
+    """
+    Renderiza 5 círculos (números de 1 a 5) que preenchem quando selecionados
+    e retorna a nota inteira correspondente.
+    """
+
+    # estado atual
+    current = st.session_state.get(pergunta_key, None)
+
+    # símbolos unicode: círculos ocos vs preenchidos
+    unselected = ["①", "②", "③", "④", "⑤"]
+    selected = ["❶", "❷", "❸", "❹", "❺"]
+    valores = [1, 2, 3, 4, 5]
+    descricoes = ["Péssimo", "Ruim", "Regular", "Bom", "Excelente"]
+
+    # linha dos "botões" (círculos)
+    cols_circulos = st.columns(5)
+    for col, v, sym_uns, sym_sel in zip(cols_circulos, valores, unselected, selected):
+        with col:
+            label = sym_sel if current == v else sym_uns
+            if st.button(label, key=f"{pergunta_key}_btn_{v}"):
+                current = v
+                st.session_state[pergunta_key] = v
+
+    # linha das descrições (abaixo, alinhadas)
+    cols_labels = st.columns(5)
+    for col, v, desc in zip(cols_labels, valores, descricoes):
+        with col:
+            st.markdown(
+                f"<div style='text-align:center;font-size:0.95rem;'>{v} - {desc}</div>",
+                unsafe_allow_html=True,
+            )
+
+    return current
+
 # ===================== FLUXO DAS TELAS =====================
 step = st.session_state["step"]
 
@@ -427,30 +451,11 @@ elif 2 <= step <= 6:
                 unsafe_allow_html=True,
             )
 
-            left, center, right = st.columns([1, 4, 1])
-            with center:
-                nota = st.slider(
-                    "",
-                    min_value=1,
-                    max_value=5,
-                    step=1,
-                    key=f"{titulo}_{i}",
-                )
-                notas[topico] = nota
+            pergunta_id = f"{titulo}_{i}"
 
-                # RÉGUA 1–5 ALINHADA
-                st.markdown(
-                    """
-                    <div class="scale-legend-5">
-                        <div>1 - Péssimo</div>
-                        <div>2 - Ruim</div>
-                        <div>3 - Regular</div>
-                        <div>4 - Bom</div>
-                        <div>5 - Excelente</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+            # círculos ocos que preenchem (1 a 5)
+            nota = escala_circulos_1a5(pergunta_id)
+            notas[topico] = nota
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -495,8 +500,8 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    left, center, right = st.columns([1, 4, 1])
-    with center:
+    _, c_centro, _ = st.columns([1, 4, 1])
+    with c_centro:
         nps = st.slider(
             "",
             min_value=0,
@@ -505,25 +510,24 @@ elif step == 7:
             key="nps",
         )
 
-        # RÉGUA 0–10 ALINHADA
-        st.markdown(
-            """
-            <div class="scale-legend-11">
-                <div>0</div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-                <div>6</div>
-                <div>7</div>
-                <div>8</div>
-                <div>9</div>
-                <div>10</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        """
+        <div class="scale-legend-11">
+            <div>0</div>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     st.markdown(
         """
@@ -552,6 +556,10 @@ elif step == 7:
         st.rerun()
 
     if enviar:
+
+        if nps is None:
+            st.error("Por favor, selecione uma nota de 0 a 10.")
+            st.stop()
 
         code = st.session_state["client_code"].strip()
 
@@ -597,7 +605,7 @@ elif step == 8:
     st.success(
         "Agradecemos por dedicar seu tempo para responder à nossa pesquisa. "
         "Suas respostas são muito importantes para que possamos aprimorar continuamente "
-        " a qualidade dos nossos serviços e o relacionamento com você."
+        "a qualidade dos nossos serviços e o relacionamento com você."
     )
 
     st.caption(
