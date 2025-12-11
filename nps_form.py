@@ -16,174 +16,190 @@ st.markdown(
     """
 <style>
 
-/* ===================== FONTES ===================== */
-@font-face {
-  font-family: 'Ofelia Display';
-  src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
-  font-weight: 300;
-}
+ /* ===================== FONTES ===================== */
+ @font-face {
+   font-family: 'Ofelia Display';
+   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
+   font-weight: 700;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
+   font-weight: 400;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
+   font-weight: 500;
+ }
+ @font-face {
+   font-family: 'Ofelia Text';
+   src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
+   font-weight: 300;
+ }
 
-/* ===================== VARIÁVEIS ===================== */
-:root {
-  --jera-primary:#00C1AD;
-  --jera-dark:#052B38;
-  --jera-bg:#052B38;
-  --jera-light:#FFFFFF;
-}
+ /* ===================== VARIÁVEIS ===================== */
+ :root {
+   --jera-primary:#00C1AD;
+   --jera-dark:#052B38;
+   --jera-bg:#052B38;
+   --jera-light:#FFFFFF;
+ }
 
-/* ===================== RESET / BACKGROUND ===================== */
-header[data-testid="stHeader"], footer {display:none !important;}
-html, body, .stApp {
-  background: var(--jera-bg) !important;
-  font-family: 'Ofelia Text', sans-serif !important;
-  color: var(--jera-dark);
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden !important;
-}
+ /* ===================== RESET / BACKGROUND ===================== */
+ header[data-testid="stHeader"], footer {display:none !important;}
+ html, body, .stApp {
+   background: var(--jera-bg) !important;
+   font-family: 'Ofelia Text', sans-serif !important;
+   color: var(--jera-dark);
+   margin: 0 !important;
+   padding: 0 !important;
+   overflow-x: hidden !important;
+ }
 
-/* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
-section.main, div.block-container {
-  background: var(--jera-light) !important;
-  border-radius: 22px !important;
-  width: 98vw !important;
-  height: 96vh !important;
-  margin: 2vh auto !important;
-  padding: 4rem 6rem !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: center !important;
-}
+ /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
+ section.main, div.block-container {
+   background: var(--jera-light) !important;
+   border-radius: 22px !important;
+   width: 96vw !important;
+   height: 96vh !important;
+   margin: 2vh auto !important;
+   padding: 4rem 6rem !important;
+   box-shadow: 0 6px 18px rgba(0,0,0,.08);
+   display: flex !important;
+   flex-direction: column !important;
+   justify-content: flex-start !important;
+   align-items: center !important;
+ }
 
-/* ===================== TÍTULOS ===================== */
-h1, h2, h3 {
-  font-family: 'Ofelia Display', sans-serif !important;
-  color: var(--jera-dark);
-  text-align: center !important;
-}
-h1 { font-size: 5.5rem !important; font-weight: 700 !important; }
-h2 { font-size: 3rem !important; font-weight: 600 !important; }
-h3 { font-size: 2rem !important; font-weight: 500 !important; }
+ @media (max-width: 1024px){
+   section.main, div.block-container {
+     width: 100vw !important;
+     height: 100vh !important;
+     border-radius: 0 !important;
+     margin: 0 auto !important;
+     padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
+   }
+ }
 
-/* ===================== TEXTOS ===================== */
-p, div, span, label {
-  font-size: 1.5rem !important;
-  line-height: 1.8 !important;
-}
+ /* ===================== TÍTULOS ===================== */
+ h1, h2, h3 {
+   font-family: 'Ofelia Display', sans-serif !important;
+   color: var(--jera-dark);
+   text-align: center !important;
+ }
+ h1 { font-size: 3.8rem !important; font-weight: 700 !important; }
+ h2 { font-size: 2.4rem !important; font-weight: 600 !important; margin-bottom: 2.2rem !important; }
+ h3 { font-size: 2.0rem !important; font-weight: 500 !important; }
 
-/* ===================== INPUT DA TELA 1 ===================== */
-.stTextInput {
-  display: flex !important;
-  justify-content: center !important;
-}
-.stTextInput > div {
-  width: fit-content !important;
-  margin: 0 auto !important;
-}
-.stTextInput input {
-  font-family: 'Ofelia Text', sans-serif !important;
-  font-size: 1.3rem !important;
-  text-align: center !important;
-  padding: 0.6rem 0.8rem !important;
-  border-radius: 8px !important;
-  background-color: #f6f6f6 !important;
-  width: 285px !important;
-}
+ /* leve deslocamento do H1 em telas grandes */
+ h1 { transform: translateX(18px); }
+ @media (max-width: 1024px){
+   h1 { transform: none !important; }
+ }
 
-/* ===================== BOTÕES ===================== */
-.stButton > button {
-  font-family: 'Ofelia Display', sans-serif !important;
-  background: #052B38 !important;
-  color: white !important;
-  border: 2px solid #052B38 !important;
-  border-radius: 12px !important;
-  font-weight: 600 !important;
-  font-size: 1.4rem !important;
-  min-width: 240px !important;
-  min-height: 55px !important;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 6px 14px rgba(0,0,0,.15);
-}
-.stButton > button:hover {
-  background: #00C1AD !important;
-  border-color: #00C1AD !important;
-  transform: translateY(-2px);
-}
+ /* ===================== TEXTOS ===================== */
+ p, div, span, label {
+   font-size: 1.2rem !important;
+   line-height: 1.7 !important;
+ }
 
-/* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
+ /* ===================== INPUT DA TELA 1 ===================== */
+ .stTextInput {
+   display: flex !important;
+   justify-content: center !important;
+ }
+ .stTextInput > div {
+   width: fit-content !important;
+   margin: 0 auto !important;
+ }
+ .stTextInput input {
+   font-family: 'Ofelia Text', sans-serif !important;
+   font-size: 1.1rem !important;
+   text-align: center !important;
+   padding: 0.6rem 0.8rem !important;
+   border-radius: 8px !important;
+   background-color: #f6f6f6 !important;
+   width: 285px !important;
+ }
 
-/* bloco central de conteúdo, só para limitar a largura visual */
-.question-area {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+ /* ===================== BOTÕES ===================== */
+ .stButton > button {
+   font-family: 'Ofelia Display', sans-serif !important;
+   background: #052B38 !important;
+   color: white !important;
+   border: 2px solid #052B38 !important;
+   border-radius: 12px !important;
+   font-weight: 600 !important;
+   font-size: 1.1rem !important;
+   min-width: 220px !important;
+   min-height: 50px !important;
+   transition: all 0.25s ease-in-out;
+   box-shadow: 0 6px 14px rgba(0,0,0,.15);
+ }
+ .stButton > button:hover {
+   background: #00C1AD !important;
+   border-color: #00C1AD !important;
+   transform: translateY(-2px);
+ }
 
-/* subtítulo da pergunta */
-.question-topic {
-  font-size: 1.4rem !important;
-  font-weight: 600 !important;
-  margin-bottom: 0.25rem !important;
-  text-align: center !important;
-}
+ /* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
 
-/* enunciado da pergunta */
-.question-text {
-  margin-top: 0.1rem;
-  margin-bottom: 0.6rem;
-  text-align: center !important;
-}
+ /* bloco das perguntas — largura limitada e centralizado */
+ .question-wrapper{
+   max-width: 1000px;
+   margin: 0 auto;
+ }
 
-/* espaçamento entre perguntas */
-.question-block {
-  margin-bottom: 2.2rem;
-}
+ /* cada pergunta */
+ .question-block {
+   margin-bottom: 2.4rem;
+   text-align: center;
+ }
 
-/* CENTRALIZA TODAS AS OPÇÕES (radios) NA PÁGINA */
-div[role="radiogroup"] {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 14px !important;
-}
+ .question-topic {
+   font-size: 1.25rem !important;
+   font-weight: 700 !important;
+   margin-bottom: 0.35rem !important;
+   text-align: center !important;
+ }
 
-/* texto das opções 1–5 */
-div[role="radiogroup"] > label {
-  white-space: nowrap !important;
-  font-size: 1.35rem !important;
-}
+ .question-text {
+   margin-top: 0.1rem;
+   margin-bottom: 0.8rem;
+   text-align: center !important;
+ }
 
-/* navegação inferior (usa a mesma largura visual do bloco) */
-.question-nav {
-  width: 100%;
-  max-width: 1200px;
-  margin: 1.2rem auto 0 auto;
-  display: flex;
-  justify-content: space-between;
-}
+ /* ===================== CENTRALIZAR TODAS AS RESPOSTAS (st.radio) ===================== */
 
-/* remover borda padrão de forms */
-div[data-testid="stForm"] {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-}
+ /* contêiner do radio */
+ div[data-testid="stRadio"] {
+   display: flex !important;
+   justify-content: center !important;
+   margin-top: 0.4rem !important;
+ }
+
+ /* grupo interno das opções */
+ div[data-testid="stRadio"] > div {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   gap: 0.9rem !important;
+   flex-wrap: wrap !important;
+ }
+
+ /* texto das opções */
+ div[data-testid="stRadio"] label {
+   white-space: nowrap !important;
+   font-size: 1.1rem !important;
+ }
+
+ /* remover borda padrão de forms */
+ div[data-testid="stForm"] {
+   border: none !important;
+   background: transparent !important;
+   padding: 0 !important;
+ }
 
 </style>
 """,
@@ -327,7 +343,6 @@ if step == 1:
     _, c2, _ = st.columns([1, 3, 1])
 
     with c2:
-
         if LOGO_FULL.exists():
             st.markdown(
                 f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
@@ -336,14 +351,14 @@ if step == 1:
             )
 
         st.markdown(
-            "<h1 style='transform: translateX(18px);'>PESQUISA DE SATISFAÇÃO</h1>",
+            "<h1>PESQUISA DE SATISFAÇÃO</h1>",
             unsafe_allow_html=True,
         )
 
         st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:1.5rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+            "<p style='font-size:1.3rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
             unsafe_allow_html=True,
         )
 
@@ -354,10 +369,10 @@ if step == 1:
         st.markdown(
             """
         <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
-            <p style='font-size:1.25rem; margin-bottom:0.8rem;'>
+            <p style='font-size:1.15rem; margin-bottom:0.8rem;'>
                 <strong>Esta é uma pesquisa identificada.</strong>
             </p>
-            <p style='font-size:1.15rem;'>
+            <p style='font-size:1.05rem;'>
                 Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
                 para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
             </p>
@@ -368,7 +383,7 @@ if step == 1:
         left_spacer, col_btn, right_spacer = st.columns([4.8, 2, 4])
 
         with col_btn:
-            st.markdown("<div style='height:16rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
             if st.button("Iniciar pesquisa", key="start_button"):
                 if not st.session_state["client_code"].strip():
@@ -383,14 +398,14 @@ elif 2 <= step <= 6:
     idx = step - 2
     titulo, perguntas = BLOCOS[idx]
 
+    st.markdown(
+        f"<h2>{titulo}</h2>",
+        unsafe_allow_html=True,
+    )
+
     with st.form(f"form_{idx}"):
 
-        st.markdown("<div class='question-area'>", unsafe_allow_html=True)
-
-        st.markdown(
-            f"<h2 style='margin-bottom:2.0rem;'>{titulo}</h2>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<div class='question-wrapper'>", unsafe_allow_html=True)
 
         notas = {}
 
@@ -424,15 +439,12 @@ elif 2 <= step <= 6:
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-        st.markdown("<div class='question-nav'>", unsafe_allow_html=True)
-        col_esq, col_dir = st.columns([1, 1])
+        col1, col2, col3 = st.columns([2, 7, 3])
 
-        with col_esq:
+        with col1:
             voltar = st.form_submit_button("◀ Voltar")
-        with col_dir:
+        with col3:
             avancar = st.form_submit_button("Avançar ►")
-
-        st.markdown("</div>", unsafe_allow_html=True)
 
         if voltar:
             st.session_state["step"] -= 1
@@ -453,12 +465,12 @@ elif step == 7:
     st.subheader("NPS")
     st.markdown(
         """
-    <p style='font-size:28px; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
+    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
     Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
     atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
     em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
     </p>
-    <p style='font-size:24px; text-align:center;'>
+    <p style='font-size:1.1rem; text-align:center;'>
         <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
     </p>
     """,
@@ -469,10 +481,10 @@ elif step == 7:
 
     st.markdown(
         """
-    <p style='font-size:26px; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
+    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
         Comentário final:
     </p>
-    <p style='font-size:22px; margin-top:0; margin-bottom:0.5rem;'>
+    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
         Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
     </p>
     """,
@@ -481,7 +493,7 @@ elif step == 7:
 
     coment_final = st.text_area("", placeholder="", key="coment_final")
 
-    col1, _, col3 = st.columns([2, 7, 3])
+    col1, col2, col3 = st.columns([2, 7, 3])
 
     with col1:
         voltar = st.button("◀ Voltar")
@@ -552,7 +564,7 @@ elif step == 8:
     )
 
     st.markdown(
-        "<p style='font-size:1.1rem; color:#052B38; margin-top:1.5rem;'>"
+        "<p style='font-size:1.0rem; color:#052B38; margin-top:1.5rem;'>"
         "Caso tenha qualquer dúvida ou queira conversar conosco, nossa equipe está sempre à disposição."
         "</p>",
         unsafe_allow_html=True,
@@ -576,7 +588,7 @@ st.markdown(
     position: fixed !important;
     bottom: calc(2vh + 0.5rem) !important;
     left:  calc(1vw + 1rem) !important;
-    font-size: 1.05rem !important;
+    font-size: 0.9rem !important;
     color: #7A8C94 !important;
     font-family: 'Ofelia Text', sans-serif !important;
     z-index: 9999 !important;
