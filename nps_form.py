@@ -44,7 +44,6 @@ st.markdown(
   --jera-dark:#052B38;
   --jera-bg:#052B38;
   --jera-light:#FFFFFF;
-  --card-max: 3500px;
 }
 
 /* ===================== RESET / BACKGROUND ===================== */
@@ -58,38 +57,19 @@ html, body, .stApp {
   overflow-x: hidden !important;
 }
 
-/* Área principal */
-[data-testid="stAppViewContainer"] > .main {
-  max-width: 100vw !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/* CARTÃO BRANCO CENTRAL */
-.main .block-container,
-div.block-container {
+/* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
+section.main, div.block-container {
   background: var(--jera-light) !important;
   border-radius: 22px !important;
-  width: 99.5vw !important;
-  max-width: var(--card-max) !important;
-  min-height: 92vh !important;
-  margin: 1rem auto !important;
-  padding: 3.8rem 4.8rem 4.8rem 4.8rem !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,.10);
-  border: 1px solid rgba(0,0,0,.06);
-}
-
-/* Responsivo */
-@media (max-width: 1024px){
-  .main .block-container,
-  div.block-container{
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-height: 100vh !important;
-    border-radius: 0 !important;
-    margin: 0 auto !important;
-    padding: 2.5rem 1.5rem 3.5rem 1.5rem !important;
-  }
+  width: 98vw !important;
+  height: 96vh !important;
+  margin: 2vh auto !important;
+  padding: 4rem 6rem !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
 }
 
 /* ===================== TÍTULOS ===================== */
@@ -98,24 +78,14 @@ h1, h2, h3 {
   color: var(--jera-dark);
   text-align: center !important;
 }
-h1 { font-size: 3.3rem !important; font-weight: 700 !important; }
-h2 { font-size: 2.1rem !important; font-weight: 600 !important; margin-bottom: 2.2rem !important; }
-h3 { font-size: 1.8rem !important; font-weight: 500 !important; }
-
-/* desloca um pouquinho o h1 só na TELA 1 (como no projeto grande) */
-h1 {
-  transform: translateX(18px);
-}
-@media (max-width: 1024px){
-  h1 {
-    transform: none !important;
-  }
-}
+h1 { font-size: 5.5rem !important; font-weight: 700 !important; }
+h2 { font-size: 3rem !important; font-weight: 600 !important; }
+h3 { font-size: 2rem !important; font-weight: 500 !important; }
 
 /* ===================== TEXTOS ===================== */
 p, div, span, label {
-  font-size: 1.1rem !important;
-  line-height: 1.7 !important;
+  font-size: 1.5rem !important;
+  line-height: 1.8 !important;
 }
 
 /* ===================== INPUT DA TELA 1 ===================== */
@@ -129,7 +99,7 @@ p, div, span, label {
 }
 .stTextInput input {
   font-family: 'Ofelia Text', sans-serif !important;
-  font-size: 1.1rem !important;
+  font-size: 1.3rem !important;
   text-align: center !important;
   padding: 0.6rem 0.8rem !important;
   border-radius: 8px !important;
@@ -145,9 +115,9 @@ p, div, span, label {
   border: 2px solid #052B38 !important;
   border-radius: 12px !important;
   font-weight: 600 !important;
-  font-size: 1.1rem !important;
-  min-width: 220px !important;
-  min-height: 50px !important;
+  font-size: 1.4rem !important;
+  min-width: 240px !important;
+  min-height: 55px !important;
   transition: all 0.25s ease-in-out;
   box-shadow: 0 6px 14px rgba(0,0,0,.15);
 }
@@ -157,35 +127,62 @@ p, div, span, label {
   transform: translateY(-2px);
 }
 
-/* ===================== SUBTÍTULOS E PERGUNTAS ===================== */
+/* ===================== ÁREA CENTRAL (TELAS 2–6) ===================== */
+
+/* bloco central de conteúdo, só para limitar a largura visual */
+.question-area {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* subtítulo da pergunta */
 .question-topic {
-  font-size: 1.2rem !important;
-  font-weight: 700 !important;
-  margin-bottom: 0.35rem !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.25rem !important;
   text-align: center !important;
 }
+
+/* enunciado da pergunta */
 .question-text {
   margin-top: 0.1rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.6rem;
   text-align: center !important;
 }
 
-/* linha de radios (1–5) – tamanho de fonte */
-div[role="radiogroup"] label {
-  white-space: nowrap !important;
-  font-size: 1.05rem !important;
+/* espaçamento entre perguntas */
+.question-block {
+  margin-bottom: 2.2rem;
 }
 
-/* ===================== RODAPÉ FIXO ===================== */
-.footer-fixed {
-    position: fixed !important;
-    bottom: calc(2vh + 0.5rem) !important;
-    left:  calc(1vw + 1rem) !important;
-    font-size: 0.9rem !important;
-    color: #7A8C94 !important;
-    font-family: 'Ofelia Text', sans-serif !important;
-    z-index: 9999 !important;
-    pointer-events: none;
+/* CENTRALIZA TODAS AS OPÇÕES (radios) NA PÁGINA */
+div[role="radiogroup"] {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+/* texto das opções 1–5 */
+div[role="radiogroup"] > label {
+  white-space: nowrap !important;
+  font-size: 1.35rem !important;
+}
+
+/* navegação inferior (usa a mesma largura visual do bloco) */
+.question-nav {
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.2rem auto 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* remover borda padrão de forms */
+div[data-testid="stForm"] {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
 </style>
@@ -339,14 +336,14 @@ if step == 1:
             )
 
         st.markdown(
-            "<h1>PESQUISA DE SATISFAÇÃO</h1>",
+            "<h1 style='transform: translateX(18px);'>PESQUISA DE SATISFAÇÃO</h1>",
             unsafe_allow_html=True,
         )
 
         st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:1.2rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+            "<p style='font-size:1.5rem;font-weight:600;text-align:center;'>CÓDIGO DO CLIENTE</p>",
             unsafe_allow_html=True,
         )
 
@@ -357,10 +354,10 @@ if step == 1:
         st.markdown(
             """
         <div style='text-align:center; line-height:1.6; margin-bottom:2rem;'>
-            <p style='font-size:1.05rem; margin-bottom:0.8rem;'>
+            <p style='font-size:1.25rem; margin-bottom:0.8rem;'>
                 <strong>Esta é uma pesquisa identificada.</strong>
             </p>
-            <p style='font-size:1.0rem;'>
+            <p style='font-size:1.15rem;'>
                 Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
                 para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
             </p>
@@ -371,7 +368,7 @@ if step == 1:
         left_spacer, col_btn, right_spacer = st.columns([4.8, 2, 4])
 
         with col_btn:
-            st.markdown("<div style='height:4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height:16rem;'></div>", unsafe_allow_html=True)
 
             if st.button("Iniciar pesquisa", key="start_button"):
                 if not st.session_state["client_code"].strip():
@@ -386,54 +383,56 @@ elif 2 <= step <= 6:
     idx = step - 2
     titulo, perguntas = BLOCOS[idx]
 
-    # TÍTULO DA SEÇÃO CENTRALIZADO
-    st.markdown(
-        f"<h2>{titulo}</h2>",
-        unsafe_allow_html=True,
-    )
-
-    # FORMULÁRIO DA SEÇÃO
     with st.form(f"form_{idx}"):
+
+        st.markdown("<div class='question-area'>", unsafe_allow_html=True)
+
+        st.markdown(
+            f"<h2 style='margin-bottom:2.0rem;'>{titulo}</h2>",
+            unsafe_allow_html=True,
+        )
 
         notas = {}
 
         for i, (topico, texto) in enumerate(perguntas):
-            # Colunas para centralizar TUDO pelo eixo do card/título
-            _, centro, _ = st.columns([1, 3, 1])
+            st.markdown("<div class='question-block'>", unsafe_allow_html=True)
 
-            with centro:
-                st.markdown(
-                    f"<p class='question-topic'>{topico}</p>",
-                    unsafe_allow_html=True,
-                )
-                st.markdown(
-                    f"<p class='question-text'>{texto}</p>",
-                    unsafe_allow_html=True,
-                )
+            st.markdown(
+                f"<p class='question-topic'>{topico}</p>",
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                f"<p class='question-text'>{texto}</p>",
+                unsafe_allow_html=True,
+            )
 
-                notas[topico] = st.radio(
-                    "",
-                    [
-                        "1 - Péssimo",
-                        "2 - Ruim",
-                        "3 - Regular",
-                        "4 - Bom",
-                        "5 - Excelente",
-                    ],
-                    horizontal=True,
-                    index=None,
-                    key=f"{titulo}_{i}",
-                )
+            notas[topico] = st.radio(
+                "",
+                [
+                    "1 - Péssimo",
+                    "2 - Ruim",
+                    "3 - Regular",
+                    "4 - Bom",
+                    "5 - Excelente",
+                ],
+                horizontal=True,
+                index=None,
+                key=f"{titulo}_{i}",
+            )
 
-            st.markdown("<div style='height:1.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        # Navegação – alinhamento dos botões segue o padrão do projeto grande
-        col1, col2, col3 = st.columns([2, 7, 3])
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        with col1:
+        st.markdown("<div class='question-nav'>", unsafe_allow_html=True)
+        col_esq, col_dir = st.columns([1, 1])
+
+        with col_esq:
             voltar = st.form_submit_button("◀ Voltar")
-        with col3:
+        with col_dir:
             avancar = st.form_submit_button("Avançar ►")
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
         if voltar:
             st.session_state["step"] -= 1
@@ -454,12 +453,12 @@ elif step == 7:
     st.subheader("NPS")
     st.markdown(
         """
-    <p style='font-size:1.3rem; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
+    <p style='font-size:28px; line-height:1.45; margin-bottom:1.2rem; text-align:justify;'>
     Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
     atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
     em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
     </p>
-    <p style='font-size:1.1rem; text-align:center;'>
+    <p style='font-size:24px; text-align:center;'>
         <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
     </p>
     """,
@@ -470,10 +469,10 @@ elif step == 7:
 
     st.markdown(
         """
-    <p style='font-size:1.2rem; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
+    <p style='font-size:26px; font-weight:700; margin-top:2rem; margin-bottom:0.3rem;'>
         Comentário final:
     </p>
-    <p style='font-size:1.05rem; margin-top:0; margin-bottom:0.5rem;'>
+    <p style='font-size:22px; margin-top:0; margin-bottom:0.5rem;'>
         Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
     </p>
     """,
@@ -482,7 +481,7 @@ elif step == 7:
 
     coment_final = st.text_area("", placeholder="", key="coment_final")
 
-    col1, col2, col3 = st.columns([2, 7, 3])
+    col1, _, col3 = st.columns([2, 7, 3])
 
     with col1:
         voltar = st.button("◀ Voltar")
@@ -553,7 +552,7 @@ elif step == 8:
     )
 
     st.markdown(
-        "<p style='font-size:1.0rem; color:#052B38; margin-top:1.5rem;'>"
+        "<p style='font-size:1.1rem; color:#052B38; margin-top:1.5rem;'>"
         "Caso tenha qualquer dúvida ou queira conversar conosco, nossa equipe está sempre à disposição."
         "</p>",
         unsafe_allow_html=True,
@@ -561,7 +560,7 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
 
-        for k in list(st.session_state.keys()):  # limpa respostas antigas
+        for k in list(st.session_state.keys()):
             if k.startswith("respostas_") or k in ["nps", "coment_final"]:
                 st.session_state.pop(k)
 
@@ -572,6 +571,18 @@ elif step == 8:
 # -------- RODAPÉ FIXO --------
 st.markdown(
     """
+<style>
+.footer-fixed {
+    position: fixed !important;
+    bottom: calc(2vh + 0.5rem) !important;
+    left:  calc(1vw + 1rem) !important;
+    font-size: 1.05rem !important;
+    color: #7A8C94 !important;
+    font-family: 'Ofelia Text', sans-serif !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+}
+</style>
 <div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>
 """,
     unsafe_allow_html=True,
