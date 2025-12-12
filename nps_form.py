@@ -516,4 +516,150 @@ elif 2 <= step <= 6:
         val = escala_1a5(pergunta_key)
         respostas[topico] = val
 
-        st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True
+        st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True)
+
+    st.session_state[f"respostas_{idx}"] = respostas
+
+    # validação: só avança se mexer nos dois sliders desta tela
+    touched_ok = True
+    for i in range(len(perguntas)):
+        pergunta_key = f"{titulo}__{i}"
+        if not st.session_state.get(f"{pergunta_key}__touched", False):
+            touched_ok = False
+
+    col1, col2, col3 = st.columns([2, 6, 2])
+    with col1:
+        if st.button("◀ Voltar"):
+            st.session_state["step"] -= 1
+            st.rerun()
+    with col3:
+        if st.button("Avançar ►"):
+            if not touched_ok:
+                st.error("Por favor, selecione uma nota (movendo o marcador) para todas as perguntas desta seção.")
+            else:
+                st.session_state["step"] += 1
+                st.rerun()
+
+# -------- PÁGINA NPS --------
+elif step == 7:
+    st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <p style='line-height:1.55; margin-bottom:1.0rem; text-align:center;'>
+        Considerando sua experiência com os serviços da <b>Jera Capital</b> ao longo do último ano — incluindo
+        atendimento, relatórios, reuniões, transparência e a adequação das soluções ao seu perfil —,
+        em uma escala de <b>0 a 10</b>, o quanto você recomendaria a Jera Capital a amigos ou familiares?
+        </p>
+        <p style='text-align:center; color:#334a55; margin-top:0;'>
+            <em>(0 = Não recomendaria de forma alguma | 10 = Recomendaria com total confiança)</em>
+        </p>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    nps = escala_0a10("nps_score")
+
+    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <p style='font-weight:750; margin-bottom:0.2rem; text-align:left; width:100%; max-width:900px;'>
+            Comentário final:
+        </p>
+        <p style='margin-top:0; color:#334a55; text-align:left; width:100%; max-width:900px;'>
+            Se desejar, utilize este espaço para compartilhar sugestões, elogios ou qualquer ponto que não tenha sido abordado anteriormente.
+        </p>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    coment_final = st.text_area("", placeholder="", key="coment_final")
+
+    col1, col2, col3 = st.columns([2, 6, 2])
+    with col1:
+        if st.button("◀ Voltar"):
+            st.session_state["step"] -= 1
+            st.rerun()
+
+    with col3:
+        if st.button("Enviar respostas ✅"):
+            if not st.session_state.get("nps_score__touched", False):
+                st.error("Por favor, selecione uma nota (movendo o marcador) de 0 a 10.")
+                st.stop()
+
+            code = st.session_state["client_code"].strip()
+            if not code:
+                st.error("O campo CÓDIGO DO CLIENTE é obrigatório.")
+                st.stop()
+
+            row = {
+                "timestamp": datetime.now().isoformat(timespec="seconds"),
+                "client_code": code,
+                "NPS": nps,
+            }
+
+            for i, (_, perguntas) in enumerate(BLOCOS):
+                respostas = st.session_state.get(f"respostas_{i}", {})
+                for topico, _ in perguntas:
+                    row[topico] = respostas.get(topico)
+
+            row["coment_final"] = coment_final
+
+            try:
+                # Tenta ler o responses.csv (para Streamlit Share)
+                df_old = pd.read_csv("responses.csv")
+                df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
+            except FileNotFoundError:
+                df = pd.DataFrame([row])
+
+            df.to_csv("responses.csv", index=False)
+
+            # Tenta gravar no Excel local (se o LOCAL_XLSX_PATH for acessível)
+            ok, _msg = _append_to_excel([row.get(h) for h in HEADERS])
+
+            if ok:
+                st.success("Respostas gravadas com sucesso no Excel! ✔")
+            else:
+                st.warning(f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})")
+
+            st.session_state["step"] = 8
+            st.rerun()
+
+# -------- CONFIRMAÇÃO FINAL --------
+elif step == 8:
+    st.markdown("<h2>✅ Resposta enviada com sucesso</h2>", unsafe_allow_html=True)
+    st.success(
+        "Agradecemos por dedicar seu tempo para responder à nossa pesquisa. "
+        "Suas respostas são muito importantes para que possamos aprimorar continuamente "
+        "a qualidade dos nossos serviços e o relacionamento com você."
+    )
+
+    st.caption(
+        f"Código do cliente: **{st.session_state['client_code']}** • "
+        f"Enviado em {datetime.now().strftime('%d/%m/%Y %H:%M')}"
+    )
+
+    st.markdown(
+        "<p style='margin-top:1.2rem;'>"
+        "Caso tenha qualquer dúvida ou queira conversar conosco, nossa equipe está sempre à disposição."
+        "</p>",
+        unsafe_allow_html=True,
+    )
+
+    if st.button("➕ Enviar nova resposta"):
+        for k in list(st.session_state.keys()):
+            # Limpa as variáveis de estado de perguntas e feedback
+            if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
+                st.session_state.pop(k, None)
+            # Limpa as flags de toque do slider
+            if k.endswith("__touched"):
+                st.session_state.pop(k, None)
+
+        st.session_state["client_code"] = ""
+        st.session_state["step"] = 1
+        st.rerun()
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# -------- RODAPÉ FIXO --------
+st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
