@@ -5,6 +5,9 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
+# Importações necessárias para o openpyxl foram movidas para dentro da função _append_to_excel
+# para evitar o ModuleNotFoundError em ambientes sem o pacote instalado globalmente.
+
 # ===================== CONFIGURAÇÃO: Excel local =====================
 # ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
@@ -325,7 +328,7 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
-        # CORREÇÃO PARA AMBIENTES HOSPEDADOS (STREAMLIT SHARE)
+        # Importação de openpyxl dentro da função para evitar ModuleNotFoundError
         from openpyxl import Workbook, load_workbook
 
         os.makedirs(os.path.dirname(LOCAL_XLSX_PATH), exist_ok=True)
@@ -349,6 +352,7 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
+        # Se ocorrer um erro (ex: openpyxl não instalado), ele será capturado aqui.
         return False, str(e)
 
 
@@ -437,11 +441,11 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    # AJUSTE FINAL: Usa margin-top negativo para -85px para encurtar o espaço.
+    # AJUSTE ATUALIZADO: Usando -100px para reduzir o espaço entre a logo e o título.
     st.markdown(
         """
         <h1 style="
-            margin-top: -85px; /* Puxa o título 85px para cima */
+            margin-top: -100px; /* Puxa o título 100px para cima */
             font-size: 2.0rem; 
             margin-bottom: 0.5rem; 
             line-height: 1; 
@@ -452,7 +456,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
     
-    # st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True) <-- Linha removida/ignorada para evitar espaço
+    # st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True) 
 
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
