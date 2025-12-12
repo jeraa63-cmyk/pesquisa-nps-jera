@@ -210,6 +210,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 }
 
 /* ===================== REMOVE PADDING PADRÃO DO STREAMLIT ===================== */
+/* Seletor genérico para tentar forçar a remoção do espaçamento vertical extra */
 .stVerticalBlock {
     gap: 0 !important;
 }
@@ -447,13 +448,12 @@ if step == 1:
                     src='{logo_uri}' 
                     style='
                         display:block;
-                        /* AJUSTE: Mudando de -120px para -80px para descer o bloco todo e aumentar o espaço superior. */
-                        margin: -80px auto -30px auto; 
+                        margin: -90px auto -50px auto; /* Puxa a imagem 90px para cima e empurra o título 50px */
                         width: 480px;
                         max-width: 95%;
                     '/>
                 <h1 style="
-                    margin-top: 0; 
+                    margin-top: 0; /* Zera margin-top para ficar logo abaixo da logo (puxada) */
                     font-size: 2.0rem; 
                     margin-bottom: 0.5rem; 
                     line-height: 1; 
