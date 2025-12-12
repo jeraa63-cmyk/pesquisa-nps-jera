@@ -220,6 +220,15 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
+
+/* ===================== AJUSTE VERTICAL — TELA 1 (NOVO) ===================== */
+.step1-wrap{
+  width: 100%;
+  transform: translateY(-28px); /* sobe 1–2 linhas (ajuste entre -20px e -40px) */
+}
+.step1-wrap img.jera-logo{
+  margin-top: -10px !important; /* sobe um pouco mais o logo */
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -240,6 +249,7 @@ if "step" not in st.session_state:
     st.session_state["step"] = 1
 if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
+
 
 # flags de “mexeu no slider”
 def _touch(key: str):
@@ -428,11 +438,12 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
+    st.markdown("<div class='step1-wrap'>", unsafe_allow_html=True)
+
     if LOGO_FULL.exists():
         st.markdown(
-            f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-"style='display:block;margin:-36px auto 0 auto;width:480px;max-width:95%;'/>",
-
+            f"<img class='jera-logo' alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
+            "style='display:block;margin:-36px auto 0 auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
@@ -471,6 +482,8 @@ if step == 1:
             else:
                 st.session_state["step"] = 2
                 st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -633,5 +646,3 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
 st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
-
-
