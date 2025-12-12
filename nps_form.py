@@ -2,7 +2,6 @@ from pathlib import Path
 import base64
 import os
 import streamlit as st
-from openpyxl import Workbook, load_workbook
 import pandas as pd
 from datetime import datetime
 
@@ -326,6 +325,9 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
+        # CORREÇÃO PARA AMBIENTES HOSPEDADOS (STREAMLIT SHARE)
+        from openpyxl import Workbook, load_workbook
+
         os.makedirs(os.path.dirname(LOCAL_XLSX_PATH), exist_ok=True)
 
         if os.path.exists(LOCAL_XLSX_PATH):
@@ -435,7 +437,7 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    # AJUSTE FINAL: Aumentando o margin-top negativo para -85px para encurtar o espaço.
+    # AJUSTE FINAL: Usa margin-top negativo para -85px para encurtar o espaço.
     st.markdown(
         """
         <h1 style="
