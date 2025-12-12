@@ -6,6 +6,7 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
+# ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
@@ -324,6 +325,7 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
+        # Importações internas para funcionar no Streamlit Share se o ambiente for configurado
         from openpyxl import Workbook, load_workbook
 
         os.makedirs(os.path.dirname(LOCAL_XLSX_PATH), exist_ok=True)
@@ -347,6 +349,8 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
+        # Atenção: Este bloco com Excel não funcionará no Streamlit Share (servidor público)
+        # se o path LOCAL_XLSX_PATH for local (C:\\Users...)
         return False, str(e)
 
 
@@ -435,12 +439,16 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    # O SEU AJUSTE FOI MANTIDO AQUI: transform e font-size menor
+    # AJUSTE REFORÇADO: Translação mais agressiva (-65px) e font-size menor (2.0rem)
     st.markdown(
         """
         <h1 style="
-            transform: translateY(-44px);
-            font-size: 2.2rem;
+            /* Puxa o título 65px para cima para eliminar o espaço excessivo entre logo e título */
+            transform: translateY(-65px);
+            /* Reduz um pouco o tamanho da fonte */
+            font-size: 2.0rem;
+            margin-top: 0; 
+            margin-bottom: 0; 
         ">
             PESQUISA DE SATISFAÇÃO
         </h1>
@@ -448,7 +456,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True)
+    # Removido o espaço de 1.1rem que estava aqui para garantir que o título subisse.
 
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
@@ -591,6 +599,7 @@ elif step == 7:
             row["coment_final"] = coment_final
 
             try:
+                # Tenta ler o responses.csv (para Streamlit Share)
                 df_old = pd.read_csv("responses.csv")
                 df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
             except FileNotFoundError:
@@ -598,12 +607,13 @@ elif step == 7:
 
             df.to_csv("responses.csv", index=False)
 
+            # Tenta gravar no Excel local (se o LOCAL_XLSX_PATH for acessível)
             ok, _msg = _append_to_excel([row.get(h) for h in HEADERS])
 
             if ok:
                 st.success("Respostas gravadas com sucesso no Excel! ✔")
             else:
-                st.warning("Não foi possível gravar no Excel. As respostas foram salvas em responses.csv.")
+                st.warning(f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})")
 
             st.session_state["step"] = 8
             st.rerun()
@@ -631,8 +641,10 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
+            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
+            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
