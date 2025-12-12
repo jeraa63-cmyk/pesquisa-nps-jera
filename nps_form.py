@@ -58,7 +58,6 @@ html, body, .stApp {
 }
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
-/* AQUI está o fix principal: sem height fixa + scroll interno */
 div.block-container {
   background: var(--jera-light) !important;
   border-radius: 22px !important;
@@ -66,7 +65,6 @@ div.block-container {
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
-  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -81,9 +79,7 @@ div.block-container {
 }
 
 @media (max-width: 1200px){
-  div.block-container {
-    padding: 2.4rem 2.0rem !important;
-  }
+  div.block-container { padding: 2.4rem 2.0rem !important; }
 }
 
 @media (max-width: 1024px){
@@ -96,7 +92,7 @@ div.block-container {
   }
 }
 
-/* ===================== TIPOGRAFIA RESPONSIVA (não “explode” no notebook) ===================== */
+/* ===================== TIPOGRAFIA RESPONSIVA ===================== */
 h1, h2, h3 {
   font-family: 'Ofelia Display', sans-serif !important;
   color: var(--jera-dark);
@@ -199,7 +195,7 @@ p, div, span, label {
   .scale-labels-5 div { font-size: 0.95rem !important; }
 }
 
-/* ===================== ESTILO DO SLIDER (cor do track/bolinha) ===================== */
+/* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
 div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
@@ -436,9 +432,13 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    st.markdown("<h1 style='margin-top:-10px;'>PESQUISA DE SATISFAÇÃO</h1>", unsafe_allow_html=True)
+    # ✅ TÍTULO: 2 linhas acima + fonte menor (somente na TELA 1)
+    st.markdown(
+        "<h1 style='margin-top:-48px; font-size:2.4rem;'>PESQUISA DE SATISFAÇÃO</h1>",
+        unsafe_allow_html=True,
+    )
 
-    # ↓ antes era 2.2rem
+    # ↓ antes era 2.2rem (já reduzido)
     st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -447,7 +447,7 @@ if step == 1:
     )
     st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
 
-    # ↓ antes era 1.4rem
+    # ↓ antes era 1.4rem (já reduzido)
     st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -463,10 +463,9 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    # ↓ antes era 1.2rem
+    # ↓ antes era 1.2rem (já reduzido)
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # botão sempre dentro do branco (sem “cair” no azul)
     c1, c2, c3 = st.columns([3, 2, 3])
     with c2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -498,7 +497,6 @@ elif 2 <= step <= 6:
 
     st.session_state[f"respostas_{idx}"] = respostas
 
-    # validação: só avança se mexer nos dois sliders desta tela
     touched_ok = True
     for i in range(len(perguntas)):
         pergunta_key = f"{titulo}__{i}"
