@@ -431,7 +431,7 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-"style='display:block;margin:-28px auto 0 auto;width:480px;max-width:95%;'/>",
+"style='display:block;margin:-36px auto 0 auto;width:480px;max-width:95%;'/>",
 
             unsafe_allow_html=True,
         )
@@ -633,4 +633,5 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
 st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
+
 
