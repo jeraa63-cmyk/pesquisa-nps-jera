@@ -435,7 +435,7 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    # ✅ TÍTULO: sobe (transform não conflita com margin-top !important) + fonte menor só aqui
+    # O SEU AJUSTE FOI MANTIDO AQUI: transform e font-size menor
     st.markdown(
         """
         <h1 style="
