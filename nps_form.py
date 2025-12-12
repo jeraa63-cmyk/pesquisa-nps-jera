@@ -220,15 +220,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
-
-/* ===================== AJUSTE VERTICAL — TELA 1 (NOVO) ===================== */
-.step1-wrap{
-  width: 100%;
-  transform: translateY(-28px); /* sobe 1–2 linhas (ajuste entre -20px e -40px) */
-}
-.step1-wrap img.jera-logo{
-  margin-top: -10px !important; /* sobe um pouco mais o logo */
-}
 </style>
 """,
     unsafe_allow_html=True,
@@ -438,31 +429,32 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    st.markdown("<div class='step1-wrap'>", unsafe_allow_html=True)
-
     if LOGO_FULL.exists():
         st.markdown(
-            f"<img class='jera-logo' alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-36px auto 0 auto;width:480px;max-width:95%;'/>",
+            f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
+            "style='display:block;margin:-90px auto 0 auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
-    st.markdown("<h1>PESQUISA DE SATISFAÇÃO</h1>", unsafe_allow_html=True)
-    st.markdown("<div style='height:2.2rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<h1 style='margin-top:-10px;'>PESQUISA DE SATISFAÇÃO</h1>", unsafe_allow_html=True)
+
+    # ↓ antes era 2.2rem
+    st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
-        "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+        "<p style='font-size:1.2rem;font-weight:650;text-align:center; margin-top:0;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
     )
     st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
 
-    st.markdown("<div style='height:1.4rem;'></div>", unsafe_allow_html=True)
+    # ↓ antes era 1.4rem
+    st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
         """
-        <div style='text-align:center; line-height:1.6; margin-bottom:1.2rem;'>
-          <p style='margin-bottom:0.6rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
-          <p style='font-size:1.05rem;'>
+        <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
+          <p style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
+          <p style='font-size:1.05rem; margin-top:0;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
           </p>
@@ -471,7 +463,8 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
+    # ↓ antes era 1.2rem
+    st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
     # botão sempre dentro do branco (sem “cair” no azul)
     c1, c2, c3 = st.columns([3, 2, 3])
@@ -482,8 +475,6 @@ if step == 1:
             else:
                 st.session_state["step"] = 2
                 st.rerun()
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
