@@ -447,7 +447,8 @@ if step == 1:
                     src='{logo_uri}' 
                     style='
                         display:block;
-                        margin: -120px auto -60px auto; /* AUMENTADO: Puxa o bloco todo para cima e diminui o espaço interno logo/título */
+                        /* AJUSTE: Mudando de -120px para -80px para descer o bloco todo e aumentar o espaço superior. */
+                        margin: -80px auto -30px auto; 
                         width: 480px;
                         max-width: 95%;
                     '/>
