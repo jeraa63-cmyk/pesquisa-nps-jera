@@ -209,6 +209,23 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
 }
 
+/* ===================== NOVO AJUSTE: Zera padding vertical em blocos Streamlit perto do topo ===================== */
+[data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"]:nth-child(1) {
+    /* Este seletor tenta atingir o primeiro container vertical no topo. */
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+}
+/* Altera o espaço vertical do contêiner mais externo do bloco de conteúdo */
+.stApp > header + div {
+    padding-top: 0 !important;
+}
+/* Seletor específico para o bloco da logo */
+.stApp > div:first-child > div:nth-child(2) > div:nth-child(2) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+
 /* ===================== RODAPÉ FIXO ===================== */
 .footer-fixed {
   position: fixed !important;
@@ -434,7 +451,7 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>", # NOVO: margin-bottom: -40px
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>", # Margem negativa na imagem
             unsafe_allow_html=True,
         )
 
