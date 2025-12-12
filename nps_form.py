@@ -5,9 +5,6 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# Importações necessárias para o openpyxl foram movidas para dentro da função _append_to_excel
-# para evitar o ModuleNotFoundError em ambientes sem o pacote instalado globalmente.
-
 # ===================== CONFIGURAÇÃO: Excel local =====================
 # ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
@@ -437,11 +434,11 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto 0 auto;width:480px;max-width:95%;'/>",
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>", # NOVO: margin-bottom: -40px
             unsafe_allow_html=True,
         )
 
-    # AJUSTE ATUALIZADO: Usando -100px para reduzir o espaço entre a logo e o título.
+    # AJUSTE ATUALIZADO: Usando -100px para puxar o título para cima.
     st.markdown(
         """
         <h1 style="
@@ -456,8 +453,6 @@ if step == 1:
         unsafe_allow_html=True,
     )
     
-    # st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True) 
-
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
