@@ -209,12 +209,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
 }
 
-/* ===================== REMOVE PADDING PADRÃO DO STREAMLIT ===================== */
-/* Seletor genérico para tentar forçar a remoção do espaçamento vertical extra */
-.stVerticalBlock {
-    gap: 0 !important;
-}
-
 /* ===================== RODAPÉ FIXO ===================== */
 .footer-fixed {
   position: fixed !important;
@@ -437,33 +431,27 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    # AJUSTE FINAL: Renderiza imagem e título em um único bloco HTML
     if LOGO_FULL.exists():
-        logo_uri = _img_data_uri(LOGO_FULL)
         st.markdown(
-            f"""
-            <div style="text-align:center;">
-                <img 
-                    alt='Jera' 
-                    src='{logo_uri}' 
-                    style='
-                        display:block;
-                        margin: -90px auto -50px auto; /* Puxa a imagem 90px para cima e empurra o título 50px */
-                        width: 480px;
-                        max-width: 95%;
-                    '/>
-                <h1 style="
-                    margin-top: 0; /* Zera margin-top para ficar logo abaixo da logo (puxada) */
-                    font-size: 2.0rem; 
-                    margin-bottom: 0.5rem; 
-                    line-height: 1; 
-                ">
-                    PESQUISA DE SATISFAÇÃO
-                </h1>
-            </div>
-            """,
+            f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>", # NOVO: margin-bottom: -40px
             unsafe_allow_html=True,
         )
+
+    # AJUSTE ATUALIZADO: Usando -100px para puxar o título para cima.
+    st.markdown(
+        """
+        <h1 style="
+            margin-top: -100px; /* Puxa o título 100px para cima */
+            font-size: 2.0rem; 
+            margin-bottom: 0.5rem; 
+            line-height: 1; 
+        ">
+            PESQUISA DE SATISFAÇÃO
+        </h1>
+        """,
+        unsafe_allow_html=True,
+    )
     
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
