@@ -325,7 +325,6 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
-        # Importações internas para funcionar no Streamlit Share se o ambiente for configurado
         from openpyxl import Workbook, load_workbook
 
         os.makedirs(os.path.dirname(LOCAL_XLSX_PATH), exist_ok=True)
@@ -349,8 +348,6 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
-        # Atenção: Este bloco com Excel não funcionará no Streamlit Share (servidor público)
-        # se o path LOCAL_XLSX_PATH for local (C:\\Users...)
         return False, str(e)
 
 
@@ -439,24 +436,23 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
-    # AJUSTE REFORÇADO: Translação mais agressiva (-65px) e font-size menor (2.0rem)
+    # AJUSTE FINAL: Usa margin-top negativo para puxar o h1 para cima do espaço da logo
+    # e define um font-size fixo e menor.
     st.markdown(
         """
         <h1 style="
-            /* Puxa o título 65px para cima para eliminar o espaço excessivo entre logo e título */
-            transform: translateY(-65px);
-            /* Reduz um pouco o tamanho da fonte */
-            font-size: 2.0rem;
-            margin-top: 0; 
-            margin-bottom: 0; 
+            margin-top: -65px; /* Puxa o título 65px para cima */
+            font-size: 2.0rem; /* Define o tamanho da fonte */
+            margin-bottom: 0.5rem; /* Adiciona um espaço pequeno antes do próximo elemento */
+            line-height: 1; /* Garante que a altura da linha não crie espaço extra */
         ">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
         unsafe_allow_html=True,
     )
-
-    # Removido o espaço de 1.1rem que estava aqui para garantir que o título subisse.
+    
+    # st.markdown("<div style='height:1.1rem;'></div>", unsafe_allow_html=True) <-- Linha removida/ignorada para evitar espaço
 
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
