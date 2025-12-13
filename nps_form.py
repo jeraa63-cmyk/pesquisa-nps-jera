@@ -221,11 +221,10 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* (mantido, mas não é mais necessário para o botão) */
-.tela-1 .btn-center {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important;
+/* ===================== TELA 1 — AJUSTE ÓPTICO DO BOTÃO ===================== */
+/* Centro matemático (columns) + deslocamento fixo para alinhar ao centro VISUAL */
+.tela-1 .btn-offset {
+  transform: translateX(16px); /* ajuste óptico (alterar para 14px/18px se quiser) */
 }
 </style>
 """,
@@ -483,14 +482,17 @@ if step == 1:
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
     # ✅ CENTRALIZAÇÃO PROFISSIONAL E ESTÁVEL (layout nativo Streamlit)
+    # + ✅ Ajuste ÓPTICO (fixo) para alinhar ao centro visual do layout
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
+        st.markdown("<div class='btn-offset'>", unsafe_allow_html=True)
         if st.button("Iniciar pesquisa", key="start_button"):
             if not st.session_state["client_code"].strip():
                 st.error("Por favor, preencha o código do cliente.")
             else:
                 st.session_state["step"] = 2
                 st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
