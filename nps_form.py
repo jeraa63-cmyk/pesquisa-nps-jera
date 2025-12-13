@@ -220,17 +220,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
-
-/* ===================== CORREÇÃO TELA 1: AJUSTE REAL DO CENTRO ===================== */
-/*
-  Streamlit não aninha st.button dentro de divs do st.markdown como HTML puro.
-  Então o jeito estável é ajustar a COLUNA do st.columns na Tela 1.
-
-  Aqui empurramos a 2ª coluna (~0,5 cm = 20px) só na Tela 1.
-*/
-.tela-1 div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:nth-child(2) {
-  margin-left: 20px !important; /* ~0,5 cm para a direita */
-}
 </style>
 """,
     unsafe_allow_html=True,
@@ -360,19 +349,14 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
-        # Se ocorrer um erro (ex: openpyxl não instalado), ele será capturado aqui.
         return False, str(e)
 
 
 def escala_1a5(key: str) -> int:
-    """
-    Slider centralizado + rótulos alinhados.
-    Exige "touched" para considerar válido.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
+        st.session_state[key] = 3
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -407,7 +391,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
+        st.session_state[key] = 5
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -442,9 +426,6 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    # Wrapper para aplicar CSS apenas nessa tela
-    st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
-
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
@@ -489,8 +470,8 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Mantém a coluna central e desloca a COLUNA via CSS (não o botão)
-    c1, c2, c3 = st.columns([3, 2, 3])
+    # ✅ AJUSTE REAL: muda só a proporção das colunas para deslocar ~0,5 cm à direita
+    c1, c2, c3 = st.columns([3.2, 2, 2.8])
     with c2:
         if st.button("Iniciar pesquisa", key="start_button"):
             if not st.session_state["client_code"].strip():
@@ -498,8 +479,6 @@ if step == 1:
             else:
                 st.session_state["step"] = 2
                 st.rerun()
-
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
