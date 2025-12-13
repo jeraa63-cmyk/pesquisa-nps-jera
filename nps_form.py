@@ -66,7 +66,6 @@ div.block-container {
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
-  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -221,10 +220,10 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
+/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO e TÍTULO -> SUBTÍTULO ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
-  margin-bottom: 0.5rem !important;
+  margin-top: -70px !important;      /* NÃO mexe no logo->título (isso é controlado no margin do logo) */
+  margin-bottom: 1.5rem !important;  /* ✅ AUMENTA espaço entre título e "CÓDIGO DO CLIENTE" */
 }
 </style>
 """,
@@ -248,7 +247,6 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -358,14 +356,10 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
-    """
-    Slider centralizado + rótulos alinhados.
-    Exige "touched" para considerar válido.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
+        st.session_state[key] = 3
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -400,7 +394,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
+        st.session_state[key] = 5
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -440,7 +434,6 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            # ✅ Ajuste apenas aqui: reduz/controle do espaço logo -> título via margin-bottom
             "style='display:block;margin:-90px auto -55px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
@@ -453,7 +446,7 @@ if step == 1:
         """,
         unsafe_allow_html=True,
     )
-    
+
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
@@ -477,7 +470,6 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Centralização estável do botão (mantida como está no seu código)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -487,9 +479,8 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
     idx = step - 2
     titulo, perguntas = BLOCOS[idx]
@@ -530,7 +521,6 @@ elif 2 <= step <= 6:
                 st.session_state["step"] += 1
                 st.rerun()
 
-# -------- PÁGINA NPS --------
 elif step == 7:
     st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
     st.markdown(
@@ -613,7 +603,6 @@ elif step == 7:
             st.session_state["step"] = 8
             st.rerun()
 
-# -------- CONFIRMAÇÃO FINAL --------
 elif step == 8:
     st.markdown("<h2>✅ Resposta enviada com sucesso</h2>", unsafe_allow_html=True)
     st.success(
@@ -636,10 +625,8 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
-            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
-            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
