@@ -221,7 +221,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: CENTRALIZAR BOTÃO (AJUSTE SOLICITADO) ===================== */
+/* ===================== TELA 1: CENTRALIZAR BOTÃO + AJUSTE PARA DIREITA ===================== */
 .tela-1 .btn-start-wrap {
   display: flex !important;
   justify-content: center !important;
@@ -234,10 +234,10 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   width: 100% !important;
 }
 
-/* Ajuste fino para direita: altere 8px se precisar */
+/* Ajuste fino para direita: ~0,5 cm */
 .tela-1 .btn-start-wrap .stButton > button {
   margin: 0 auto !important;
-  transform: translateX(8px) !important;
+  transform: translateX(20px) !important;
 }
 </style>
 """,
@@ -450,7 +450,7 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    # WRAPPER (para aplicar CSS só na Tela 1)
+    # Wrapper para aplicar CSS apenas nessa tela
     st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
 
     if LOGO_FULL.exists():
@@ -498,7 +498,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # WRAP do botão (centralização + ajuste fino pra direita)
+    # Wrap do botão (centralização + ajuste fino pra direita via CSS)
     st.markdown("<div class='btn-start-wrap'>", unsafe_allow_html=True)
 
     # botão sempre dentro do branco (sem “cair” no azul)
