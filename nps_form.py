@@ -220,6 +220,25 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
+
+/* ===================== TELA 1: CENTRALIZAR BOTÃO (AJUSTE SOLICITADO) ===================== */
+.tela-1 .btn-start-wrap {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.tela-1 .btn-start-wrap .stButton {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+/* Ajuste fino para direita: altere 8px se precisar */
+.tela-1 .btn-start-wrap .stButton > button {
+  margin: 0 auto !important;
+  transform: translateX(8px) !important;
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -431,10 +450,13 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
+    # WRAPPER (para aplicar CSS só na Tela 1)
+    st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
+
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>", # NOVO: margin-bottom: -40px
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",  # NOVO: margin-bottom: -40px
             unsafe_allow_html=True,
         )
 
@@ -452,7 +474,7 @@ if step == 1:
         """,
         unsafe_allow_html=True,
     )
-    
+
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
@@ -476,6 +498,9 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
+    # WRAP do botão (centralização + ajuste fino pra direita)
+    st.markdown("<div class='btn-start-wrap'>", unsafe_allow_html=True)
+
     # botão sempre dentro do branco (sem “cair” no azul)
     c1, c2, c3 = st.columns([3, 2, 3])
     with c2:
@@ -485,6 +510,9 @@ if step == 1:
             else:
                 st.session_state["step"] = 2
                 st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha btn-start-wrap
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
