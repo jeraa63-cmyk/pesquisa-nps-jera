@@ -221,24 +221,11 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: BOTÃO FIXO NO CENTRO + 20px ===================== */
-/*
-  Estratégia:
-  - Criamos um "anchor" (um bloco vazio) e posicionamos o próximo stButton
-    de forma absoluta no centro do container.
-  - Isso não depende de st.columns, nem de largura de tela.
-*/
-.tela-1 .start-btn-anchor {
-  position: relative !important;
+/* ===================== TELA 1: CENTRALIZAÇÃO ESTÁVEL DO BOTÃO ===================== */
+.tela-1 .btn-center {
   width: 100% !important;
-  height: 60px !important; /* reserva espaço vertical para o botão */
-}
-
-/* Seleciona o stButton logo após o anchor, dentro da Tela 1 */
-.tela-1 .start-btn-anchor + div div[data-testid="stButton"] {
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) translateX(20px) !important; /* +20px ≈ 0,5 cm */
+  display: flex !important;
+  justify-content: center !important;
 }
 </style>
 """,
@@ -345,7 +332,6 @@ HEADERS = (
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
-        # Importação de openpyxl dentro da função para evitar ModuleNotFoundError
         from openpyxl import Workbook, load_workbook
 
         os.makedirs(os.path.dirname(LOCAL_XLSX_PATH), exist_ok=True)
@@ -369,7 +355,6 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
-        # Se ocorrer um erro (ex: openpyxl não instalado), ele será capturado aqui.
         return False, str(e)
 
 
@@ -451,30 +436,29 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    # Wrapper para aplicar CSS apenas nessa tela
     st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
 
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",  # NOVO: margin-bottom: -40px
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
     st.markdown(
         """
         <h1 style="
-            margin-top: -100px; /* Puxa o título 100px para cima */
-            font-size: 2.0rem; 
-            margin-bottom: 0.5rem; 
-            line-height: 1; 
+            margin-top: -100px;
+            font-size: 2.0rem;
+            margin-bottom: 0.5rem;
+            line-height: 1;
         ">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
         unsafe_allow_html=True,
     )
-    
+
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
@@ -498,16 +482,15 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # Anchor (não contém o botão; serve como referência para o CSS)
-    st.markdown("<div class='start-btn-anchor'></div>", unsafe_allow_html=True)
-
-    # Botão (estilizado e posicionado via CSS acima)
+    # ✅ Centralização estável (não depende de colunas nem DOM instável)
+    st.markdown("<div class='btn-center'>", unsafe_allow_html=True)
     if st.button("Iniciar pesquisa", key="start_button"):
         if not st.session_state["client_code"].strip():
             st.error("Por favor, preencha o código do cliente.")
         else:
             st.session_state["step"] = 2
             st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
@@ -533,7 +516,6 @@ elif 2 <= step <= 6:
 
     st.session_state[f"respostas_{idx}"] = respostas
 
-    # validação: só avança se mexer nos dois sliders desta tela
     touched_ok = True
     for i in range(len(perguntas)):
         pergunta_key = f"{titulo}__{i}"
@@ -619,7 +601,6 @@ elif step == 7:
             row["coment_final"] = coment_final
 
             try:
-                # Tenta ler o responses.csv (para Streamlit Share)
                 df_old = pd.read_csv("responses.csv")
                 df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
             except FileNotFoundError:
@@ -627,7 +608,6 @@ elif step == 7:
 
             df.to_csv("responses.csv", index=False)
 
-            # Tenta gravar no Excel local (se o LOCAL_XLSX_PATH for acessível)
             ok, _msg = _append_to_excel([row.get(h) for h in HEADERS])
 
             if ok:
@@ -661,10 +641,8 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
-            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
-            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
