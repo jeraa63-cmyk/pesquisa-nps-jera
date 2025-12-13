@@ -6,7 +6,6 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
-# ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
@@ -66,7 +65,6 @@ div.block-container {
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
-  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -81,9 +79,7 @@ div.block-container {
 }
 
 @media (max-width: 1200px){
-  div.block-container {
-    padding: 2.4rem 2.0rem !important;
-  }
+  div.block-container { padding: 2.4rem 2.0rem !important; }
 }
 
 @media (max-width: 1024px){
@@ -199,7 +195,7 @@ p, div, span, label {
   .scale-labels-5 div { font-size: 0.95rem !important; }
 }
 
-/* ===================== ESTILO DO SLIDER (cor do track/bolinha) ===================== */
+/* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
 div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
@@ -219,20 +215,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   font-family: 'Ofelia Text', sans-serif !important;
   z-index: 9999 !important;
   pointer-events: none;
-}
-
-/* ===================== TELA 1 — AJUSTE ÓPTICO DO BOTÃO ===================== */
-/* Centro matemático (columns) + deslocamento fixo p/ alinhar ao centro VISUAL
-   1,5cm ≈ 58px (base web 96dpi) */
-.tela-1 .btn-optical-offset {
-  transform: translateX(58px);
-}
-
-/* Em telas pequenas, removemos o offset para evitar “empurrão” desnecessário */
-@media (max-width: 768px) {
-  .tela-1 .btn-optical-offset {
-    transform: translateX(0);
-  }
 }
 </style>
 """,
@@ -256,7 +238,6 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -366,14 +347,10 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
-    """
-    Slider centralizado + rótulos alinhados.
-    Exige "touched" para considerar válido.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
+        st.session_state[key] = 3
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -408,7 +385,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
+        st.session_state[key] = 5
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -443,8 +420,6 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
-    st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
-
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
@@ -489,19 +464,16 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Central matemático estável + offset óptico (desktop) para alinhar ao centro visual
-    col1, col2, col3 = st.columns([1, 1, 1])
+    # ✅ SOLUÇÃO MAIS ESTÁVEL NO STREAMLIT:
+    # Ajuste do peso das colunas (não depende de CSS/DOM interno) para empurrar o botão para a direita.
+    col1, col2, col3 = st.columns([1.4, 1, 1])  # aumente/diminua 1.4 para calibrar fino
     with col2:
-        st.markdown("<div class='btn-optical-offset'>", unsafe_allow_html=True)
         if st.button("Iniciar pesquisa", key="start_button"):
             if not st.session_state["client_code"].strip():
                 st.error("Por favor, preencha o código do cliente.")
             else:
                 st.session_state["step"] = 2
                 st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
