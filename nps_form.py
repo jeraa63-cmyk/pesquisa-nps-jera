@@ -220,6 +220,26 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
+
+/* ===================== TELA 1: BOTÃO FIXO NO CENTRO + 20px ===================== */
+/*
+  Estratégia:
+  - Criamos um "anchor" (um bloco vazio) e posicionamos o próximo stButton
+    de forma absoluta no centro do container.
+  - Isso não depende de st.columns, nem de largura de tela.
+*/
+.tela-1 .start-btn-anchor {
+  position: relative !important;
+  width: 100% !important;
+  height: 60px !important; /* reserva espaço vertical para o botão */
+}
+
+/* Seleciona o stButton logo após o anchor, dentro da Tela 1 */
+.tela-1 .start-btn-anchor + div div[data-testid="stButton"] {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateX(20px) !important; /* +20px ≈ 0,5 cm */
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -349,14 +369,19 @@ def _append_to_excel(row_values):
         wb.save(LOCAL_XLSX_PATH)
         return True, "Gravado no Excel local."
     except Exception as e:
+        # Se ocorrer um erro (ex: openpyxl não instalado), ele será capturado aqui.
         return False, str(e)
 
 
 def escala_1a5(key: str) -> int:
+    """
+    Slider centralizado + rótulos alinhados.
+    Exige "touched" para considerar válido.
+    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3
+        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -391,7 +416,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5
+        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -426,17 +451,20 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
+    # Wrapper para aplicar CSS apenas nessa tela
+    st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
+
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",  # NOVO: margin-bottom: -40px
             unsafe_allow_html=True,
         )
 
     st.markdown(
         """
         <h1 style="
-            margin-top: -100px;
+            margin-top: -100px; /* Puxa o título 100px para cima */
             font-size: 2.0rem; 
             margin-bottom: 0.5rem; 
             line-height: 1; 
@@ -470,15 +498,18 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ AJUSTE REAL: muda só a proporção das colunas para deslocar ~0,5 cm à direita
-    c1, c2, c3 = st.columns([3.2, 2, 2.8])
-    with c2:
-        if st.button("Iniciar pesquisa", key="start_button"):
-            if not st.session_state["client_code"].strip():
-                st.error("Por favor, preencha o código do cliente.")
-            else:
-                st.session_state["step"] = 2
-                st.rerun()
+    # Anchor (não contém o botão; serve como referência para o CSS)
+    st.markdown("<div class='start-btn-anchor'></div>", unsafe_allow_html=True)
+
+    # Botão (estilizado e posicionado via CSS acima)
+    if st.button("Iniciar pesquisa", key="start_button"):
+        if not st.session_state["client_code"].strip():
+            st.error("Por favor, preencha o código do cliente.")
+        else:
+            st.session_state["step"] = 2
+            st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -502,6 +533,7 @@ elif 2 <= step <= 6:
 
     st.session_state[f"respostas_{idx}"] = respostas
 
+    # validação: só avança se mexer nos dois sliders desta tela
     touched_ok = True
     for i in range(len(perguntas)):
         pergunta_key = f"{titulo}__{i}"
@@ -587,6 +619,7 @@ elif step == 7:
             row["coment_final"] = coment_final
 
             try:
+                # Tenta ler o responses.csv (para Streamlit Share)
                 df_old = pd.read_csv("responses.csv")
                 df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
             except FileNotFoundError:
@@ -594,6 +627,7 @@ elif step == 7:
 
             df.to_csv("responses.csv", index=False)
 
+            # Tenta gravar no Excel local (se o LOCAL_XLSX_PATH for acessível)
             ok, _msg = _append_to_excel([row.get(h) for h in HEADERS])
 
             if ok:
@@ -627,8 +661,10 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
+            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
+            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
