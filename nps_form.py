@@ -221,23 +221,16 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: CENTRALIZAR BOTÃO + AJUSTE PARA DIREITA ===================== */
+/* ===================== TELA 1: CENTRALIZAÇÃO REAL DO BOTÃO (SEM st.columns) ===================== */
 .tela-1 .btn-start-wrap {
+  width: 100% !important;
   display: flex !important;
   justify-content: center !important;
-  width: 100% !important;
 }
 
 .tela-1 .btn-start-wrap .stButton {
   display: flex !important;
   justify-content: center !important;
-  width: 100% !important;
-}
-
-/* Ajuste fino para direita: ~0,5 cm */
-.tela-1 .btn-start-wrap .stButton > button {
-  margin: 0 auto !important;
-  transform: translateX(20px) !important;
 }
 </style>
 """,
@@ -456,15 +449,14 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",  # NOVO: margin-bottom: -40px
+            "style='display:block;margin:-90px auto -40px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
-    # AJUSTE ATUALIZADO: Usando -100px para puxar o título para cima.
     st.markdown(
         """
         <h1 style="
-            margin-top: -100px; /* Puxa o título 100px para cima */
+            margin-top: -100px;
             font-size: 2.0rem; 
             margin-bottom: 0.5rem; 
             line-height: 1; 
@@ -474,7 +466,7 @@ if step == 1:
         """,
         unsafe_allow_html=True,
     )
-
+    
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
@@ -498,18 +490,15 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # Wrap do botão (centralização + ajuste fino pra direita via CSS)
+    # ✅ Botão centralizado SEM st.columns (correção definitiva)
     st.markdown("<div class='btn-start-wrap'>", unsafe_allow_html=True)
 
-    # botão sempre dentro do branco (sem “cair” no azul)
-    c1, c2, c3 = st.columns([3, 2, 3])
-    with c2:
-        if st.button("Iniciar pesquisa", key="start_button"):
-            if not st.session_state["client_code"].strip():
-                st.error("Por favor, preencha o código do cliente.")
-            else:
-                st.session_state["step"] = 2
-                st.rerun()
+    if st.button("Iniciar pesquisa", key="start_button"):
+        if not st.session_state["client_code"].strip():
+            st.error("Por favor, preencha o código do cliente.")
+        else:
+            st.session_state["step"] = 2
+            st.rerun()
 
     st.markdown("</div>", unsafe_allow_html=True)  # fecha btn-start-wrap
     st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
@@ -536,7 +525,6 @@ elif 2 <= step <= 6:
 
     st.session_state[f"respostas_{idx}"] = respostas
 
-    # validação: só avança se mexer nos dois sliders desta tela
     touched_ok = True
     for i in range(len(perguntas)):
         pergunta_key = f"{titulo}__{i}"
@@ -622,7 +610,6 @@ elif step == 7:
             row["coment_final"] = coment_final
 
             try:
-                # Tenta ler o responses.csv (para Streamlit Share)
                 df_old = pd.read_csv("responses.csv")
                 df = pd.concat([df_old, pd.DataFrame([row])], ignore_index=True)
             except FileNotFoundError:
@@ -630,7 +617,6 @@ elif step == 7:
 
             df.to_csv("responses.csv", index=False)
 
-            # Tenta gravar no Excel local (se o LOCAL_XLSX_PATH for acessível)
             ok, _msg = _append_to_excel([row.get(h) for h in HEADERS])
 
             if ok:
@@ -664,10 +650,8 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
-            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
-            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
