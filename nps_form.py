@@ -66,6 +66,7 @@ div.block-container {
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
+  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -220,10 +221,15 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO e TÍTULO -> SUBTÍTULO ===================== */
+/* ===================== TELA 1: AJUSTES LOCAIS ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* NÃO mexe no logo->título (isso é controlado no margin do logo) */
-  margin-bottom: 1.5rem !important;  /* ✅ AUMENTA espaço entre título e "CÓDIGO DO CLIENTE" */
+  margin-top: -70px !important; /* mantém seu ajuste de logo->título */
+  margin-bottom: 0.0rem !important; /* deixa o spacer controlar o espaço */
+}
+
+/* ✅ Espaço garantido entre TÍTULO e "CÓDIGO DO CLIENTE" */
+.tela-1 .spacer-titulo-codigo{
+  height: 24px; /* ajuste aqui: 16px / 24px / 32px */
 }
 </style>
 """,
@@ -434,7 +440,7 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -55px auto;width:480px;max-width:95%;'/>",
+            "style='display:block;margin:-90px auto -15px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
@@ -443,6 +449,7 @@ if step == 1:
         <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
             PESQUISA DE SATISFAÇÃO
         </h1>
+        <div class="spacer-titulo-codigo"></div>
         """,
         unsafe_allow_html=True,
     )
@@ -479,8 +486,9 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
+# -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
     idx = step - 2
     titulo, perguntas = BLOCOS[idx]
@@ -521,6 +529,7 @@ elif 2 <= step <= 6:
                 st.session_state["step"] += 1
                 st.rerun()
 
+# -------- PÁGINA NPS --------
 elif step == 7:
     st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
     st.markdown(
@@ -603,6 +612,7 @@ elif step == 7:
             st.session_state["step"] = 8
             st.rerun()
 
+# -------- CONFIRMAÇÃO FINAL --------
 elif step == 8:
     st.markdown("<h2>✅ Resposta enviada com sucesso</h2>", unsafe_allow_html=True)
     st.success(
