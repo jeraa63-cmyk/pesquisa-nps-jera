@@ -440,7 +440,8 @@ if step == 1:
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            "style='display:block;margin:-90px auto -15px auto;width:480px;max-width:95%;'/>",
+            # ✅ Ajuste apenas aqui: reduz/controle do espaço logo -> título via margin-bottom
+            "style='display:block;margin:-90px auto -55px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
@@ -476,7 +477,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Centralização estável do botão (ajuste fino via proporção das colunas)
+    # ✅ Centralização estável do botão (mantida como está no seu código)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
