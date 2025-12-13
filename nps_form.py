@@ -221,7 +221,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: CENTRALIZAÇÃO ESTÁVEL DO BOTÃO ===================== */
+/* (mantido, mas não é mais necessário para o botão) */
 .tela-1 .btn-center {
   width: 100% !important;
   display: flex !important;
@@ -482,15 +482,15 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Centralização estável (não depende de colunas nem DOM instável)
-    st.markdown("<div class='btn-center'>", unsafe_allow_html=True)
-    if st.button("Iniciar pesquisa", key="start_button"):
-        if not st.session_state["client_code"].strip():
-            st.error("Por favor, preencha o código do cliente.")
-        else:
-            st.session_state["step"] = 2
-            st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
+    # ✅ CENTRALIZAÇÃO PROFISSIONAL E ESTÁVEL (layout nativo Streamlit)
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("Iniciar pesquisa", key="start_button"):
+            if not st.session_state["client_code"].strip():
+                st.error("Por favor, preencha o código do cliente.")
+            else:
+                st.session_state["step"] = 2
+                st.rerun()
 
     st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
