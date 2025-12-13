@@ -222,9 +222,17 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 }
 
 /* ===================== TELA 1 — AJUSTE ÓPTICO DO BOTÃO ===================== */
-/* Centro matemático (columns) + deslocamento fixo para alinhar ao centro VISUAL */
-.tela-1 .btn-offset {
-  transform: translateX(16px); /* ajuste óptico (alterar para 14px/18px se quiser) */
+/* Centro matemático (columns) + deslocamento fixo p/ alinhar ao centro VISUAL
+   1,5cm ≈ 58px (base web 96dpi) */
+.tela-1 .btn-optical-offset {
+  transform: translateX(58px);
+}
+
+/* Em telas pequenas, removemos o offset para evitar “empurrão” desnecessário */
+@media (max-width: 768px) {
+  .tela-1 .btn-optical-offset {
+    transform: translateX(0);
+  }
 }
 </style>
 """,
@@ -481,11 +489,10 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ CENTRALIZAÇÃO PROFISSIONAL E ESTÁVEL (layout nativo Streamlit)
-    # + ✅ Ajuste ÓPTICO (fixo) para alinhar ao centro visual do layout
+    # ✅ Central matemático estável + offset óptico (desktop) para alinhar ao centro visual
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        st.markdown("<div class='btn-offset'>", unsafe_allow_html=True)
+        st.markdown("<div class='btn-optical-offset'>", unsafe_allow_html=True)
         if st.button("Iniciar pesquisa", key="start_button"):
             if not st.session_state["client_code"].strip():
                 st.error("Por favor, preencha o código do cliente.")
