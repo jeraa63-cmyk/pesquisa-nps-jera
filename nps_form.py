@@ -222,14 +222,15 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 }
 
 /* ===================== TELA 1: AJUSTES LOCAIS ===================== */
+/* mantém o espaço logo -> título como está (sem mexer no restante) */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important; /* mantém seu ajuste de logo->título */
-  margin-bottom: 0.0rem !important; /* deixa o spacer controlar o espaço */
+  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
+  margin-bottom: 0 !important;       /* zera para o spacer controlar o gap */
 }
 
-/* ✅ Espaço garantido entre TÍTULO e "CÓDIGO DO CLIENTE" */
+/* ✅ ESTE É O "PULA LINHA" ENTRE TÍTULO E CÓDIGO DO CLIENTE */
 .tela-1 .spacer-titulo-codigo{
-  height: 24px; /* ajuste aqui: 16px / 24px / 32px */
+  height: 26px; /* aumente/diminua aqui sem afetar logo->título */
 }
 </style>
 """,
@@ -253,6 +254,7 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
+# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -362,10 +364,14 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
+    """
+    Slider centralizado + rótulos alinhados.
+    Exige "touched" para considerar válido.
+    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3
+        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -400,7 +406,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5
+        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -477,6 +483,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
+    # ✅ Centralização estável do botão (ajuste fino via proporção das colunas)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -635,8 +642,10 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
+            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
+            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
