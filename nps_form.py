@@ -221,16 +221,15 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: CENTRALIZAÇÃO REAL DO BOTÃO (SEM st.columns) ===================== */
-.tela-1 .btn-start-wrap {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important;
-}
+/* ===================== CORREÇÃO TELA 1: AJUSTE REAL DO CENTRO ===================== */
+/*
+  Streamlit não aninha st.button dentro de divs do st.markdown como HTML puro.
+  Então o jeito estável é ajustar a COLUNA do st.columns na Tela 1.
 
-.tela-1 .btn-start-wrap .stButton {
-  display: flex !important;
-  justify-content: center !important;
+  Aqui empurramos a 2ª coluna (~0,5 cm = 20px) só na Tela 1.
+*/
+.tela-1 div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:nth-child(2) {
+  margin-left: 20px !important; /* ~0,5 cm para a direita */
 }
 </style>
 """,
@@ -490,17 +489,16 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Botão centralizado SEM st.columns (correção definitiva)
-    st.markdown("<div class='btn-start-wrap'>", unsafe_allow_html=True)
+    # ✅ Mantém a coluna central e desloca a COLUNA via CSS (não o botão)
+    c1, c2, c3 = st.columns([3, 2, 3])
+    with c2:
+        if st.button("Iniciar pesquisa", key="start_button"):
+            if not st.session_state["client_code"].strip():
+                st.error("Por favor, preencha o código do cliente.")
+            else:
+                st.session_state["step"] = 2
+                st.rerun()
 
-    if st.button("Iniciar pesquisa", key="start_button"):
-        if not st.session_state["client_code"].strip():
-            st.error("Por favor, preencha o código do cliente.")
-        else:
-            st.session_state["step"] = 2
-            st.rerun()
-
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha btn-start-wrap
     st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
