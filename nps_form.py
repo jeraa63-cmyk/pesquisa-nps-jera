@@ -220,6 +220,12 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
+
+/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
+.tela-1 .h1-tela1{
+  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
+  margin-bottom: 0.5rem !important;
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -429,23 +435,18 @@ st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
 if step == 1:
+    st.markdown("<div class='tela-1'>", unsafe_allow_html=True)
+
     if LOGO_FULL.exists():
         st.markdown(
             f"<img alt='Jera' src='{_img_data_uri(LOGO_FULL)}' "
-            # ✅ AJUSTE 1 (TELA 1): reduz espaço entre logo e título (era -40px)
             "style='display:block;margin:-90px auto -15px auto;width:480px;max-width:95%;'/>",
             unsafe_allow_html=True,
         )
 
-    # ✅ AJUSTE 2 (TELA 1): reduz espaço entre logo e título (era -100px)
     st.markdown(
         """
-        <h1 style="
-            margin-top: -70px;
-            font-size: 2.0rem; 
-            margin-bottom: 0.5rem; 
-            line-height: 1; 
-        ">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
@@ -475,7 +476,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ mantém centralização do botão do jeito que funcionou
+    # ✅ Centralização estável do botão (ajuste fino via proporção das colunas)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -484,6 +485,8 @@ if step == 1:
             else:
                 st.session_state["step"] = 2
                 st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
