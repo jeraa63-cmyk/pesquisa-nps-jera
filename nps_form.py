@@ -10,7 +10,7 @@ from datetime import datetime
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
-# ===================== PÁGINA + CSS (AJUSTADO PARA CENTRALIZAÇÃO) =====================
+# ===================== PÁGINA + CSS (AJUSTADO) =====================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
@@ -241,38 +241,42 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.35rem;
   text-align: center;
 }
-
 .scale-labels-5 div { 
     white-space: nowrap !important; 
     font-size: 1.0rem !important; 
-    text-align: center; /* Garantindo que o texto esteja centralizado na sua célula */
+    text-align: center; /* Garantir que o texto esteja centralizado na célula por padrão */
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (FOCO EM 2 e 4) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS */
+/* ------------------------------------------------------------------ */
 
-/* 1 - Péssimo: Manter no centro da coluna (0) */
+/* 1 - Péssimo: Manter no centro da coluna, mas ajustar o container para Streamlit */
 .scale-labels-5 div:nth-child(1) {
-    transform: translateX(0); 
+    transform: translateX(0); /* Sem deslocamento de texto */
+    text-align: left; 
+    padding-left: 0.7rem; 
 }
 
-/* 2 - Ruim: Puxar para a esquerda (Compensação de largura do texto) */
+/* 2 - Ruim: MOVER PARA ESQUERDA (compensar o texto mais curto) */
 .scale-labels-5 div:nth-child(2) {
     transform: translateX(-15px); 
 }
 
-/* 3 - Regular: Manter no centro (Referência) */
+/* 3 - Regular: OK no centro (Ponto de referência) */
 .scale-labels-5 div:nth-child(3) {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: Puxar para a direita (Compensação de largura do texto) */
+/* 4 - Bom: MOVER PARA DIREITA (compensar o texto mais curto) */
 .scale-labels-5 div:nth-child(4) {
     transform: translateX(15px); 
 }
 
-/* 5 - Excelente: Manter no centro da coluna (0) */
+/* 5 - Excelente: Manter no centro da coluna, mas ajustar o container para Streamlit */
 .scale-labels-5 div:nth-child(5) {
-    transform: translateX(0); 
+    transform: translateX(0); /* Sem deslocamento de texto */
+    text-align: right; 
+    padding-right: 0.7rem; 
 }
 
 
@@ -290,12 +294,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10: Sem deslocamento nos extremos (0 e 10) e nos internos */
+/* Compensação visual para Streamlit */
 .scale-labels-11 div:nth-child(1) {
-    transform: translateX(0); 
+    text-align: left; /* Alinha o texto na borda esquerda (0) */
+    padding-left: 0.5rem; /* Ajuste fino */
 }
 .scale-labels-11 div:nth-child(11) {
-    transform: translateX(0); 
+    text-align: right; /* Alinha o texto na borda direita (10) */
+    padding-right: 0.5rem; /* Ajuste fino */
 }
 
 
@@ -303,19 +309,20 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
+  
   /* Mantém os ajustes internos principais */
   .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
   
-  /* Garantindo que os externos fiquem sem deslocamento extra em telas pequenas */
+  /* Mantém os ajustes de borda */
   .scale-labels-5 div:nth-child(1) { transform: translateX(0); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0); }
 }
 
-/* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
+/* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-/* ZERA O PADDING INTERNO DO CONTAINER DO SLIDER */
-div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; } 
+/* Manter ou ajustar o padding interno do slider */
+div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } 
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
@@ -355,9 +362,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 """,
     unsafe_allow_html=True,
 )
-
-# [O restante do código Python (funções, estados, fluxo, etc.) permanece inalterado]
-# ...
 
 # ===================== LOGO =====================
 BASE_DIR = Path(__file__).parent.resolve()
