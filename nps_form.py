@@ -140,7 +140,7 @@ p, div, span, label {
   width: 285px !important;
 }
 /* CORREÇÃO DEFINITIVA: Oculta a mensagem "Press Enter to apply / 0/20" */
-div[data-testid="stTextInput"] > div:nth-child(1) > div:nth-child(3) {
+div[data-testid="stTextInput"] > div > div:nth-child(3) {
   display: none !important;
 }
 
