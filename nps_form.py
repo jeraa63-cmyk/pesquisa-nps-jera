@@ -247,32 +247,35 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (Valores aumentados) */
 
-/* 1 - Péssimo: Alinha na esquerda da coluna (compensa o padding do slider) */
+/* 1 - Péssimo: Puxa para a direita */
 .scale-labels-5 div:nth-child(1) {
     text-align: left; 
-    padding-left: 0; /* Começa na borda */
-    transform: translateX(5px); /* Ajuste minúsculo para a direita, se necessário */
+    padding-left: 0; 
+    transform: translateX(10px); 
 }
 
-/* 2 - Ruim: Centraliza e puxa um pouco mais para a esquerda */
+/* 2 - Ruim: Puxa agressivamente para a esquerda */
 .scale-labels-5 div:nth-child(2) {
-    transform: translateX(-5px); 
+    transform: translateX(-15px); 
 }
 
 /* 3 - Regular: Mantém centralizado (sem transform) */
-
-/* 4 - Bom: Centraliza e puxa um pouco mais para a direita */
-.scale-labels-5 div:nth-child(4) {
-    transform: translateX(5px); 
+.scale-labels-5 div:nth-child(3) {
+    transform: translateX(0); 
 }
 
-/* 5 - Excelente: Alinha na direita da coluna (compensa o padding do slider) */
+/* 4 - Bom: Puxa agressivamente para a direita */
+.scale-labels-5 div:nth-child(4) {
+    transform: translateX(15px); 
+}
+
+/* 5 - Excelente: Puxa para a esquerda */
 .scale-labels-5 div:nth-child(5) {
     text-align: right; 
-    padding-right: 0; /* Termina na borda */
-    transform: translateX(-5px); /* Ajuste minúsculo para a esquerda, se necessário */
+    padding-right: 0; 
+    transform: translateX(-10px); 
 }
 
 
@@ -290,16 +293,16 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Apenas os extremos do 0-10 precisam de ajuste, já que os internos devem estar centralizados */
+/* Extremos do 0-10 também ajustados com o mesmo valor (10px) */
 .scale-labels-11 div:nth-child(1) {
     text-align: left; 
     padding-left: 0;
-    transform: translateX(5px); 
+    transform: translateX(10px); 
 }
 .scale-labels-11 div:nth-child(11) {
     text-align: right; 
     padding-right: 0;
-    transform: translateX(-5px); 
+    transform: translateX(-10px); 
 }
 
 
@@ -307,9 +310,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Ajustes para telas menores - manter o mesmo translateX */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-5px); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(5px); }
+  /* Ajustes para telas menores - manter os valores de 15px nos internos para testar */
+  .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
 }
 
 /* ===================== ESTILO DO SLIDER (MODIFICADO) ===================== */
@@ -355,9 +358,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 """,
     unsafe_allow_html=True,
 )
-
-# [O restante do código Python (funções, estados, fluxo, etc.) permanece inalterado]
-# ...
 
 # ===================== LOGO =====================
 BASE_DIR = Path(__file__).parent.resolve()
