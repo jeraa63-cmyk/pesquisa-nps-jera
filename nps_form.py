@@ -60,7 +60,8 @@ html, body, .stApp {
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
 div.block-container {
-  background: var(--jera-light) !important;
+  /* ATENÇÃO: Alterado para RGBA para adicionar transparência de 95% */
+  background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
 
   width: min(1200px, 96vw) !important;
