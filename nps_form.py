@@ -139,9 +139,13 @@ p, div, span, label {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-/* ADICIONADO: Oculta a mensagem "Press Enter to apply • 0/20" */
-.stTextInput > div > div:nth-child(2) {
-  display: none !important;
+/* CORREÇÃO REFORÇADA: Oculta a mensagem "Press Enter to apply / 0/20" */
+[data-testid="stTextInput"] > div:nth-child(2) {
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
 }
 
 /* ===================== BOTÕES ===================== */
@@ -474,7 +478,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
     
-    # ALTERADO: placeholder agora exibe "Ex.: APELIDO" e max_chars=20 mantido para validação
+    # placeholder para "Ex.: APELIDO" e max_chars=20 mantido para validação
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
     st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
