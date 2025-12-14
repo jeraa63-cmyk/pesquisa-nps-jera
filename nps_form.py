@@ -32,7 +32,7 @@ st.markdown(
   src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
   font-weight: 500;
 }
-/* ADICIONADO: VARIANT MEDIUM ITALIC (Ajuste o nome do arquivo se necessário) */
+/* ADICIONADO: VARIANT MEDIUM ITALIC */
 @font-face {
   font-family: 'Ofelia Text';
   src: url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype'); 
@@ -67,7 +67,7 @@ html, body, .stApp {
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
 div.block-container {
-  /* Alterado para RGBA para adicionar transparência de 95% */
+  /* Fundo levemente transparente (95% opaco) */
   background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
 
@@ -246,7 +246,7 @@ LOGO_FULL = ASSETS / "jera-logo-full.png"
 
 
 def _img_data_uri(p: Path) -> str:
-    # CORRIGIDO: Certifique-se de que não há caracteres U+00A0 aqui
+    # Função para converter imagem em URI de dados (Base64)
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
 
 
@@ -454,7 +454,6 @@ if step == 1:
         )
 
     st.markdown(
-        # POSIÇÃO AJUSTADA
         """
         <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.6cm);">
             PESQUISA DE SATISFAÇÃO
@@ -470,7 +469,9 @@ if step == 1:
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
     )
-    st.text_input("", key="client_code", placeholder="Ex.: 12345", max_chars=20)
+    
+    # ALTERADO: placeholder agora exibe "Ex.: APELIDO"
+    st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
     st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
 
