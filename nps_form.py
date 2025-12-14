@@ -18,7 +18,7 @@ st.markdown(
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Usado agora para CÓDIGO DO CLIENTE e Pesquisa Identificada */
+/* Ofelia Display Medium (Peso 500) - Usado para CÓDIGO DO CLIENTE */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 500; 
@@ -26,7 +26,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Regular (Peso 400) - Mapeado, mas o Medium será usado para ênfase */
+/* Ofelia Display Regular (Peso 400) - Mapeado, mas o Medium/Bold será usado para ênfase */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 400; 
@@ -34,15 +34,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Extra Light (Peso 200) - Mantido para referências */
-@font-face {
-  font-family: 'Ofelia Display';
-  font-weight: 200;
-  src: url('assets/fontes/OfeliaDisplay-Extralight.ttf') format('truetype'),
-       url('assets/fontes/OfeliaDisplay-Extralight.woff2') format('woff2');
-}
-
-/* Ofelia Display Bold (Peso 700) - Títulos Secundários e Título Principal (h1) */
+/* Ofelia Display Bold (Peso 700) - Títulos Secundários e Título Principal (h1) E AGORA A PESQUISA IDENTIFICADA */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
@@ -65,7 +57,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold/Bold (Peso 650) - Mantido para referências de outros textos */
+/* Ofelia Text Semibold/Bold (Peso 650) - Mantido para negritos gerais */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
@@ -160,7 +152,7 @@ p, div, span, label {
 
 /* ===================== INPUT DA TELA 1 ===================== */
 
-/* AJUSTADO: CÓDIGO DO CLIENTE: Ofelia Display Medium (500) */
+/* AJUSTADO: CÓDIGO DO CLIENTE: Ofelia Display Medium (500) - Mantido com ênfase leve */
 .codigo-cliente {
     font-family: 'Ofelia Display', sans-serif !important;
     font-size: 1.2rem !important;
@@ -168,10 +160,10 @@ p, div, span, label {
     text-align: center !important;
 }
 
-/* AJUSTADO: Esta é uma pesquisa identificada: Ofelia Display Medium (500) */
+/* AJUSTADO PARA NEGIRTO FORTE: Esta é uma pesquisa identificada: Ofelia Display Bold (700) */
 .pesquisa-identificada strong {
     font-family: 'Ofelia Display', sans-serif !important;
-    font-weight: 500 !important; /* Medium (ênfase visual) */
+    font-weight: 700 !important; /* Bold (Negrito Forte) */
 }
 
 /* Remove o negrito padrão do strong se for usado em textos comuns */
