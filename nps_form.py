@@ -217,7 +217,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS (MODIFICADO) ===================== */
+/* ===================== SLIDER COM RÓTULOS ALINHADOS (AJUSTE FINO) ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
@@ -232,7 +232,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
-/* AJUSTES DE ALINHAMENTO PARA 1-5 */
+/* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -241,19 +241,24 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.35rem;
   text-align: center;
 }
-.scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; }
+.scale-labels-5 div { 
+    white-space: nowrap !important; 
+    font-size: 1.0rem !important; 
+    /* Todos os divs centralizados na coluna */
+}
 
-/* ⬇️ AJUSTE CRÍTICO: Move a primeira coluna para a esquerda e a última para a direita */
+/* Compensação visual para Streamlit: move os extremos para compensar o padding interno */
 .scale-labels-5 div:nth-child(1) {
     text-align: left; /* Alinha o texto na borda esquerda */
+    padding-left: 0.7rem; /* Adiciona padding para centralizar visualmente sob a marca 1 */
 }
 .scale-labels-5 div:nth-child(5) {
     text-align: right; /* Alinha o texto na borda direita */
+    padding-right: 0.7rem; /* Adiciona padding para centralizar visualmente sob a marca 5 */
 }
-/* Os elementos 2, 3 e 4 permanecem centralizados */
 
 
-/* AJUSTES DE ALINHAMENTO PARA 0-10 */
+/* ⬇️ AJUSTE PARA 0-10 */
 .scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
@@ -262,16 +267,20 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.4rem;
   text-align: center;
 }
-.scale-labels-11 div { white-space: nowrap !important; font-size: 1.0rem !important; }
+.scale-labels-11 div { 
+    white-space: nowrap !important; 
+    font-size: 1.0rem !important; 
+}
 
-/* ⬇️ AJUSTE CRÍTICO: Move a primeira coluna (0) para a esquerda e a última (10) para a direita */
+/* Compensação visual para Streamlit */
 .scale-labels-11 div:nth-child(1) {
-    text-align: left; /* Alinha o texto na borda esquerda */
+    text-align: left; /* Alinha o texto na borda esquerda (0) */
+    padding-left: 0.5rem; /* Ajuste fino */
 }
 .scale-labels-11 div:nth-child(11) {
-    text-align: right; /* Alinha o texto na borda direita */
+    text-align: right; /* Alinha o texto na borda direita (10) */
+    padding-right: 0.5rem; /* Ajuste fino */
 }
-/* Os elementos do meio permanecem centralizados */
 
 
 @media (max-width: 700px){
@@ -282,8 +291,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-/* ⬇️ AJUSTE PARA REMOVER O PADDING LATERAL INTERNO DO SLIDER */
-div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } /* Manter o padding default ou remover se quiser alinhar as pontas */
+/* Manter ou ajustar o padding interno do slider */
+div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } 
+
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
 }
