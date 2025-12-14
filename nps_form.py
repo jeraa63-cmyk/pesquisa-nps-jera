@@ -247,18 +247,20 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (Valores aumentados) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (USANDO % E PIXEL) */
 
-/* 1 - Péssimo: Puxa para a direita */
+/* 1 - Péssimo: Alinha na esquerda + Ajuste para mover para a direita */
 .scale-labels-5 div:nth-child(1) {
     text-align: left; 
     padding-left: 0; 
-    transform: translateX(10px); 
+    /* Move para a direita em 1/2 da largura da coluna, compensando o 10px que o slider joga para fora */
+    transform: translateX(calc(50% + 5px)); 
 }
 
-/* 2 - Ruim: Puxa agressivamente para a esquerda */
+/* 2 - Ruim: Centraliza e puxa para a esquerda (menos que 50% para compensar) */
 .scale-labels-5 div:nth-child(2) {
-    transform: translateX(-15px); 
+    /* Move o centro do texto 50% para a esquerda da célula, mais 5px de ajuste fino */
+    transform: translateX(calc(-50% - 5px)); 
 }
 
 /* 3 - Regular: Mantém centralizado (sem transform) */
@@ -266,16 +268,18 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: Puxa agressivamente para a direita */
+/* 4 - Bom: Centraliza e puxa para a direita */
 .scale-labels-5 div:nth-child(4) {
-    transform: translateX(15px); 
+    /* Move o centro do texto 50% para a direita da célula, mais 5px de ajuste fino */
+    transform: translateX(calc(50% + 5px)); 
 }
 
-/* 5 - Excelente: Puxa para a esquerda */
+/* 5 - Excelente: Alinha na direita + Ajuste para mover para a esquerda */
 .scale-labels-5 div:nth-child(5) {
     text-align: right; 
     padding-right: 0; 
-    transform: translateX(-10px); 
+    /* Move para a esquerda em 1/2 da largura da coluna, compensando o 10px que o slider joga para fora */
+    transform: translateX(calc(-50% - 5px)); 
 }
 
 
@@ -293,16 +297,16 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10 também ajustados com o mesmo valor (10px) */
+/* Extremos do 0-10 (0 e 10) ajustados de forma mais responsiva */
 .scale-labels-11 div:nth-child(1) {
     text-align: left; 
     padding-left: 0;
-    transform: translateX(10px); 
+    transform: translateX(calc(50% + 5px)); 
 }
 .scale-labels-11 div:nth-child(11) {
     text-align: right; 
     padding-right: 0;
-    transform: translateX(-10px); 
+    transform: translateX(calc(-50% - 5px)); 
 }
 
 
@@ -310,14 +314,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Ajustes para telas menores - manter os valores de 15px nos internos para testar */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
+  /* Manter os ajustes percentuais, eles devem ser responsivos */
+  .scale-labels-5 div:nth-child(2) { transform: translateX(calc(-50% - 5px)); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(calc(50% + 5px)); }
 }
 
-/* ===================== ESTILO DO SLIDER (MODIFICADO) ===================== */
+/* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-/* ⚠️ ZERA O PADDING INTERNO DO CONTAINER DO SLIDER PARA QUE A GRADE DE RÓTULOS ALINHE-SE COM AS BORDAS DA LINHA */
+/* ZERA O PADDING INTERNO DO CONTAINER DO SLIDER */
 div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; } 
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
