@@ -257,7 +257,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   text-align: right;
   padding-right: 0.5rem;
 }
-/* ✅ AJUSTE FINO PEDIDO: 2 vai 1cm para esquerda e 4 vai 1cm para direita */
+/* ✅ AJUSTE FINAL: SOMENTE 2 e 4 */
 .scale-numbers-5 div:nth-child(2) { transform: translateX(-1cm); }
 .scale-numbers-5 div:nth-child(4) { transform: translateX(1cm); }
 
@@ -536,7 +536,7 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ NOVO: numeração 1–5 em todos os pontos
+    # ✅ numeração 1–5 em todos os pontos
     st.markdown(
         """
         <div class="scale-numbers-5">
