@@ -285,6 +285,16 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   margin-top: -70px !important;
   margin-bottom: 0.5rem !important;
 }
+
+/* ===================== NOVO ESTILO PARA INSTRUÇÃO DE SLIDER ===================== */
+.slider-instruction {
+    text-align: center; 
+    color: #00C1AD; /* Cor primária Jera */
+    font-weight: 600; 
+    margin-top: -1.0rem; /* Traz para perto do slider */
+    margin-bottom: 0.5rem;
+    font-size: 1.0rem !important;
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -415,10 +425,15 @@ def escala_1a5(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     
-    # ⬇️ AJUSTE AQUI: O valor inicial passa a ser 1 (o mínimo), e não 3.
-    # O usuário deve mover o slider para que a resposta seja marcada como 'touched'.
+    # ⬇️ ALTERAÇÃO AQUI: Valor inicial do slider passa a ser 1
     if key not in st.session_state:
         st.session_state[key] = 1 
+    
+    # ⬇️ ADIÇÃO AQUI: Texto de instrução "Deslize"
+    if not st.session_state.get(f"{key}__touched", False):
+        st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
+    else:
+         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True) # Espaço para manter o layout
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -452,10 +467,15 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     
-    # ⬇️ AJUSTE AQUI: O valor inicial passa a ser 0 (o mínimo), e não 5.
-    # O usuário deve mover o slider para que a resposta seja marcada como 'touched'.
+    # ⬇️ ALTERAÇÃO AQUI: Valor inicial do slider passa a ser 0
     if key not in st.session_state:
         st.session_state[key] = 0
+
+    # ⬇️ ADIÇÃO AQUI: Texto de instrução "Deslize"
+    if not st.session_state.get(f"{key}__touched", False):
+        st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
+    else:
+        st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True) # Espaço para manter o layout
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -561,12 +581,6 @@ elif 2 <= step <= 6:
 
     st.session_state[f"respostas_{idx}"] = respostas
 
-    touched_ok = True
-    for i in range(len(perguntas)):
-        pergunta_key = f"{titulo}__{i}"
-        if not st.session_state.get(f"{pergunta_key}__touched", False):
-            touched_ok = False
-
     col1, col2, col3 = st.columns([2, 6, 2])
     with col1:
         if st.button("◀ Voltar"):
@@ -574,11 +588,8 @@ elif 2 <= step <= 6:
             st.rerun()
     with col3:
         if st.button("Avançar ►"):
-            if not touched_ok:
-                st.error("Por favor, selecione uma nota (movendo o marcador) para todas as perguntas desta seção.")
-            else:
-                st.session_state["step"] += 1
-                st.rerun()
+            st.session_state["step"] += 1
+            st.rerun()
 
 # -------- PÁGINA NPS --------
 elif step == 7:
@@ -622,10 +633,7 @@ elif step == 7:
 
     with col3:
         if st.button("Enviar respostas ✅"):
-            if not st.session_state.get("nps_score__touched", False):
-                st.error("Por favor, selecione uma nota (movendo o marcador) de 0 a 10.")
-                st.stop()
-
+            
             code = st.session_state["client_code"].strip()
             if not code:
                 st.error("O campo CÓDIGO DO CLIENTE é obrigatório.")
