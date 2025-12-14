@@ -222,13 +222,11 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 }
 
 /* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
-/* Correção: Alterado de '.tela-1 .h1-tela1' para apenas '.h1-tela1' para forçar o deslocamento */
-.h1-tela1{
+/* REVERTIDO: Mantendo apenas margens para posicionamento vertical. */
+.tela-1 .h1-tela1{
   margin-top: -70px !important;        /* mantém o espaço logo -> título */
   margin-bottom: 0.5rem !important;
-
-  /* ✅ move somente o título 1cm para a direita */
-  transform: translateX(1cm) !important;
+  /* O transform será adicionado inline no h1 */
 }
 </style>
 """,
@@ -242,7 +240,7 @@ LOGO_FULL = ASSETS / "jera-logo-full.png"
 
 
 def _img_data_uri(p: Path) -> str:
-    # LINHA CORRIGIDA: Espaço entre '+' e 'base64' era um caractere especial (U+00A0)
+    # CÓDIGO DO FIX DO SyntaxError (U+00A0)
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
 
 
@@ -450,8 +448,9 @@ if step == 1:
         )
 
     st.markdown(
+        # AQUI FOI ADICIONADO: transform: translateX(1cm);
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(1cm);">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
