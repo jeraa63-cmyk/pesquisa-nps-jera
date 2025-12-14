@@ -221,10 +221,11 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
+/* ===================== TELA 1: AJUSTES FINOS (SÓ TELA 1) ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
+  margin-top: -70px !important;      /* controla só o espaço logo -> título */
   margin-bottom: 0.5rem !important;
+  transform: translateX(0.5cm);      /* ✅ move o título 0,5cm pra direita */
 }
 </style>
 """,
@@ -453,8 +454,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    # ✅ AJUSTE: adiciona “uma linha” (espaço) ENTRE o título e "CÓDIGO DO CLIENTE"
-    # sem mexer no espaço logo -> título
+    # ✅ “Uma linha” (espaço) ENTRE o título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
