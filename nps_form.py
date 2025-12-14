@@ -245,19 +245,19 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-5 div { 
     white-space: nowrap !important; 
     font-size: 1.0rem !important; 
+    text-align: center; /* Garantindo que o texto esteja centralizado na sua célula */
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (VOLTANDO AO PX, MAIS REFINADO) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (VALORES OTIMIZADOS) */
 
-/* 1 - Péssimo: Alinha na esquerda + pequeno ajuste para a direita para compensar o slider */
+/* 1 - Péssimo: Alinhado e sem deslocamento */
 .scale-labels-5 div:nth-child(1) {
-    text-align: center; /* Mantém centralizado na coluna para melhor controle */
-    transform: translateX(5px); 
+    transform: translateX(0); 
 }
 
-/* 2 - Ruim: Centraliza e puxa para a esquerda */
+/* 2 - Ruim: Centraliza e puxa para a esquerda (aumentado para -15px) */
 .scale-labels-5 div:nth-child(2) {
-    transform: translateX(-10px); 
+    transform: translateX(-15px); 
 }
 
 /* 3 - Regular: Mantém centralizado (sem transform) */
@@ -265,15 +265,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: Centraliza e puxa para a direita */
+/* 4 - Bom: Centraliza e puxa para a direita (aumentado para 15px) */
 .scale-labels-5 div:nth-child(4) {
-    transform: translateX(10px); 
+    transform: translateX(15px); 
 }
 
-/* 5 - Excelente: Alinha na direita + pequeno ajuste para a esquerda para compensar o slider */
+/* 5 - Excelente: Alinhado e sem deslocamento */
 .scale-labels-5 div:nth-child(5) {
-    text-align: center; /* Mantém centralizado na coluna para melhor controle */
-    transform: translateX(-5px); 
+    transform: translateX(0); 
 }
 
 
@@ -291,14 +290,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10 ajustados com o mesmo valor de 5px */
+/* Extremos do 0-10 */
 .scale-labels-11 div:nth-child(1) {
-    text-align: center; 
-    transform: translateX(5px); 
+    transform: translateX(0); 
 }
 .scale-labels-11 div:nth-child(11) {
-    text-align: center; 
-    transform: translateX(-5px); 
+    transform: translateX(0); 
 }
 
 
@@ -306,9 +303,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Mantém os ajustes em pixel nos internos para testar */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-10px); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(10px); }
+  /* Mantém os ajustes internos de -15px e 15px */
+  .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
 }
 
 /* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
