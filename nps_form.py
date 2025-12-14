@@ -221,16 +221,10 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTES LOCAIS (SEM AFETAR O RESTO) ===================== */
-/* Mantém o controle do espaço logo -> título apenas via margens do logo (inline) e do título aqui */
+/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* mantém como você já estava usando para o espaço logo->título */
-  margin-bottom: 0 !important;       /* zera para NÃO grudar no próximo e deixar o spacer mandar */
-}
-
-/* ✅ AUMENTA SOMENTE o espaço entre TÍTULO e "CÓDIGO DO CLIENTE" */
-.tela-1 .spacer-titulo-codigo{
-  height: 34px;  /* <<< ajuste aqui (ex.: 24px / 34px / 44px) */
+  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
+  margin-bottom: 0.5rem !important;
 }
 </style>
 """,
@@ -455,10 +449,13 @@ if step == 1:
         <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
             PESQUISA DE SATISFAÇÃO
         </h1>
-        <div class="spacer-titulo-codigo"></div>
         """,
         unsafe_allow_html=True,
     )
+
+    # ✅ AJUSTE: adiciona “uma linha” (espaço) ENTRE o título e "CÓDIGO DO CLIENTE"
+    # sem mexer no espaço logo -> título
+    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
         "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
