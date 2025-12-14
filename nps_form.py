@@ -248,31 +248,31 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     text-align: center; /* Garantindo que o texto esteja centralizado na sua célula */
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (VALORES OTIMIZADOS) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (GRUPOS DE 15PX) */
 
-/* 1 - Péssimo: Alinhado e sem deslocamento */
+/* 1 - Péssimo: Mover para a esquerda */
 .scale-labels-5 div:nth-child(1) {
-    transform: translateX(0); 
+    transform: translateX(-15px); 
 }
 
-/* 2 - Ruim: Centraliza e puxa para a esquerda (aumentado para -15px) */
+/* 2 - Ruim: Mover para a esquerda */
 .scale-labels-5 div:nth-child(2) {
     transform: translateX(-15px); 
 }
 
-/* 3 - Regular: Mantém centralizado (sem transform) */
+/* 3 - Regular: Mantém no centro (ponto de referência) */
 .scale-labels-5 div:nth-child(3) {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: Centraliza e puxa para a direita (aumentado para 15px) */
+/* 4 - Bom: Mover para a direita */
 .scale-labels-5 div:nth-child(4) {
     transform: translateX(15px); 
 }
 
-/* 5 - Excelente: Alinhado e sem deslocamento */
+/* 5 - Excelente: Mover para a direita */
 .scale-labels-5 div:nth-child(5) {
-    transform: translateX(0); 
+    transform: translateX(15px); 
 }
 
 
@@ -290,12 +290,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10 */
+/* Extremos do 0-10: 0 para esquerda (-15px) e 10 para direita (15px) */
 .scale-labels-11 div:nth-child(1) {
-    transform: translateX(0); 
+    transform: translateX(-15px); 
 }
 .scale-labels-11 div:nth-child(11) {
-    transform: translateX(0); 
+    transform: translateX(15px); 
 }
 
 
@@ -303,9 +303,11 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Mantém os ajustes internos de -15px e 15px */
+  /* Mantém os ajustes internos e externos */
+  .scale-labels-5 div:nth-child(1) { transform: translateX(-15px); }
   .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
+  .scale-labels-5 div:nth-child(5) { transform: translateX(15px); }
 }
 
 /* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
