@@ -6,6 +6,7 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
+# ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
@@ -15,9 +16,9 @@ st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 st.markdown(
     """
 <style>
-/* ===================== FONTES (MANTIDAS, SÓ AJUSTAMOS USO/PESOS) ===================== */
+/* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (500) */
+/* Ofelia Display Medium (Peso 500) - Usado para CÓDIGO DO CLIENTE */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 500;
@@ -25,7 +26,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2');
 }
 
-/* Ofelia Display Regular (400) */
+/* Ofelia Display Regular (Peso 400) */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 400;
@@ -33,15 +34,14 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2');
 }
 
-/* Ofelia Display Bold (700) - se precisar futuramente */
+/* Ofelia Display Bold (Peso 700) */
 @font-face {
   font-family: 'Ofelia Display';
+  src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
   font-weight: 700;
-  src: url('assets/fontes/OfeliaDisplay-Bold.ttf') format('truetype'),
-       url('assets/fontes/OfeliaDisplay-Bold.woff2') format('woff2');
 }
 
-/* Ofelia Text Regular (400) */
+/* Ofelia Text Regular (Peso 400) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 400;
@@ -49,7 +49,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
 }
 
-/* Ofelia Text Medium (500) */
+/* Ofelia Text Medium (Peso 500) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 500;
@@ -57,7 +57,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold (650) */
+/* Ofelia Text Semibold (Peso 650) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
@@ -65,13 +65,13 @@ st.markdown(
        url('assets/fontes/OfeliaText-Semibold.woff2') format('woff2');
 }
 
-/* Ofelia Text Medium Italic (500 italic) */
+/* Ofelia Text Medium Italic (Peso 500 Itálico) */
 @font-face {
   font-family: 'Ofelia Text';
-  font-weight: 500;
-  font-style: italic;
   src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
        url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
 }
 
 /* ===================== VARIÁVEIS ===================== */
@@ -129,7 +129,7 @@ div.block-container {
   }
 }
 
-/* ===================== TIPOGRAFIA BASE ===================== */
+/* ===================== TIPOGRAFIA RESPONSIVA ===================== */
 h1, h2, h3 {
   font-family: 'Ofelia Display', sans-serif !important;
   color: var(--jera-dark);
@@ -137,6 +137,7 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
+h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; }
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
@@ -145,48 +146,28 @@ p, div, span, label {
   line-height: 1.65 !important;
 }
 
-/* ===================== TELA 1: TÍTULO MAIS LEVE (manual) ===================== */
-/* (Mantém seu ajuste de subir o título sem afetar logo) */
-.tela-1 .h1-tela1{
-  margin-top: -70px !important;
-  margin-bottom: 0.7rem !important;
-
-  /* ✅ “Premium” e menos pesado */
-  font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 600 !important; /* mais leve que 700 */
-  font-size: clamp(1.9rem, 2.3vw, 2.5rem) !important;
-  letter-spacing: 0.06em !important; /* essencial p/ caixa alta */
-  color: #0b2f3a !important;
-  text-transform: uppercase !important;
-}
-
-/* ===================== LABEL “CÓDIGO DO CLIENTE” MAIS LEVE ===================== */
-.codigo-cliente {
-  font-family: 'Ofelia Text', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
-  letter-spacing: 0.18em !important;
-  text-align: center !important;
-  color: #2f4a55 !important;
-  margin: 0 !important;
-}
-
-/* ===================== TEXTO EXPLICATIVO MAIS LEVE ===================== */
-.texto-info {
-  font-family: 'Ofelia Text', sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 0.98rem !important;
-  line-height: 1.6 !important;
-  color: #4a646f !important;
-}
-
-.texto-info-strong {
-  font-family: 'Ofelia Text', sans-serif !important;
-  font-weight: 500 !important;
-  color: #0b2f3a !important;
-}
-
 /* ===================== INPUT DA TELA 1 ===================== */
+
+/* ✅ AJUSTE 1 (micro): label um pouco mais escuro para legibilidade */
+.codigo-cliente {
+  font-family: 'Ofelia Display', sans-serif !important;
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  color: #1F3A44 !important;   /* antes ficava muito claro em alguns monitores */
+}
+
+/* Destaque: “Esta é uma pesquisa identificada.” */
+.pesquisa-identificada strong {
+  font-family: 'Ofelia Display', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* Negritos gerais */
+p strong {
+  font-weight: 650 !important;
+}
+
 .stTextInput {
   display: flex !important;
   justify-content: center !important;
@@ -208,25 +189,23 @@ p, div, span, label {
   color: #a0a0a0 !important;
   opacity: 1 !important;
 }
-
-/* Oculta “Press Enter” / contador */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   display: none !important;
 }
 
-/* ===================== BOTÕES (mais leve) ===================== */
+/* ===================== BOTÕES ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
   background: #052B38 !important;
   color: white !important;
   border: 2px solid #052B38 !important;
   border-radius: 12px !important;
-  font-weight: 500 !important;              /* ✅ mais leve */
-  font-size: 1.02rem !important;
+  font-weight: 650 !important;
+  font-size: 1.05rem !important;
   min-width: 220px !important;
   min-height: 50px !important;
   transition: all 0.25s ease-in-out;
-  box-shadow: 0 3px 8px rgba(0,0,0,.12) !important;  /* ✅ menos sombra */
+  box-shadow: 0 6px 14px rgba(0,0,0,.15);
 }
 .stButton > button:hover {
   background: #00C1AD !important;
@@ -235,10 +214,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 
 /* ===================== BLOCO DE CONTEÚDO ===================== */
-.page { width: 100% !important; max-width: 1050px !important; }
+.page {
+  width: 100% !important;
+  max-width: 1050px !important;
+}
 
 /* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
-.scale-wrap { width: 100%; max-width: 760px; margin: 0.6rem auto 1.4rem auto; }
+.scale-wrap {
+  width: 100%;
+  max-width: 760px;
+  margin: 0.6rem auto 1.4rem auto;
+}
 
 .scale-ends {
   display:flex;
@@ -251,6 +237,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 0;
   width: 100%;
   margin-top: 0.35rem;
   text-align: center;
@@ -260,6 +247,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
+  gap: 0;
   width: 100%;
   margin-top: 0.4rem;
   text-align: center;
@@ -293,6 +281,15 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
+
+/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
+.tela-1 .h1-tela1{
+  margin-top: -70px !important;
+  margin-bottom: 0.5rem !important;
+
+  /* ✅ AJUSTE 2 (micro): reduz um pouco o “aberto” do título (tracking) */
+  letter-spacing: 0.03em !important;  /* se quiser mais fechado ainda: 0.02em */
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -324,46 +321,66 @@ BLOCOS = [
     (
         "Qualidade do Relacionamento com a Equipe Jera",
         [
-            ("Tempo de resolução às solicitações",
-             "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?"),
-            ("Proatividade na comunicação",
-             "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?"),
+            (
+                "Tempo de resolução às solicitações",
+                "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?",
+            ),
+            (
+                "Proatividade na comunicação",
+                "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?",
+            ),
         ],
     ),
     (
         "Clareza e Relevância das Informações Prestadas",
         [
-            ("Clareza das informações apresentadas",
-             "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?"),
-            ("Compreensão dos resultados",
-             "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?"),
+            (
+                "Clareza das informações apresentadas",
+                "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?",
+            ),
+            (
+                "Compreensão dos resultados",
+                "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?",
+            ),
         ],
     ),
     (
         "Efetividade dos Encontros e Alinhamentos",
         [
-            ("Frequência, formato e duração das reuniões",
-             "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?"),
-            ("Relevância e efetividade das reuniões",
-             "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?"),
+            (
+                "Frequência, formato e duração das reuniões",
+                "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?",
+            ),
+            (
+                "Relevância e efetividade das reuniões",
+                "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?",
+            ),
         ],
     ),
     (
         "Percepção sobre o Desempenho da Carteira",
         [
-            ("Satisfação com o retorno obtido",
-             "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?"),
-            ("Alinhamento entre retorno e perfil de risco",
-             "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?"),
+            (
+                "Satisfação com o retorno obtido",
+                "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?",
+            ),
+            (
+                "Alinhamento entre retorno e perfil de risco",
+                "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?",
+            ),
         ],
     ),
     (
         "Compromisso com a Transparência e Integridade",
         [
-            ("Independência nas recomendações",
-             "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?"),
-            ("Transparência sobre custos e remunerações",
-             "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?"),
+            (
+                "Independência nas recomendações",
+                "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?",
+            ),
+            (
+                "Transparência sobre custos e remunerações",
+                "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?",
+            ),
         ],
     ),
 ]
@@ -375,6 +392,7 @@ HEADERS = (
 )
 
 
+# ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
         from openpyxl import Workbook, load_workbook
@@ -472,7 +490,6 @@ def escala_0a10(key: str) -> int:
 
 # ===================== FLUXO DAS TELAS =====================
 step = st.session_state["step"]
-
 st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
@@ -488,7 +505,7 @@ if step == 1:
 
     st.markdown(
         """
-        <h1 class="h1-tela1">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.6cm);">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
@@ -497,17 +514,21 @@ if step == 1:
 
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    st.markdown("<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>", unsafe_allow_html=True)
+    st.markdown(
+        "<p class='codigo-cliente'><strong>CÓDIGO DO CLIENTE</strong></p>",
+        unsafe_allow_html=True,
+    )
 
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
-    st.markdown("<div style='height:0.9rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
         """
         <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
-          <p class='texto-info-strong' style='margin-bottom:0.35rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
-          <p class='texto-info' style='margin-top:0; font-style: italic;'>
+          <p class='pesquisa-identificada' style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
+
+          <p style='font-size:1.05rem; margin-top:0; font-style: italic; font-weight: 500;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
           </p>
@@ -648,9 +669,7 @@ elif step == 7:
             if ok:
                 st.success("Respostas gravadas com sucesso no Excel! ✔")
             else:
-                st.warning(
-                    f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})"
-                )
+                st.warning(f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})")
 
             st.session_state["step"] = 8
             st.rerun()
@@ -689,4 +708,5 @@ elif step == 8:
 
 st.markdown("</div>", unsafe_allow_html=True)
 
+# -------- RODAPÉ FIXO --------
 st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
