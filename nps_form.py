@@ -18,7 +18,7 @@ st.markdown(
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Mantido para referências */
+/* Ofelia Display Medium (Peso 500) - Usado agora no texto 'CÓDIGO DO CLIENTE' */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 500; 
@@ -34,7 +34,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Extralight.woff2') format('woff2');
 }
 
-/* Ofelia Display Bold (Peso 700) - Títulos Secundários e agora Título Principal (h1) */
+/* Ofelia Display Bold (Peso 700) - Títulos Secundários e Título Principal (h1) */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
@@ -133,7 +133,7 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
-h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; } /* AGORA USA BOLD (700) */
+h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; } /* BOLD (700) */
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
@@ -143,6 +143,21 @@ p, div, span, label {
 }
 
 /* ===================== INPUT DA TELA 1 ===================== */
+
+/* NOVO: Estiliza o texto CÓDIGO DO CLIENTE para Display Medium */
+.codigo-cliente {
+    font-family: 'Ofelia Display', sans-serif !important;
+    font-size: 1.2rem !important;
+    font-weight: 500 !important; /* Medium */
+    text-align: center !important;
+}
+
+/* NOVO: Estiliza o texto Esta é uma pesquisa identificada para Display Regular */
+.pesquisa-identificada strong {
+    font-family: 'Ofelia Display', sans-serif !important;
+    font-weight: 400 !important; /* Regular */
+}
+
 .stTextInput {
   display: flex !important;
   justify-content: center !important;
@@ -497,8 +512,9 @@ if step == 1:
     # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
+    # Aplica a classe CSS 'codigo-cliente' criada acima
     st.markdown(
-        "<p style='font-size:1.2rem;font-weight:650;text-align:center;'>CÓDIGO DO CLIENTE</p>",
+        "<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>",
         unsafe_allow_html=True,
     )
     
@@ -510,7 +526,8 @@ if step == 1:
     st.markdown(
         """
         <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
-          <p style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
+          <p class='pesquisa-identificada' style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
+          
           <p style='font-size:1.05rem; margin-top:0; font-style: italic; font-weight: 500;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
