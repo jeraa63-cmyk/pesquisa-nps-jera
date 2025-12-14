@@ -189,7 +189,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 /* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 400 !important;   /* ✅ Regular conforme manual */
+  font-weight: 400 !important;    /* ✅ Regular conforme manual */
   font-size: 1.02rem !important;
   min-width: 220px !important;
   min-height: 48px !important;
@@ -414,8 +414,11 @@ def _append_to_excel(row_values):
 def escala_1a5(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
+    
+    # ⬇️ AJUSTE AQUI: O valor inicial passa a ser 1 (o mínimo), e não 3.
+    # O usuário deve mover o slider para que a resposta seja marcada como 'touched'.
     if key not in st.session_state:
-        st.session_state[key] = 3
+        st.session_state[key] = 1 
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -448,8 +451,11 @@ def escala_1a5(key: str) -> int:
 def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
+    
+    # ⬇️ AJUSTE AQUI: O valor inicial passa a ser 0 (o mínimo), e não 5.
+    # O usuário deve mover o slider para que a resposta seja marcada como 'touched'.
     if key not in st.session_state:
-        st.session_state[key] = 5
+        st.session_state[key] = 0
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
