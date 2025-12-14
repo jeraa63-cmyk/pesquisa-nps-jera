@@ -6,7 +6,6 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
-# ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
@@ -16,40 +15,41 @@ st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 st.markdown(
     """
 <style>
-/* ===================== FONTES (REVISADO) ===================== */
+/* ===================== FONTES (MANTIDAS, SÓ AJUSTAMOS USO/PESOS) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Usado para CÓDIGO DO CLIENTE */
+/* Ofelia Display Medium (500) */
 @font-face {
   font-family: 'Ofelia Display';
-  font-weight: 500; 
-  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'), 
-       url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
+  font-weight: 500;
+  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'),
+       url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2');
 }
 
-/* Ofelia Display Regular (Peso 400) - Mapeado, mas o Medium/Bold será usado para ênfase */
+/* Ofelia Display Regular (400) */
 @font-face {
   font-family: 'Ofelia Display';
-  font-weight: 400; 
+  font-weight: 400;
   src: url('assets/fontes/OfeliaDisplay-Regular.ttf') format('truetype'),
-       url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2'); 
+       url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2');
 }
 
-/* Ofelia Display Bold (Peso 700) - Títulos Secundários e Título Principal (h1) E AGORA A PESQUISA IDENTIFICADA */
+/* Ofelia Display Bold (700) - se precisar futuramente */
 @font-face {
   font-family: 'Ofelia Display';
-  src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
   font-weight: 700;
+  src: url('assets/fontes/OfeliaDisplay-Bold.ttf') format('truetype'),
+       url('assets/fontes/OfeliaDisplay-Bold.woff2') format('woff2');
 }
 
-/* Ofelia Text Regular (Peso 400) - Textos de corpo */
+/* Ofelia Text Regular (400) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 400;
-  src: url('assets/fontes/OfeliaText-Regular.otf') format('opentype'), 
+  src: url('assets/fontes/OfeliaText-Regular.otf') format('opentype'),
        url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
 }
 
-/* Ofelia Text Medium (Peso 500) - Destaques/Observações */
+/* Ofelia Text Medium (500) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 500;
@@ -57,7 +57,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold/Bold (Peso 650) - Mantido para negritos gerais */
+/* Ofelia Text Semibold (650) */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
@@ -65,13 +65,13 @@ st.markdown(
        url('assets/fontes/OfeliaText-Semibold.woff2') format('woff2');
 }
 
-/* Ofelia Text Medium Italic (Peso 500 Itálico) - Observações Itálico */
+/* Ofelia Text Medium Italic (500 italic) */
 @font-face {
   font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
-       url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
+  src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
+       url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
 }
 
 /* ===================== VARIÁVEIS ===================== */
@@ -96,14 +96,12 @@ html, body, .stApp {
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
 div.block-container {
-  /* Fundo levemente transparente (95% opaco) */
   background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
 
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
-  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -118,9 +116,7 @@ div.block-container {
 }
 
 @media (max-width: 1200px){
-  div.block-container {
-    padding: 2.4rem 2.0rem !important;
-  }
+  div.block-container { padding: 2.4rem 2.0rem !important; }
 }
 
 @media (max-width: 1024px){
@@ -133,7 +129,7 @@ div.block-container {
   }
 }
 
-/* ===================== TIPOGRAFIA RESPONSIVA ===================== */
+/* ===================== TIPOGRAFIA BASE ===================== */
 h1, h2, h3 {
   font-family: 'Ofelia Display', sans-serif !important;
   color: var(--jera-dark);
@@ -141,7 +137,6 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
-h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; } /* BOLD (700) */
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
@@ -150,27 +145,48 @@ p, div, span, label {
   line-height: 1.65 !important;
 }
 
-/* ===================== INPUT DA TELA 1 ===================== */
+/* ===================== TELA 1: TÍTULO MAIS LEVE (manual) ===================== */
+/* (Mantém seu ajuste de subir o título sem afetar logo) */
+.tela-1 .h1-tela1{
+  margin-top: -70px !important;
+  margin-bottom: 0.7rem !important;
 
-/* AJUSTADO: CÓDIGO DO CLIENTE: Ofelia Display Medium (500) - Mantido com ênfase leve */
+  /* ✅ “Premium” e menos pesado */
+  font-family: 'Ofelia Display', sans-serif !important;
+  font-weight: 600 !important; /* mais leve que 700 */
+  font-size: clamp(1.9rem, 2.3vw, 2.5rem) !important;
+  letter-spacing: 0.06em !important; /* essencial p/ caixa alta */
+  color: #0b2f3a !important;
+  text-transform: uppercase !important;
+}
+
+/* ===================== LABEL “CÓDIGO DO CLIENTE” MAIS LEVE ===================== */
 .codigo-cliente {
-    font-family: 'Ofelia Display', sans-serif !important;
-    font-size: 1.2rem !important;
-    font-weight: 500 !important; /* Medium (ênfase visual) */
-    text-align: center !important;
+  font-family: 'Ofelia Text', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.18em !important;
+  text-align: center !important;
+  color: #2f4a55 !important;
+  margin: 0 !important;
 }
 
-/* AJUSTADO PARA NEGIRTO FORTE: Esta é uma pesquisa identificada: Ofelia Display Bold (700) */
-.pesquisa-identificada strong {
-    font-family: 'Ofelia Display', sans-serif !important;
-    font-weight: 700 !important; /* Bold (Negrito Forte) */
+/* ===================== TEXTO EXPLICATIVO MAIS LEVE ===================== */
+.texto-info {
+  font-family: 'Ofelia Text', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.6 !important;
+  color: #4a646f !important;
 }
 
-/* Remove o negrito padrão do strong se for usado em textos comuns */
-p strong {
-  font-weight: 650 !important; /* Mantém um peso forte para negritos gerais */
+.texto-info-strong {
+  font-family: 'Ofelia Text', sans-serif !important;
+  font-weight: 500 !important;
+  color: #0b2f3a !important;
 }
 
+/* ===================== INPUT DA TELA 1 ===================== */
 .stTextInput {
   display: flex !important;
   justify-content: center !important;
@@ -188,31 +204,29 @@ p strong {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-/* CORREÇÃO DO PLACEHOLDER */
 .stTextInput input::placeholder {
-    color: #a0a0a0 !important; 
-    opacity: 1 !important;
+  color: #a0a0a0 !important;
+  opacity: 1 !important;
 }
 
-/* CORREÇÃO DEFINITIVA (Versão 4.0): Oculta a mensagem de Press Enter / Contagem de caracteres */
+/* Oculta “Press Enter” / contador */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
-    display: none !important;
+  display: none !important;
 }
 
-
-/* ===================== BOTÕES ===================== */
+/* ===================== BOTÕES (mais leve) ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
   background: #052B38 !important;
   color: white !important;
   border: 2px solid #052B38 !important;
   border-radius: 12px !important;
-  font-weight: 650 !important;
-  font-size: 1.05rem !important;
+  font-weight: 500 !important;              /* ✅ mais leve */
+  font-size: 1.02rem !important;
   min-width: 220px !important;
   min-height: 50px !important;
   transition: all 0.25s ease-in-out;
-  box-shadow: 0 6px 14px rgba(0,0,0,.15);
+  box-shadow: 0 3px 8px rgba(0,0,0,.12) !important;  /* ✅ menos sombra */
 }
 .stButton > button:hover {
   background: #00C1AD !important;
@@ -221,17 +235,10 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 
 /* ===================== BLOCO DE CONTEÚDO ===================== */
-.page {
-  width: 100% !important;
-  max-width: 1050px !important;
-}
+.page { width: 100% !important; max-width: 1050px !important; }
 
 /* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
-.scale-wrap {
-  width: 100%;
-  max-width: 760px;
-  margin: 0.6rem auto 1.4rem auto;
-}
+.scale-wrap { width: 100%; max-width: 760px; margin: 0.6rem auto 1.4rem auto; }
 
 .scale-ends {
   display:flex;
@@ -244,7 +251,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0;
   width: 100%;
   margin-top: 0.35rem;
   text-align: center;
@@ -254,7 +260,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
-  gap: 0;
   width: 100%;
   margin-top: 0.4rem;
   text-align: center;
@@ -267,7 +272,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-5 div { font-size: 0.95rem !important; }
 }
 
-/* ===================== ESTILO DO SLIDER (cor do track/bolinha) ===================== */
+/* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
 div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
@@ -288,12 +293,6 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   z-index: 9999 !important;
   pointer-events: none;
 }
-
-/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
-.tela-1 .h1-tela1{
-  margin-top: -70px !important;        /* mantém o espaço logo -> título */
-  margin-bottom: 0.5rem !important;
-}
 </style>
 """,
     unsafe_allow_html=True,
@@ -306,7 +305,6 @@ LOGO_FULL = ASSETS / "jera-logo-full.png"
 
 
 def _img_data_uri(p: Path) -> str:
-    # Função para converter imagem em URI de dados (Base64)
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
 
 
@@ -317,7 +315,6 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -327,66 +324,46 @@ BLOCOS = [
     (
         "Qualidade do Relacionamento com a Equipe Jera",
         [
-            (
-                "Tempo de resolução às solicitações",
-                "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?",
-            ),
-            (
-                "Proatividade na comunicação",
-                "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?",
-            ),
+            ("Tempo de resolução às solicitações",
+             "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?"),
+            ("Proatividade na comunicação",
+             "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?"),
         ],
     ),
     (
         "Clareza e Relevância das Informações Prestadas",
         [
-            (
-                "Clareza das informações apresentadas",
-                "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?",
-            ),
-            (
-                "Compreensão dos resultados",
-                "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?",
-            ),
+            ("Clareza das informações apresentadas",
+             "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?"),
+            ("Compreensão dos resultados",
+             "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?"),
         ],
     ),
     (
         "Efetividade dos Encontros e Alinhamentos",
         [
-            (
-                "Frequência, formato e duração das reuniões",
-                "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?",
-            ),
-            (
-                "Relevância e efetividade das reuniões",
-                "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?",
-            ),
+            ("Frequência, formato e duração das reuniões",
+             "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?"),
+            ("Relevância e efetividade das reuniões",
+             "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?"),
         ],
     ),
     (
         "Percepção sobre o Desempenho da Carteira",
         [
-            (
-                "Satisfação com o retorno obtido",
-                "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?",
-            ),
-            (
-                "Alinhamento entre retorno e perfil de risco",
-                "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?",
-            ),
+            ("Satisfação com o retorno obtido",
+             "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?"),
+            ("Alinhamento entre retorno e perfil de risco",
+             "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?"),
         ],
     ),
     (
         "Compromisso com a Transparência e Integridade",
         [
-            (
-                "Independência nas recomendações",
-                "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?",
-            ),
-            (
-                "Transparência sobre custos e remunerações",
-                "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?",
-            ),
+            ("Independência nas recomendações",
+             "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?"),
+            ("Transparência sobre custos e remunerações",
+             "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?"),
         ],
     ),
 ]
@@ -397,7 +374,7 @@ HEADERS = (
     + ["coment_final"]
 )
 
-# ===================== FUNÇÕES AUXILIARES =====================
+
 def _append_to_excel(row_values):
     try:
         from openpyxl import Workbook, load_workbook
@@ -427,14 +404,10 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
-    """
-    Slider centralizado + rótulos alinhados.
-    Exige "touched" para considerar válido.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
+        st.session_state[key] = 3
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -469,7 +442,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
+        st.session_state[key] = 5
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -515,33 +488,26 @@ if step == 1:
 
     st.markdown(
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.6cm);">
+        <h1 class="h1-tela1">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
         unsafe_allow_html=True,
     )
 
-    # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # CÓDIGO DO CLIENTE: Ofelia Display Medium (500)
-    st.markdown(
-        "<p class='codigo-cliente'><strong>CÓDIGO DO CLIENTE</strong></p>",
-        unsafe_allow_html=True,
-    )
-    
-    # placeholder para "Ex.: APELIDO" e max_chars=20 mantido para validação
+    st.markdown("<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>", unsafe_allow_html=True)
+
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
-    st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:0.9rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
         """
         <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
-          <p class='pesquisa-identificada' style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
-          
-          <p style='font-size:1.05rem; margin-top:0; font-style: italic; font-weight: 500;'>
+          <p class='texto-info-strong' style='margin-bottom:0.35rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
+          <p class='texto-info' style='margin-top:0; font-style: italic;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
           </p>
@@ -552,7 +518,6 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # Centralização estável do botão (ajuste fino via proporção das colunas)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -562,7 +527,7 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -683,7 +648,9 @@ elif step == 7:
             if ok:
                 st.success("Respostas gravadas com sucesso no Excel! ✔")
             else:
-                st.warning(f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})")
+                st.warning(
+                    f"Não foi possível gravar no Excel. As respostas foram salvas em responses.csv. (Erro: {_msg})"
+                )
 
             st.session_state["step"] = 8
             st.rerun()
@@ -722,5 +689,4 @@ elif step == 8:
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# -------- RODAPÉ FIXO --------
 st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
