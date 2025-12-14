@@ -221,11 +221,14 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTES FINOS (SÓ TELA 1) ===================== */
+/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* controla só o espaço logo -> título */
+  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
   margin-bottom: 0.5rem !important;
-  transform: translateX(0.5cm);      /* ✅ move o título 0,5cm pra direita */
+
+  /* ✅ NOVO: move SOMENTE o título 0,5cm para a direita */
+  position: relative !important;
+  left: 0.5cm !important;
 }
 </style>
 """,
@@ -454,7 +457,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    # ✅ “Uma linha” (espaço) ENTRE o título e "CÓDIGO DO CLIENTE"
+    # ✅ espaço entre título e código
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -480,7 +483,6 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ Centralização estável do botão (ajuste fino via proporção das colunas)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -490,7 +492,7 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
@@ -639,10 +641,8 @@ elif step == 8:
 
     if st.button("➕ Enviar nova resposta"):
         for k in list(st.session_state.keys()):
-            # Limpa as variáveis de estado de perguntas e feedback
             if k.startswith("respostas_") or k in ["nps_score", "coment_final"]:
                 st.session_state.pop(k, None)
-            # Limpa as flags de toque do slider
             if k.endswith("__touched"):
                 st.session_state.pop(k, None)
 
