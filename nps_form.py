@@ -16,38 +16,47 @@ st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 st.markdown(
     """
 <style>
-/* ===================== FONTES ===================== */
+/* ===================== FONTES (REVISADO) ===================== */
+
+/* NOVO: Ofelia Display Extra Light (Peso 200) - Título Principal */
+@font-face {
+  font-family: 'Ofelia Display';
+  font-weight: 200;
+  src: url('assets/fontes/OfeliaDisplay-Extralight.ttf') format('truetype'),
+       url('assets/fontes/OfeliaDisplay-Extralight.woff2') format('woff2'); /* Adicionar outros formatos se houver */
+}
+
+/* Ofelia Display Bold (Peso 700) - Títulos Secundários */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
   font-weight: 700;
 }
-@font-face {
-  font-family: 'Ofelia Display';
-  src: url('assets/fontes/OfeliaDisplay-Extrabold.ttf') format('truetype'); 
-  font-weight: 800; /* NOVO: EXTRA BOLD */
-}
+
+/* Ofelia Text Regular (Peso 400) - Textos de corpo */
 @font-face {
   font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
   font-weight: 400;
+  /* Use .otf e .ttf conforme listado nos seus arquivos */
+  src: url('assets/fontes/OfeliaText-Regular.otf') format('opentype'), 
+       url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
 }
+
+/* Ofelia Text Medium (Peso 500) - Destaques/Observações */
 @font-face {
   font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
   font-weight: 500;
+  src: url('assets/fontes/OfeliaText-Medium.otf') format('opentype'),
+       url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
-/* ADICIONADO: VARIANT MEDIUM ITALIC */
+
+/* Ofelia Text Medium Italic (Peso 500 Itálico) - Observações Itálico */
 @font-face {
   font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype'); 
+  src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
+       url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
-}
-@font-face {
-  font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
-  font-weight: 300;
 }
 
 /* ===================== VARIÁVEIS ===================== */
@@ -117,7 +126,7 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
-h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 800 !important; } /* AGORA USA EXTRA BOLD (800) */
+h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 200 !important; } /* AGORA USA EXTRA LIGHT (200) */
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
@@ -144,8 +153,13 @@ p, div, span, label {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
+/* CORREÇÃO DO PLACEHOLDER */
+.stTextInput input::placeholder {
+    color: #a0a0a0 !important; 
+    opacity: 1 !important;
+}
+
 /* CORREÇÃO DEFINITIVA (Versão 4.0): Oculta a mensagem de Press Enter / Contagem de caracteres */
-/* Mirando o elemento que contém o contador/dica, que é o último no container de metadados */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     display: none !important;
 }
