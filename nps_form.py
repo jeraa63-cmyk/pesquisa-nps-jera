@@ -446,9 +446,9 @@ if step == 1:
         )
 
     st.markdown(
-        # CORRIGIDO: transform: translateX(0.8cm);
+        # CORRIGIDO: transform: translateX(-0.3cm);
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.8cm);">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(-0.3cm);">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
