@@ -23,6 +23,11 @@ st.markdown(
   font-weight: 700;
 }
 @font-face {
+  font-family: 'Ofelia Display';
+  src: url('assets/fontes/OfeliaDisplay-Extrabold.ttf') format('truetype'); 
+  font-weight: 800; /* NOVO: EXTRA BOLD */
+}
+@font-face {
   font-family: 'Ofelia Text';
   src: url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -112,7 +117,7 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
-h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; }
+h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 800 !important; } /* AGORA USA EXTRA BOLD (800) */
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
@@ -139,15 +144,9 @@ p, div, span, label {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-/* CORREÇÃO DEFINITIVA (Versão 3.0): Oculta a mensagem de Press Enter / Contagem de caracteres */
-/* Esta regra é mais genérica e mira o container do label e do contador do st.text_input. */
-div[data-testid="stTextInput"] > div > div:nth-child(1) {
-    /* Garante que o container interno é flex para que o nth-child(2) funcione */
-    display: flex;
-    justify-content: space-between; 
-}
-/* Oculta o elemento específico do contador/dicas (o que tem a mensagem "Press Enter...") */
-div[data-testid="stTextInput"] > div > div:nth-child(1) > div:nth-child(2) {
+/* CORREÇÃO DEFINITIVA (Versão 4.0): Oculta a mensagem de Press Enter / Contagem de caracteres */
+/* Mirando o elemento que contém o contador/dica, que é o último no container de metadados */
+div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     display: none !important;
 }
 
