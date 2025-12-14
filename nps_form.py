@@ -139,14 +139,11 @@ p, div, span, label {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-/* CORREÇÃO REFORÇADA: Oculta a mensagem "Press Enter to apply / 0/20" */
-[data-testid="stTextInput"] > div:nth-child(2) {
-  visibility: hidden !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  pointer-events: none !important;
+/* CORREÇÃO DEFINITIVA: Oculta a mensagem "Press Enter to apply / 0/20" */
+div[data-testid="stTextInput"] > div:nth-child(1) > div:nth-child(3) {
+  display: none !important;
 }
+
 
 /* ===================== BOTÕES ===================== */
 .stButton > button {
