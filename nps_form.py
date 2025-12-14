@@ -14,11 +14,11 @@ SHOW_INTERNAL_NPS = False
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
-    """
+    r"""
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Mapeado, mas NÃO será usado para "CÓDIGO DO CLIENTE" */
+/* Ofelia Display Medium (Peso 500) - mapeado (caso use em algum ponto) */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 500; 
@@ -26,7 +26,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Regular (Peso 400) - Usado para "CÓDIGO DO CLIENTE" */
+/* Ofelia Display Regular (Peso 400) */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 400; 
@@ -34,7 +34,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Bold (Peso 700) - Título Principal (h1) e destaques */
+/* Ofelia Display Bold (Peso 700) */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
@@ -57,7 +57,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold/Bold (Peso 650) - Negritos gerais */
+/* Ofelia Text Semibold (Peso 650) - Negritos gerais */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
@@ -65,7 +65,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Semibold.woff2') format('woff2');
 }
 
-/* Ofelia Text Medium Italic (Peso 500 Itálico) - Observações Itálico */
+/* Ofelia Text Medium Italic (Peso 500 Itálico) */
 @font-face {
   font-family: 'Ofelia Text';
   src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
@@ -152,24 +152,22 @@ p, div, span, label {
 
 /* ===================== INPUT DA TELA 1 ===================== */
 
-/* ✅ AJUSTADO (fiel ao manual): CÓDIGO DO CLIENTE = Ofelia Display Regular (400) */
+/* ✅ AJUSTE "MANUAL DA MARCA" (somente CÓDIGO DO CLIENTE) */
 .codigo-cliente {
-  font-family: 'Ofelia Display', sans-serif !important;
-  font-size: 1.15rem !important;
-  font-weight: 400 !important;        /* Regular */
-  letter-spacing: 0.08em !important;  /* “cara” de rótulo */
-  text-align: center !important;
-  color: #1F3A44 !important;
-  margin: 0.2rem 0 0.6rem 0 !important;
+    font-family: 'Ofelia Display', sans-serif !important;
+    font-size: 1.1rem !important;       /* antes: 1.2rem */
+    font-weight: 400 !important;        /* display regular, mais leve */
+    letter-spacing: 0.06em !important;  /* antes: 0.08em (ou sem) */
+    text-align: center !important;
 }
 
-/* AJUSTADO PARA NEGRITO FORTE: "Esta é uma pesquisa identificada." */
+/* "Esta é uma pesquisa identificada." com Display Bold (700) */
 .pesquisa-identificada strong {
-  font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 700 !important;
+    font-family: 'Ofelia Display', sans-serif !important;
+    font-weight: 700 !important;
 }
 
-/* Negrito padrão em textos gerais */
+/* Negritos gerais */
 p strong {
   font-weight: 650 !important;
 }
@@ -192,15 +190,15 @@ p strong {
   width: 285px !important;
 }
 
-/* CORREÇÃO DO PLACEHOLDER */
+/* Placeholder */
 .stTextInput input::placeholder {
-  color: #a0a0a0 !important; 
-  opacity: 1 !important;
+    color: #a0a0a0 !important; 
+    opacity: 1 !important;
 }
 
-/* Oculta mensagem de "Press Enter" / contador */
+/* Oculta "Press Enter"/contagem */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
-  display: none !important;
+    display: none !important;
 }
 
 /* ===================== BOTÕES ===================== */
@@ -294,9 +292,10 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 
 /* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;        /* mantém o espaço logo -> título */
+  margin-top: -70px !important;
   margin-bottom: 0.5rem !important;
 }
+
 </style>
 """,
     unsafe_allow_html=True,
@@ -319,6 +318,7 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
+# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -428,10 +428,14 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
+    """
+    Slider centralizado + rótulos alinhados.
+    Exige "touched" para considerar válido.
+    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3
+        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -466,7 +470,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5
+        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -512,17 +516,21 @@ if step == 1:
 
     st.markdown(
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.6cm);">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
         unsafe_allow_html=True,
     )
 
+    # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ agora sem <strong> para não “pesar” e ficar fiel ao manual
-    st.markdown("<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>", unsafe_allow_html=True)
+    # CÓDIGO DO CLIENTE (ajustado via CSS .codigo-cliente)
+    st.markdown(
+        "<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>",
+        unsafe_allow_html=True,
+    )
 
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
@@ -543,6 +551,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
+    # Centralização estável do botão
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -552,7 +561,7 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
