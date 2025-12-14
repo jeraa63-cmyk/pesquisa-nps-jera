@@ -18,38 +18,38 @@ st.markdown(
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Usado para CÓDIGO DO CLIENTE */
+/* Ofelia Display Medium (Peso 500) - Mapeado, mas NÃO será usado para "CÓDIGO DO CLIENTE" */
 @font-face {
   font-family: 'Ofelia Display';
-  font-weight: 500;
-  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'),
-       url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2');
+  font-weight: 500; 
+  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'), 
+       url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Regular (Peso 400) */
+/* Ofelia Display Regular (Peso 400) - Usado para "CÓDIGO DO CLIENTE" */
 @font-face {
   font-family: 'Ofelia Display';
-  font-weight: 400;
+  font-weight: 400; 
   src: url('assets/fontes/OfeliaDisplay-Regular.ttf') format('truetype'),
-       url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2');
+       url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Bold (Peso 700) */
+/* Ofelia Display Bold (Peso 700) - Título Principal (h1) e destaques */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 
-/* Ofelia Text Regular (Peso 400) */
+/* Ofelia Text Regular (Peso 400) - Textos de corpo */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 400;
-  src: url('assets/fontes/OfeliaText-Regular.otf') format('opentype'),
+  src: url('assets/fontes/OfeliaText-Regular.otf') format('opentype'), 
        url('assets/fontes/OfeliaText-Regular.ttf') format('truetype');
 }
 
-/* Ofelia Text Medium (Peso 500) */
+/* Ofelia Text Medium (Peso 500) - Destaques/Observações */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 500;
@@ -57,7 +57,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold (Peso 650) */
+/* Ofelia Text Semibold/Bold (Peso 650) - Negritos gerais */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
@@ -65,7 +65,7 @@ st.markdown(
        url('assets/fontes/OfeliaText-Semibold.woff2') format('woff2');
 }
 
-/* Ofelia Text Medium Italic (Peso 500 Itálico) */
+/* Ofelia Text Medium Italic (Peso 500 Itálico) - Observações Itálico */
 @font-face {
   font-family: 'Ofelia Text';
   src: url('assets/fontes/OfeliaText-MediumItalic.otf') format('opentype'),
@@ -96,12 +96,14 @@ html, body, .stApp {
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
 div.block-container {
+  /* Fundo levemente transparente (95% opaco) */
   background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
 
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
+  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -116,7 +118,9 @@ div.block-container {
 }
 
 @media (max-width: 1200px){
-  div.block-container { padding: 2.4rem 2.0rem !important; }
+  div.block-container {
+    padding: 2.4rem 2.0rem !important;
+  }
 }
 
 @media (max-width: 1024px){
@@ -148,22 +152,24 @@ p, div, span, label {
 
 /* ===================== INPUT DA TELA 1 ===================== */
 
-/* ✅ AJUSTE 1 (micro): label um pouco mais escuro para legibilidade */
+/* ✅ AJUSTADO (fiel ao manual): CÓDIGO DO CLIENTE = Ofelia Display Regular (400) */
 .codigo-cliente {
   font-family: 'Ofelia Display', sans-serif !important;
-  font-size: 1.2rem !important;
-  font-weight: 500 !important;
+  font-size: 1.15rem !important;
+  font-weight: 400 !important;        /* Regular */
+  letter-spacing: 0.08em !important;  /* “cara” de rótulo */
   text-align: center !important;
-  color: #1F3A44 !important;   /* antes ficava muito claro em alguns monitores */
+  color: #1F3A44 !important;
+  margin: 0.2rem 0 0.6rem 0 !important;
 }
 
-/* Destaque: “Esta é uma pesquisa identificada.” */
+/* AJUSTADO PARA NEGRITO FORTE: "Esta é uma pesquisa identificada." */
 .pesquisa-identificada strong {
   font-family: 'Ofelia Display', sans-serif !important;
   font-weight: 700 !important;
 }
 
-/* Negritos gerais */
+/* Negrito padrão em textos gerais */
 p strong {
   font-weight: 650 !important;
 }
@@ -185,10 +191,14 @@ p strong {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
+
+/* CORREÇÃO DO PLACEHOLDER */
 .stTextInput input::placeholder {
-  color: #a0a0a0 !important;
+  color: #a0a0a0 !important; 
   opacity: 1 !important;
 }
+
+/* Oculta mensagem de "Press Enter" / contador */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   display: none !important;
 }
@@ -284,11 +294,8 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 
 /* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;
+  margin-top: -70px !important;        /* mantém o espaço logo -> título */
   margin-bottom: 0.5rem !important;
-
-  /* ✅ AJUSTE 2 (micro): reduz um pouco o “aberto” do título (tracking) */
-  letter-spacing: 0.03em !important;  /* se quiser mais fechado ainda: 0.02em */
 }
 </style>
 """,
@@ -391,7 +398,6 @@ HEADERS = (
     + ["coment_final"]
 )
 
-
 # ===================== FUNÇÕES AUXILIARES =====================
 def _append_to_excel(row_values):
     try:
@@ -490,6 +496,7 @@ def escala_0a10(key: str) -> int:
 
 # ===================== FLUXO DAS TELAS =====================
 step = st.session_state["step"]
+
 st.markdown("<div class='page'>", unsafe_allow_html=True)
 
 # -------- TELA 1 --------
@@ -514,10 +521,8 @@ if step == 1:
 
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    st.markdown(
-        "<p class='codigo-cliente'><strong>CÓDIGO DO CLIENTE</strong></p>",
-        unsafe_allow_html=True,
-    )
+    # ✅ agora sem <strong> para não “pesar” e ficar fiel ao manual
+    st.markdown("<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>", unsafe_allow_html=True)
 
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
@@ -527,7 +532,6 @@ if step == 1:
         """
         <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
           <p class='pesquisa-identificada' style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
-
           <p style='font-size:1.05rem; margin-top:0; font-style: italic; font-weight: 500;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
