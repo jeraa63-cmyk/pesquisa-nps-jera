@@ -189,7 +189,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 /* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 400 !important;
+  font-weight: 400 !important;    /* ✅ Regular conforme manual */
   font-size: 1.02rem !important;
   min-width: 220px !important;
   min-height: 48px !important;
@@ -224,19 +224,42 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin: 0.6rem auto 1.4rem auto;
 }
 
-/* ✅ NOVO: numeração 1–5 em todos os pontos (alinhada no grid) */
-.scale-numbers-5{
+/* (mantido para 0–10, etc.) */
+.scale-ends {
+  display:flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.95rem !important;
+  margin-top: -0.35rem;
+}
+
+/* ✅ NOVO: NUMERAÇÃO COMPLETA 1–5 */
+.scale-numbers-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 0;
   width: 100%;
   margin-top: -0.35rem;
   margin-bottom: 0.15rem;
+  text-align: center;
   color: var(--muted);
   font-size: 0.95rem !important;
+}
+.scale-numbers-5 div {
+  white-space: nowrap !important;
   text-align: center;
 }
-.scale-numbers-5 div:nth-child(1){ text-align: left; }
-.scale-numbers-5 div:nth-child(5){ text-align: right; }
+.scale-numbers-5 div:nth-child(1) {
+  text-align: left;
+  padding-left: 0.5rem;
+}
+.scale-numbers-5 div:nth-child(5) {
+  text-align: right;
+  padding-right: 0.5rem;
+}
+/* ✅ AJUSTE FINO PEDIDO: 2 vai 1cm para esquerda e 4 vai 1cm para direita */
+.scale-numbers-5 div:nth-child(2) { transform: translateX(-1cm); }
+.scale-numbers-5 div:nth-child(4) { transform: translateX(1cm); }
 
 /* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
@@ -311,12 +334,16 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
 
-  /* Mantém os ajustes internos principais */
+  /* Mantém os ajustes internos principais (labels) */
   .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
   .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
   .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
+
+  /* Mantém também no mobile o ajuste dos números 2 e 4 */
+  .scale-numbers-5 div:nth-child(2) { transform: translateX(-1cm); }
+  .scale-numbers-5 div:nth-child(4) { transform: translateX(1cm); }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
