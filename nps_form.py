@@ -222,11 +222,9 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 }
 
 /* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
-/* REVERTIDO: Mantendo apenas margens para posicionamento vertical. */
 .tela-1 .h1-tela1{
   margin-top: -70px !important;        /* mantém o espaço logo -> título */
   margin-bottom: 0.5rem !important;
-  /* O transform será adicionado inline no h1 */
 }
 </style>
 """,
@@ -448,9 +446,9 @@ if step == 1:
         )
 
     st.markdown(
-        # AQUI FOI ADICIONADO: transform: translateX(1cm);
+        # ALTERADO: transform: translateX(1cm); -> transform: translateX(-0.5cm);
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(1cm);">
+        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(-0.5cm);">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
