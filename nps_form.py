@@ -244,39 +244,39 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-labels-5 div { 
     white-space: nowrap !important; 
     font-size: 1.0rem !important; 
-    text-align: center; /* Garantir que o texto esteja centralizado na célula por padrão */
+    text-align: center;
 }
 
 /* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS */
 /* ------------------------------------------------------------------ */
 
-/* 1 - Péssimo: Manter no centro da coluna, mas ajustar o container para Streamlit */
+/* 1 - Péssimo: 0,5cm para a esquerda */
 .scale-labels-5 div:nth-child(1) {
-    transform: translateX(0); /* Sem deslocamento de texto */
-    text-align: left; 
-    padding-left: 0.7rem; 
+    transform: translateX(-0.5cm);
+    text-align: left;
+    padding-left: 0.7rem;
 }
 
-/* 2 - Ruim: MOVER 1cm PARA ESQUERDA */
+/* 2 - Ruim: mais 0,5cm para a esquerda (total -1,5cm) */
 .scale-labels-5 div:nth-child(2) {
-    transform: translateX(-1cm);
+    transform: translateX(-1.5cm);
 }
 
-/* 3 - Regular: OK no centro (Ponto de referência) */
+/* 3 - Regular: centro */
 .scale-labels-5 div:nth-child(3) {
-    transform: translateX(0); 
+    transform: translateX(0);
 }
 
-/* 4 - Bom: MOVER 1cm PARA DIREITA */
+/* 4 - Bom: mais 0,5cm para a direita (total +1,5cm) */
 .scale-labels-5 div:nth-child(4) {
-    transform: translateX(1cm);
+    transform: translateX(1.5cm);
 }
 
-/* 5 - Excelente: Manter no centro da coluna, mas ajustar o container para Streamlit */
+/* 5 - Excelente: 0,5cm para a direita */
 .scale-labels-5 div:nth-child(5) {
-    transform: translateX(0); /* Sem deslocamento de texto */
-    text-align: right; 
-    padding-right: 0.7rem; 
+    transform: translateX(0.5cm);
+    text-align: right;
+    padding-right: 0.7rem;
 }
 
 
@@ -296,12 +296,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 
 /* Compensação visual para Streamlit */
 .scale-labels-11 div:nth-child(1) {
-    text-align: left; /* Alinha o texto na borda esquerda (0) */
-    padding-left: 0.5rem; /* Ajuste fino */
+    text-align: left;
+    padding-left: 0.5rem;
 }
 .scale-labels-11 div:nth-child(11) {
-    text-align: right; /* Alinha o texto na borda direita (10) */
-    padding-right: 0.5rem; /* Ajuste fino */
+    text-align: right;
+    padding-right: 0.5rem;
 }
 
 
@@ -309,19 +309,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  
+
   /* Mantém os ajustes internos principais */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-1cm); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(1cm); }
-  
-  /* Mantém os ajustes de borda */
-  .scale-labels-5 div:nth-child(1) { transform: translateX(0); }
-  .scale-labels-5 div:nth-child(5) { transform: translateX(0); }
+  .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
+  .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
+  .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
+  .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-/* Manter ou ajustar o padding interno do slider */
 div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } 
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
@@ -352,9 +350,9 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 /* ===================== NOVO ESTILO PARA INSTRUÇÃO DE SLIDER ===================== */
 .slider-instruction {
     text-align: center; 
-    color: #00C1AD; /* Cor primária Jera */
+    color: #00C1AD;
     font-weight: 600; 
-    margin-top: -1.0rem; /* Traz para perto do slider */
+    margin-top: -1.0rem;
     margin-bottom: 0.5rem;
     font-size: 1.0rem !important;
 }
