@@ -18,16 +18,15 @@ st.markdown(
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* NOVO: Ofelia Display Medium (Peso 500) - Título Principal */
-/* Revertido para Ofelia Display, mas com peso 500, buscando a fonte Medium */
+/* Ofelia Display Medium (Peso 500) - Mantido para referências */
 @font-face {
   font-family: 'Ofelia Display';
-  font-weight: 500; /* Mapeando o Medium para este peso */
-  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'), /* Se você tiver o arquivo Display Medium */
+  font-weight: 500; 
+  src: url('assets/fontes/OfeliaDisplay-Medium.ttf') format('truetype'), 
        url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Extra Light (Peso 200) - Mantido caso queira reverter */
+/* Ofelia Display Extra Light (Peso 200) - Mantido para referências */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 200;
@@ -35,7 +34,7 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Extralight.woff2') format('woff2');
 }
 
-/* Ofelia Display Bold (Peso 700) - Títulos Secundários */
+/* Ofelia Display Bold (Peso 700) - Títulos Secundários e agora Título Principal (h1) */
 @font-face {
   font-family: 'Ofelia Display';
   src: url('assets/fontes/OfeliaText-Bold.ttf') format('truetype');
@@ -134,7 +133,7 @@ h1, h2, h3 {
   margin-top: 0.4rem !important;
 }
 
-h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 500 !important; } /* AGORA USA MEDIUM (500) */
+h1 { font-size: clamp(2.2rem, 3.2vw, 3.6rem) !important; font-weight: 700 !important; } /* AGORA USA BOLD (700) */
 h2 { font-size: clamp(1.6rem, 2.3vw, 2.4rem) !important; font-weight: 650 !important; margin-bottom: 1.6rem !important; }
 h3 { font-size: clamp(1.2rem, 1.8vw, 2.0rem) !important; font-weight: 550 !important; }
 
