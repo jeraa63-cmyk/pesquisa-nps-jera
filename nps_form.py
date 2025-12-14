@@ -139,9 +139,16 @@ p, div, span, label {
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-/* CORREÇÃO DEFINITIVA: Oculta a mensagem "Press Enter to apply / 0/20" */
-div[data-testid="stTextInput"] > div > div:nth-child(3) {
-  display: none !important;
+/* CORREÇÃO DEFINITIVA (Versão 3.0): Oculta a mensagem de Press Enter / Contagem de caracteres */
+/* Esta regra é mais genérica e mira o container do label e do contador do st.text_input. */
+div[data-testid="stTextInput"] > div > div:nth-child(1) {
+    /* Garante que o container interno é flex para que o nth-child(2) funcione */
+    display: flex;
+    justify-content: space-between; 
+}
+/* Oculta o elemento específico do contador/dicas (o que tem a mensagem "Press Enter...") */
+div[data-testid="stTextInput"] > div > div:nth-child(1) > div:nth-child(2) {
+    display: none !important;
 }
 
 
