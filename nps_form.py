@@ -221,14 +221,13 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTE APENAS DO ESPAÇO LOGO -> TÍTULO ===================== */
+/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
 .tela-1 .h1-tela1{
-  margin-top: -70px !important;      /* sobe o título, ignorando o h1 global */
+  margin-top: -70px !important;       /* mantém o espaço logo -> título */
   margin-bottom: 0.5rem !important;
 
-  /* ✅ NOVO: move SOMENTE o título 0,5cm para a direita */
-  position: relative !important;
-  left: 0.5cm !important;
+  /* ✅ NOVO: move somente o título 1cm para a direita */
+  transform: translateX(1cm) !important;
 }
 </style>
 """,
@@ -457,7 +456,7 @@ if step == 1:
         unsafe_allow_html=True,
     )
 
-    # ✅ espaço entre título e código
+    # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -483,6 +482,7 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
+    # Centralização estável do botão (ajuste fino via proporção das colunas)
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -492,7 +492,7 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
