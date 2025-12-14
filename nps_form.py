@@ -248,31 +248,31 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     text-align: center; /* Garantindo que o texto esteja centralizado na sua célula */
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (GRUPOS DE 15PX) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (FOCO EM 2 e 4) */
 
-/* 1 - Péssimo: Mover para a esquerda */
+/* 1 - Péssimo: Manter no centro da coluna (0) */
 .scale-labels-5 div:nth-child(1) {
-    transform: translateX(-15px); 
+    transform: translateX(0); 
 }
 
-/* 2 - Ruim: Mover para a esquerda */
+/* 2 - Ruim: Puxar para a esquerda (Compensação de largura do texto) */
 .scale-labels-5 div:nth-child(2) {
     transform: translateX(-15px); 
 }
 
-/* 3 - Regular: Mantém no centro (ponto de referência) */
+/* 3 - Regular: Manter no centro (Referência) */
 .scale-labels-5 div:nth-child(3) {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: Mover para a direita */
+/* 4 - Bom: Puxar para a direita (Compensação de largura do texto) */
 .scale-labels-5 div:nth-child(4) {
     transform: translateX(15px); 
 }
 
-/* 5 - Excelente: Mover para a direita */
+/* 5 - Excelente: Manter no centro da coluna (0) */
 .scale-labels-5 div:nth-child(5) {
-    transform: translateX(15px); 
+    transform: translateX(0); 
 }
 
 
@@ -290,12 +290,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10: 0 para esquerda (-15px) e 10 para direita (15px) */
+/* Extremos do 0-10: Sem deslocamento nos extremos (0 e 10) e nos internos */
 .scale-labels-11 div:nth-child(1) {
-    transform: translateX(-15px); 
+    transform: translateX(0); 
 }
 .scale-labels-11 div:nth-child(11) {
-    transform: translateX(15px); 
+    transform: translateX(0); 
 }
 
 
@@ -303,11 +303,13 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Mantém os ajustes internos e externos */
-  .scale-labels-5 div:nth-child(1) { transform: translateX(-15px); }
+  /* Mantém os ajustes internos principais */
   .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
-  .scale-labels-5 div:nth-child(5) { transform: translateX(15px); }
+  
+  /* Garantindo que os externos fiquem sem deslocamento extra em telas pequenas */
+  .scale-labels-5 div:nth-child(1) { transform: translateX(0); }
+  .scale-labels-5 div:nth-child(5) { transform: translateX(0); }
 }
 
 /* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
