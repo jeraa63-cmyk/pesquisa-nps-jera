@@ -257,9 +257,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     padding-left: 0.7rem; 
 }
 
-/* 2 - Ruim: MOVER PARA ESQUERDA (compensar o texto mais curto) */
+/* 2 - Ruim: MOVER 1cm PARA ESQUERDA */
 .scale-labels-5 div:nth-child(2) {
-    transform: translateX(-15px); 
+    transform: translateX(-1cm);
 }
 
 /* 3 - Regular: OK no centro (Ponto de referência) */
@@ -267,9 +267,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     transform: translateX(0); 
 }
 
-/* 4 - Bom: MOVER PARA DIREITA (compensar o texto mais curto) */
+/* 4 - Bom: MOVER 1cm PARA DIREITA */
 .scale-labels-5 div:nth-child(4) {
-    transform: translateX(15px); 
+    transform: translateX(1cm);
 }
 
 /* 5 - Excelente: Manter no centro da coluna, mas ajustar o container para Streamlit */
@@ -311,8 +311,8 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-5 div { font-size: 0.95rem !important; }
   
   /* Mantém os ajustes internos principais */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-15px); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(15px); }
+  .scale-labels-5 div:nth-child(2) { transform: translateX(-1cm); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(1cm); }
   
   /* Mantém os ajustes de borda */
   .scale-labels-5 div:nth-child(1) { transform: translateX(0); }
