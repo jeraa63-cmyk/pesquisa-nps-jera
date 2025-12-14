@@ -103,7 +103,6 @@ div.block-container {
   width: min(1200px, 96vw) !important;
   margin: 2vh auto !important;
 
-  /* Troca altura fixa por min-height e permite rolagem interna */
   min-height: calc(100vh - 4vh) !important;
   height: auto !important;
   overflow-y: auto !important;
@@ -152,22 +151,20 @@ p, div, span, label {
 
 /* ===================== INPUT DA TELA 1 ===================== */
 
-/* ✅ AJUSTE "MANUAL DA MARCA" (somente CÓDIGO DO CLIENTE) */
+/* CÓDIGO DO CLIENTE (manual da marca) */
 .codigo-cliente {
     font-family: 'Ofelia Display', sans-serif !important;
-    font-size: 1.1rem !important;       /* antes: 1.2rem */
-    font-weight: 400 !important;        /* display regular, mais leve */
-    letter-spacing: 0.06em !important;  /* antes: 0.08em (ou sem) */
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.06em !important;
     text-align: center !important;
 }
 
-/* "Esta é uma pesquisa identificada." com Display Bold (700) */
 .pesquisa-identificada strong {
     font-family: 'Ofelia Display', sans-serif !important;
     font-weight: 700 !important;
 }
 
-/* Negritos gerais */
 p strong {
   font-weight: 650 !important;
 }
@@ -190,13 +187,11 @@ p strong {
   width: 285px !important;
 }
 
-/* Placeholder */
 .stTextInput input::placeholder {
     color: #a0a0a0 !important; 
     opacity: 1 !important;
 }
 
-/* Oculta "Press Enter"/contagem */
 div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     display: none !important;
 }
@@ -318,7 +313,6 @@ if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -428,14 +422,10 @@ def _append_to_excel(row_values):
 
 
 def escala_1a5(key: str) -> int:
-    """
-    Slider centralizado + rótulos alinhados.
-    Exige "touched" para considerar válido.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 3  # valor visual inicial, mas não conta como "selecionado"
+        st.session_state[key] = 3
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -470,7 +460,7 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     if key not in st.session_state:
-        st.session_state[key] = 5  # visual inicial (não conta como selecionado)
+        st.session_state[key] = 5
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -514,23 +504,19 @@ if step == 1:
             unsafe_allow_html=True,
         )
 
+    # ✅ AJUSTE: título 0,5cm para a direita + menor (menos gritante)
     st.markdown(
         """
-        <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1;">
+        <h1 class="h1-tela1" style="font-size: 1.8rem; line-height: 1; transform: translateX(0.5cm);">
             PESQUISA DE SATISFAÇÃO
         </h1>
         """,
         unsafe_allow_html=True,
     )
 
-    # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # CÓDIGO DO CLIENTE (ajustado via CSS .codigo-cliente)
-    st.markdown(
-        "<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("<p class='codigo-cliente'>CÓDIGO DO CLIENTE</p>", unsafe_allow_html=True)
 
     st.text_input("", key="client_code", placeholder="Ex.: APELIDO", max_chars=20)
 
@@ -551,7 +537,6 @@ if step == 1:
 
     st.markdown("<div style='height:0.6rem;'></div>", unsafe_allow_html=True)
 
-    # Centralização estável do botão
     col1, col2, col3 = st.columns([1.4, 1, 1])
     with col2:
         if st.button("Iniciar pesquisa", key="start_button"):
@@ -561,7 +546,7 @@ if step == 1:
                 st.session_state["step"] = 2
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)  # fecha tela-1
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- TELAS 2–6 (PERGUNTAS) --------
 elif 2 <= step <= 6:
