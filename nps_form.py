@@ -10,7 +10,7 @@ from datetime import datetime
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
-# ===================== PÁGINA + CSS =====================
+# ===================== PÁGINA + CSS (AJUSTADO) =====================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
@@ -217,7 +217,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
+/* ===================== SLIDER COM RÓTULOS ALINHADOS (MODIFICADO) ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
@@ -232,6 +232,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
+/* AJUSTES DE ALINHAMENTO PARA 1-5 */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -242,6 +243,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 .scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; }
 
+/* ⬇️ AJUSTE CRÍTICO: Move a primeira coluna para a esquerda e a última para a direita */
+.scale-labels-5 div:nth-child(1) {
+    text-align: left; /* Alinha o texto na borda esquerda */
+}
+.scale-labels-5 div:nth-child(5) {
+    text-align: right; /* Alinha o texto na borda direita */
+}
+/* Os elementos 2, 3 e 4 permanecem centralizados */
+
+
+/* AJUSTES DE ALINHAMENTO PARA 0-10 */
 .scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
@@ -252,6 +264,16 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 .scale-labels-11 div { white-space: nowrap !important; font-size: 1.0rem !important; }
 
+/* ⬇️ AJUSTE CRÍTICO: Move a primeira coluna (0) para a esquerda e a última (10) para a direita */
+.scale-labels-11 div:nth-child(1) {
+    text-align: left; /* Alinha o texto na borda esquerda */
+}
+.scale-labels-11 div:nth-child(11) {
+    text-align: right; /* Alinha o texto na borda direita */
+}
+/* Os elementos do meio permanecem centralizados */
+
+
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
@@ -260,7 +282,8 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-div[data-testid="stSlider"] > div { padding-left: 0 !important; padding-right: 0 !important; }
+/* ⬇️ AJUSTE PARA REMOVER O PADDING LATERAL INTERNO DO SLIDER */
+div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } /* Manter o padding default ou remover se quiser alinhar as pontas */
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
 }
@@ -425,15 +448,14 @@ def escala_1a5(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     
-    # ⬇️ ALTERAÇÃO AQUI: Valor inicial do slider passa a ser 1
     if key not in st.session_state:
         st.session_state[key] = 1 
     
-    # ⬇️ ADIÇÃO AQUI: Texto de instrução "Deslize"
+    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
-         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True) # Espaço para manter o layout
+         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
@@ -467,15 +489,14 @@ def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
     
-    # ⬇️ ALTERAÇÃO AQUI: Valor inicial do slider passa a ser 0
     if key not in st.session_state:
         st.session_state[key] = 0
 
-    # ⬇️ ADIÇÃO AQUI: Texto de instrução "Deslize"
+    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
-        st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True) # Espaço para manter o layout
+        st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
     val = st.slider(
