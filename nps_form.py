@@ -10,7 +10,7 @@ from datetime import datetime
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
-# ===================== PÁGINA + CSS (AJUSTADO) =====================
+# ===================== PÁGINA + CSS (AJUSTADO PARA CENTRALIZAÇÃO) =====================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
@@ -241,22 +241,36 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.35rem;
   text-align: center;
 }
+
 .scale-labels-5 div { 
     white-space: nowrap !important; 
     font-size: 1.0rem !important; 
-    /* Todos os divs centralizados na coluna */
 }
 
-/* Compensação visual para Streamlit: move os extremos para compensar o padding interno */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS */
+/* 1 - Péssimo: Alinha na esquerda da coluna + ajuste de padding */
 .scale-labels-5 div:nth-child(1) {
-    text-align: left; /* Alinha o texto na borda esquerda */
-    padding-left: 0.7rem; /* Adiciona padding para centralizar visualmente sob a marca 1 */
-}
-.scale-labels-5 div:nth-child(5) {
-    text-align: right; /* Alinha o texto na borda direita */
-    padding-right: 0.7rem; /* Adiciona padding para centralizar visualmente sob a marca 5 */
+    text-align: left; 
+    padding-left: 0.7rem; 
 }
 
+/* 2 - Ruim: Centralizado na coluna, mas puxa um pouco para a esquerda */
+.scale-labels-5 div:nth-child(2) {
+    transform: translateX(-10px); /* Puxa para a esquerda */
+}
+
+/* 3 - Regular: Mantém centralizado */
+
+/* 4 - Bom: Centralizado na coluna, mas puxa um pouco para a direita */
+.scale-labels-5 div:nth-child(4) {
+    transform: translateX(10px); /* Puxa para a direita */
+}
+
+/* 5 - Excelente: Alinha na direita da coluna + ajuste de padding */
+.scale-labels-5 div:nth-child(5) {
+    text-align: right; 
+    padding-right: 0.7rem; 
+}
 
 /* ⬇️ AJUSTE PARA 0-10 */
 .scale-labels-11 {
@@ -287,11 +301,18 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
+  /* Ajustes para telas menores, se necessário, podem ser mais agressivos: */
+  .scale-labels-5 div:nth-child(2) {
+      transform: translateX(-5px); 
+  }
+  .scale-labels-5 div:nth-child(4) {
+      transform: translateX(5px); 
+  }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-/* Manter ou ajustar o padding interno do slider */
+/* Manter o padding interno do slider */
 div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } 
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
