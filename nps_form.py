@@ -247,20 +247,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (USANDO % E PIXEL) */
+/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS (VOLTANDO AO PX, MAIS REFINADO) */
 
-/* 1 - Péssimo: Alinha na esquerda + Ajuste para mover para a direita */
+/* 1 - Péssimo: Alinha na esquerda + pequeno ajuste para a direita para compensar o slider */
 .scale-labels-5 div:nth-child(1) {
-    text-align: left; 
-    padding-left: 0; 
-    /* Move para a direita em 1/2 da largura da coluna, compensando o 10px que o slider joga para fora */
-    transform: translateX(calc(50% + 5px)); 
+    text-align: center; /* Mantém centralizado na coluna para melhor controle */
+    transform: translateX(5px); 
 }
 
-/* 2 - Ruim: Centraliza e puxa para a esquerda (menos que 50% para compensar) */
+/* 2 - Ruim: Centraliza e puxa para a esquerda */
 .scale-labels-5 div:nth-child(2) {
-    /* Move o centro do texto 50% para a esquerda da célula, mais 5px de ajuste fino */
-    transform: translateX(calc(-50% - 5px)); 
+    transform: translateX(-10px); 
 }
 
 /* 3 - Regular: Mantém centralizado (sem transform) */
@@ -270,16 +267,13 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 
 /* 4 - Bom: Centraliza e puxa para a direita */
 .scale-labels-5 div:nth-child(4) {
-    /* Move o centro do texto 50% para a direita da célula, mais 5px de ajuste fino */
-    transform: translateX(calc(50% + 5px)); 
+    transform: translateX(10px); 
 }
 
-/* 5 - Excelente: Alinha na direita + Ajuste para mover para a esquerda */
+/* 5 - Excelente: Alinha na direita + pequeno ajuste para a esquerda para compensar o slider */
 .scale-labels-5 div:nth-child(5) {
-    text-align: right; 
-    padding-right: 0; 
-    /* Move para a esquerda em 1/2 da largura da coluna, compensando o 10px que o slider joga para fora */
-    transform: translateX(calc(-50% - 5px)); 
+    text-align: center; /* Mantém centralizado na coluna para melhor controle */
+    transform: translateX(-5px); 
 }
 
 
@@ -297,16 +291,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
 }
 
-/* Extremos do 0-10 (0 e 10) ajustados de forma mais responsiva */
+/* Extremos do 0-10 ajustados com o mesmo valor de 5px */
 .scale-labels-11 div:nth-child(1) {
-    text-align: left; 
-    padding-left: 0;
-    transform: translateX(calc(50% + 5px)); 
+    text-align: center; 
+    transform: translateX(5px); 
 }
 .scale-labels-11 div:nth-child(11) {
-    text-align: right; 
-    padding-right: 0;
-    transform: translateX(calc(-50% - 5px)); 
+    text-align: center; 
+    transform: translateX(-5px); 
 }
 
 
@@ -314,9 +306,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
-  /* Manter os ajustes percentuais, eles devem ser responsivos */
-  .scale-labels-5 div:nth-child(2) { transform: translateX(calc(-50% - 5px)); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(calc(50% + 5px)); }
+  /* Mantém os ajustes em pixel nos internos para testar */
+  .scale-labels-5 div:nth-child(2) { transform: translateX(-10px); }
+  .scale-labels-5 div:nth-child(4) { transform: translateX(10px); }
 }
 
 /* ===================== ESTILO DO SLIDER (MANTIDO ZERO PADDING) ===================== */
@@ -362,6 +354,9 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
 """,
     unsafe_allow_html=True,
 )
+
+# [O restante do código Python (funções, estados, fluxo, etc.) permanece inalterado]
+# ...
 
 # ===================== LOGO =====================
 BASE_DIR = Path(__file__).parent.resolve()
