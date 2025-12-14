@@ -18,7 +18,7 @@ st.markdown(
 <style>
 /* ===================== FONTES (REVISADO) ===================== */
 
-/* Ofelia Display Medium (Peso 500) - Mantido para referências */
+/* Ofelia Display Medium (Peso 500) - Usado agora para CÓDIGO DO CLIENTE e Pesquisa Identificada */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 500; 
@@ -26,12 +26,20 @@ st.markdown(
        url('assets/fontes/OfeliaDisplay-Medium.woff2') format('woff2'); 
 }
 
-/* Ofelia Display Regular (Peso 400) - NOVO: Mapeamento para o Display Regular */
+/* Ofelia Display Regular (Peso 400) - Mapeado, mas o Medium será usado para ênfase */
 @font-face {
   font-family: 'Ofelia Display';
   font-weight: 400; 
-  src: url('assets/fontes/OfeliaDisplay-Regular.ttf') format('truetype'), /* ASSUMINDO que você tenha este arquivo */
+  src: url('assets/fontes/OfeliaDisplay-Regular.ttf') format('truetype'),
        url('assets/fontes/OfeliaDisplay-Regular.woff2') format('woff2'); 
+}
+
+/* Ofelia Display Extra Light (Peso 200) - Mantido para referências */
+@font-face {
+  font-family: 'Ofelia Display';
+  font-weight: 200;
+  src: url('assets/fontes/OfeliaDisplay-Extralight.ttf') format('truetype'),
+       url('assets/fontes/OfeliaDisplay-Extralight.woff2') format('woff2');
 }
 
 /* Ofelia Display Bold (Peso 700) - Títulos Secundários e Título Principal (h1) */
@@ -57,11 +65,11 @@ st.markdown(
        url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
 }
 
-/* Ofelia Text Semibold/Bold (Peso 650) - NOVO: Usado para CÓDIGO DO CLIENTE */
+/* Ofelia Text Semibold/Bold (Peso 650) - Mantido para referências de outros textos */
 @font-face {
   font-family: 'Ofelia Text';
   font-weight: 650;
-  src: url('assets/fontes/OfeliaText-Semibold.ttf') format('truetype'), /* ASSUMINDO que você tenha este arquivo */
+  src: url('assets/fontes/OfeliaText-Semibold.ttf') format('truetype'),
        url('assets/fontes/OfeliaText-Semibold.woff2') format('woff2');
 }
 
@@ -152,18 +160,18 @@ p, div, span, label {
 
 /* ===================== INPUT DA TELA 1 ===================== */
 
-/* NOVO: CÓDIGO DO CLIENTE: Ofelia Text Semibold (650) */
+/* AJUSTADO: CÓDIGO DO CLIENTE: Ofelia Display Medium (500) */
 .codigo-cliente {
-    font-family: 'Ofelia Text', sans-serif !important;
+    font-family: 'Ofelia Display', sans-serif !important;
     font-size: 1.2rem !important;
-    font-weight: 650 !important; /* Semibold */
+    font-weight: 500 !important; /* Medium (ênfase visual) */
     text-align: center !important;
 }
 
-/* NOVO: Esta é uma pesquisa identificada: Ofelia Display Regular (400) */
+/* AJUSTADO: Esta é uma pesquisa identificada: Ofelia Display Medium (500) */
 .pesquisa-identificada strong {
     font-family: 'Ofelia Display', sans-serif !important;
-    font-weight: 400 !important; /* Regular/Normal, mas é o peso da fonte. */
+    font-weight: 500 !important; /* Medium (ênfase visual) */
 }
 
 /* Remove o negrito padrão do strong se for usado em textos comuns */
@@ -525,8 +533,7 @@ if step == 1:
     # Espaço entre título e "CÓDIGO DO CLIENTE"
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # CÓDIGO DO CLIENTE: Ofelia Text Semibold (650)
-    # Adicionado <strong> para aplicar o font-weight: 650
+    # CÓDIGO DO CLIENTE: Ofelia Display Medium (500)
     st.markdown(
         "<p class='codigo-cliente'><strong>CÓDIGO DO CLIENTE</strong></p>",
         unsafe_allow_html=True,
