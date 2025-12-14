@@ -32,10 +32,10 @@ st.markdown(
   src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
   font-weight: 500;
 }
-/* ADICIONADO: VARIANT MEDIUM ITALIC */
+/* ADICIONADO: VARIANT MEDIUM ITALIC (Ajuste o nome do arquivo se necessário) */
 @font-face {
   font-family: 'Ofelia Text';
-  src: url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
+  src: url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype'); 
   font-weight: 500;
   font-style: italic;
 }
@@ -246,7 +246,7 @@ LOGO_FULL = ASSETS / "jera-logo-full.png"
 
 
 def _img_data_uri(p: Path) -> str:
-    # CÓDIGO DO FIX DO SyntaxError (U+00A0)
+    # CORRIGIDO: Certifique-se de que não há caracteres U+00A0 aqui
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
 
 
@@ -660,4 +660,4 @@ elif step == 8:
 st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
-st.markdown("<div
+st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
