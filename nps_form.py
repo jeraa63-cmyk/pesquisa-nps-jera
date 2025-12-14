@@ -189,7 +189,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 /* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 400 !important;    /* ✅ Regular conforme manual */
+  font-weight: 400 !important;
   font-size: 1.02rem !important;
   min-width: 220px !important;
   min-height: 48px !important;
@@ -224,13 +224,19 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin: 0.6rem auto 1.4rem auto;
 }
 
-.scale-ends {
-  display:flex;
-  justify-content: space-between;
+/* ✅ NOVO: numeração 1–5 em todos os pontos (alinhada no grid) */
+.scale-numbers-5{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  margin-top: -0.35rem;
+  margin-bottom: 0.15rem;
   color: var(--muted);
   font-size: 0.95rem !important;
-  margin-top: -0.35rem;
+  text-align: center;
 }
+.scale-numbers-5 div:nth-child(1){ text-align: left; }
+.scale-numbers-5 div:nth-child(5){ text-align: right; }
 
 /* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
@@ -246,9 +252,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     font-size: 1.0rem !important; 
     text-align: center;
 }
-
-/* 🚨 AJUSTES CRÍTICOS DE ALINHAMENTO PARA CENTRALIZAR SOB AS MARCAS */
-/* ------------------------------------------------------------------ */
 
 /* 1 - Péssimo: 0,5cm para a esquerda */
 .scale-labels-5 div:nth-child(1) {
@@ -279,7 +282,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     padding-right: 0.7rem;
 }
 
-
 /* ⬇️ AJUSTE PARA 0-10 */
 .scale-labels-11 {
   display: grid;
@@ -303,7 +305,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     text-align: right;
     padding-right: 0.5rem;
 }
-
 
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
@@ -507,7 +508,21 @@ def escala_1a5(key: str) -> int:
         args=(key,),
         label_visibility="collapsed",
     )
-    st.markdown("<div class='scale-ends'><span>1</span><span>5</span></div>", unsafe_allow_html=True)
+
+    # ✅ NOVO: numeração 1–5 em todos os pontos
+    st.markdown(
+        """
+        <div class="scale-numbers-5">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown(
         """
         <div class="scale-labels-5">
