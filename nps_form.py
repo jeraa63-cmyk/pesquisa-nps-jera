@@ -32,6 +32,13 @@ st.markdown(
   src: url('assets/fontes/OfeliaText-Medium.ttf') format('truetype');
   font-weight: 500;
 }
+/* ADICIONADO: VARIANT MEDIUM ITALIC */
+@font-face {
+  font-family: 'Ofelia Text';
+  src: url('assets/fontes/OfeliaText-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
 @font-face {
   font-family: 'Ofelia Text';
   src: url('assets/fontes/OfeliaText-Light.ttf') format('truetype');
@@ -60,7 +67,7 @@ html, body, .stApp {
 
 /* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
 div.block-container {
-  /* ATENÇÃO: Alterado para RGBA para adicionar transparência de 95% */
+  /* Alterado para RGBA para adicionar transparência de 95% */
   background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
 
@@ -447,7 +454,7 @@ if step == 1:
         )
 
     st.markdown(
-        # CORRIGIDO: transform: translateX(0.6cm);
+        # POSIÇÃO AJUSTADA
         """
         <h1 class="h1-tela1" style="font-size: 2.0rem; line-height: 1; transform: translateX(0.6cm);">
             PESQUISA DE SATISFAÇÃO
@@ -471,7 +478,7 @@ if step == 1:
         """
         <div style='text-align:center; line-height:1.6; margin-bottom:0.6rem;'>
           <p style='margin-bottom:0.4rem;'><strong>Esta é uma pesquisa identificada.</strong></p>
-          <p style='font-size:1.05rem; margin-top:0;'>
+          <p style='font-size:1.05rem; margin-top:0; font-style: italic; font-weight: 500;'>
             Suas respostas serão tratadas com confidencialidade e utilizadas exclusivamente
             para aperfeiçoarmos nossos serviços, sempre alinhados aos seus objetivos.
           </p>
@@ -653,4 +660,4 @@ elif step == 8:
 st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
-st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
+st.markdown("<div
