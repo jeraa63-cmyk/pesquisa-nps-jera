@@ -217,11 +217,20 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS (AJUSTE FINO) ===================== */
+/* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
   margin: 0.6rem auto 1.4rem auto;
+}
+
+/* (mantido para 0–10, etc.) */
+.scale-ends {
+  display:flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.95rem !important;
+  margin-top: -0.35rem;
 }
 
 /* ✅ NUMERAÇÃO COMPLETA 1–5 */
@@ -248,11 +257,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   text-align: right;
   padding-right: 0.5rem;
 }
+
 /* ✅ 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
 .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
 .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-/* ⬇️ LABELS 1-5 (SÓ TEXTO) */
+/* ⬇️ LABELS 1-5 (SEM NÚMERO, SÓ TEXTO) */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -261,81 +271,57 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.35rem;
   text-align: center;
 }
-.scale-labels-5 div { 
-    white-space: nowrap !important; 
-    font-size: 1.0rem !important; 
+.scale-labels-5 div {
+    white-space: nowrap !important;
+    font-size: 1.0rem !important;
     text-align: center;
 }
-/* Péssimo */
+
+/* Péssimo: 0,5cm para a esquerda */
 .scale-labels-5 div:nth-child(1) {
     transform: translateX(-0.5cm);
     text-align: left;
     padding-left: 0.7rem;
 }
-/* Ruim */
-.scale-labels-5 div:nth-child(2) {
-    transform: translateX(-1.5cm);
-}
-/* Regular */
-.scale-labels-5 div:nth-child(3) {
-    transform: translateX(0);
-}
-/* Bom */
-.scale-labels-5 div:nth-child(4) {
-    transform: translateX(1.5cm);
-}
-/* Excelente */
+/* Ruim: -1,5cm */
+.scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
+/* Regular: centro */
+.scale-labels-5 div:nth-child(3) { transform: translateX(0); }
+/* Bom: +1,5cm */
+.scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
+/* Excelente: 0,5cm para a direita */
 .scale-labels-5 div:nth-child(5) {
     transform: translateX(0.5cm);
     text-align: right;
     padding-right: 0.7rem;
 }
 
-/* ===================== NPS: NUMERAÇÃO COMPLETA 0–10 (GRID) ===================== */
-.scale-numbers-11 {
+/* ✅ NPS: numeração 0–10 (base) */
+.scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   gap: 0;
   width: 100%;
-  margin-top: -0.35rem;
-  margin-bottom: 0.25rem;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.95rem !important;
-}
-.scale-numbers-11 div{
-  white-space: nowrap !important;
+  margin-top: 0.4rem;
   text-align: center;
 }
-.scale-numbers-11 div:nth-child(1){
-  text-align: left;
-  padding-left: 0.5rem;
-}
-.scale-numbers-11 div:nth-child(11){
-  text-align: right;
-  padding-right: 0.5rem;
+.scale-labels-11 div {
+    white-space: nowrap !important;
+    font-size: 1.0rem !important;
 }
 
-/* ✅ AJUSTE PEDIDO (NPS):
-   1,2,3,4 -> meio cm pra esquerda
-   6,7,8,9 -> meio cm pra direita
-   0,5,10 ficam como estão
-*/
-.scale-numbers-11 > div:nth-child(2),
-.scale-numbers-11 > div:nth-child(3),
-.scale-numbers-11 > div:nth-child(4),
-.scale-numbers-11 > div:nth-child(5) {
-  transform: translateX(-0.5cm) !important;
-}
-.scale-numbers-11 > div:nth-child(7),
-.scale-numbers-11 > div:nth-child(8),
-.scale-numbers-11 > div:nth-child(9),
-.scale-numbers-11 > div:nth-child(10) {
-  transform: translateX(0.5cm) !important;
-}
+/* Compensação visual (0 e 10) */
+.scale-labels-11 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
+.scale-labels-11 div:nth-child(11) { text-align: right; padding-right: 0.5rem; }
+
+/* ===================== AJUSTE FINO SOMENTE NO NPS ===================== */
+/* Apliquei uma classe extra 'nps-scale' apenas no NPS pra não afetar nada fora dele */
+.scale-labels-11.nps-scale div:nth-child(2)  { transform: translateX(-0.3cm) !important; } /* 1 */
+.scale-labels-11.nps-scale div:nth-child(10) { transform: translateX( 0.3cm) !important; } /* 9 */
 
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
+  .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
 
   .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
@@ -347,24 +333,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
   .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-  /* mantém o ajuste do NPS no mobile também */
-  .scale-numbers-11 > div:nth-child(2),
-  .scale-numbers-11 > div:nth-child(3),
-  .scale-numbers-11 > div:nth-child(4),
-  .scale-numbers-11 > div:nth-child(5) {
-    transform: translateX(-0.5cm) !important;
-  }
-  .scale-numbers-11 > div:nth-child(7),
-  .scale-numbers-11 > div:nth-child(8),
-  .scale-numbers-11 > div:nth-child(9),
-  .scale-numbers-11 > div:nth-child(10) {
-    transform: translateX(0.5cm) !important;
-  }
+  /* NPS: mantém ajustes no mobile também */
+  .scale-labels-11.nps-scale div:nth-child(2)  { transform: translateX(-0.3cm) !important; }
+  .scale-labels-11.nps-scale div:nth-child(10) { transform: translateX( 0.3cm) !important; }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; } 
+div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
@@ -373,7 +349,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
 }
 
-/* ✅ esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
+/* ✅ esconder numeração NATIVA do slider */
 div[data-testid="stSlider"] [data-baseweb="slider"] span {
   display: none !important;
 }
@@ -390,17 +366,17 @@ div[data-testid="stSlider"] [data-baseweb="slider"] span {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
+/* ===================== TELA 1: AJUSTES DO TÍTULO ===================== */
 .tela-1 .h1-tela1{
   margin-top: -70px !important;
   margin-bottom: 0.5rem !important;
 }
 
-/* ===================== NOVO ESTILO PARA INSTRUÇÃO DE SLIDER ===================== */
+/* ===================== INSTRUÇÃO SLIDER ===================== */
 .slider-instruction {
-    text-align: center; 
+    text-align: center;
     color: #00C1AD;
-    font-weight: 600; 
+    font-weight: 600;
     margin-top: -1.0rem;
     margin-bottom: 0.5rem;
     font-size: 1.0rem !important;
@@ -424,7 +400,6 @@ if "step" not in st.session_state:
 if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -534,11 +509,10 @@ def _append_to_excel(row_values):
 def escala_1a5(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
-    
+
     if key not in st.session_state:
-        st.session_state[key] = 1 
-    
-    # Texto de instrução "Deslize"
+        st.session_state[key] = 1
+
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -557,7 +531,6 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ Numeração controlada (nativa escondida no CSS)
     st.markdown(
         """
         <div class="scale-numbers-5">
@@ -571,7 +544,6 @@ def escala_1a5(key: str) -> int:
         unsafe_allow_html=True,
     )
 
-    # ✅ Labels sem número
     st.markdown(
         """
         <div class="scale-labels-5">
@@ -587,15 +559,13 @@ def escala_1a5(key: str) -> int:
     st.markdown("</div>", unsafe_allow_html=True)
     return val
 
-# ✅ NPS refatorado: mesma lógica do 1–5, sem iframe/JS (estável no Cloud)
-def escala_0a10(key: str) -> int:
+def escala_0a10(key: str, extra_class: str = "") -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
-    
+
     if key not in st.session_state:
         st.session_state[key] = 0
 
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -614,10 +584,10 @@ def escala_0a10(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ NUMERAÇÃO COMPLETA 0–10 nos pontos (0, 5 e 10 ficam “base”, os demais ajustados no CSS)
+    # ✅ Linha 0–10 completa (0..10 em todos os pontos)
     st.markdown(
-        """
-        <div class="scale-numbers-11">
+        f"""
+        <div class="scale-labels-11 {extra_class}">
           <div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
           <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
         </div>
@@ -734,7 +704,9 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    nps = escala_0a10("nps_score")
+    # ✅ AQUI: só no NPS aplicamos a classe extra "nps-scale"
+    nps = escala_0a10("nps_score", extra_class="nps-scale")
+
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
     st.markdown(
