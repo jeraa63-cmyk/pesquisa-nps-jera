@@ -852,4 +852,4 @@ elif step == 8:
 st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
-st.markdown("<div class='footer-fixed'>
+st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
