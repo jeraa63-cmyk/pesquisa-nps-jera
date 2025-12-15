@@ -258,11 +258,11 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   padding-right: 0.5rem;
 }
 
-/* ✅ AGORA: 2 exatamente na mesma direção do "2 - Ruim" e 4 do "4 - Bom" */
+/* ✅ 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
 .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
 .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-/* ⬇️ AJUSTE PARA 1-5 */
+/* ⬇️ LABELS 1-5 (AGORA SEM NÚMERO, SÓ TEXTO) */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -277,29 +277,29 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     text-align: center;
 }
 
-/* 1 - Péssimo: 0,5cm para a esquerda */
+/* Péssimo: 0,5cm para a esquerda */
 .scale-labels-5 div:nth-child(1) {
     transform: translateX(-0.5cm);
     text-align: left;
     padding-left: 0.7rem;
 }
 
-/* 2 - Ruim: -1,5cm */
+/* Ruim: -1,5cm */
 .scale-labels-5 div:nth-child(2) {
     transform: translateX(-1.5cm);
 }
 
-/* 3 - Regular: centro */
+/* Regular: centro */
 .scale-labels-5 div:nth-child(3) {
     transform: translateX(0);
 }
 
-/* 4 - Bom: +1,5cm */
+/* Bom: +1,5cm */
 .scale-labels-5 div:nth-child(4) {
     transform: translateX(1.5cm);
 }
 
-/* 5 - Excelente: 0,5cm para a direita */
+/* Excelente: 0,5cm para a direita */
 .scale-labels-5 div:nth-child(5) {
     transform: translateX(0.5cm);
     text-align: right;
@@ -335,14 +335,12 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
 
-  /* Mantém os ajustes dos labels */
   .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
   .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
   .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 
-  /* Mantém também os ajustes dos números */
   .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
   .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 }
@@ -556,14 +554,15 @@ def escala_1a5(key: str) -> int:
         unsafe_allow_html=True,
     )
 
+    # ✅ Labels agora SEM número (só texto)
     st.markdown(
         """
         <div class="scale-labels-5">
-          <div>1 - Péssimo</div>
-          <div>2 - Ruim</div>
-          <div>3 - Regular</div>
-          <div>4 - Bom</div>
-          <div>5 - Excelente</div>
+          <div>Péssimo</div>
+          <div>Ruim</div>
+          <div>Regular</div>
+          <div>Bom</div>
+          <div>Excelente</div>
         </div>
         """,
         unsafe_allow_html=True,
