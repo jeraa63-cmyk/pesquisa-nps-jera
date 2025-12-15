@@ -330,6 +330,28 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     padding-right: 0.5rem;
 }
 
+/* ✅ AJUSTE APENAS PARA A PÁGINA DO NPS (step == 7)
+   0–4 -> 1cm para esquerda | 5 sem mexer | 6–10 -> 1cm para direita */
+.nps-page .scale-labels-11 div:nth-child(1),
+.nps-page .scale-labels-11 div:nth-child(2),
+.nps-page .scale-labels-11 div:nth-child(3),
+.nps-page .scale-labels-11 div:nth-child(4),
+.nps-page .scale-labels-11 div:nth-child(5) {
+  margin-left: -1cm !important;
+}
+
+.nps-page .scale-labels-11 div:nth-child(6) {
+  margin-left: 0 !important;
+}
+
+.nps-page .scale-labels-11 div:nth-child(7),
+.nps-page .scale-labels-11 div:nth-child(8),
+.nps-page .scale-labels-11 div:nth-child(9),
+.nps-page .scale-labels-11 div:nth-child(10),
+.nps-page .scale-labels-11 div:nth-child(11) {
+  margin-left: 1cm !important;
+}
+
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
   .scale-labels-11 div { font-size: 0.9rem !important; }
@@ -343,6 +365,25 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 
   .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
   .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
+
+  /* mantém o ajuste do NPS também no mobile */
+  .nps-page .scale-labels-11 div:nth-child(1),
+  .nps-page .scale-labels-11 div:nth-child(2),
+  .nps-page .scale-labels-11 div:nth-child(3),
+  .nps-page .scale-labels-11 div:nth-child(4),
+  .nps-page .scale-labels-11 div:nth-child(5) {
+    margin-left: -1cm !important;
+  }
+  .nps-page .scale-labels-11 div:nth-child(6) {
+    margin-left: 0 !important;
+  }
+  .nps-page .scale-labels-11 div:nth-child(7),
+  .nps-page .scale-labels-11 div:nth-child(8),
+  .nps-page .scale-labels-11 div:nth-child(9),
+  .nps-page .scale-labels-11 div:nth-child(10),
+  .nps-page .scale-labels-11 div:nth-child(11) {
+    margin-left: 1cm !important;
+  }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
@@ -521,7 +562,6 @@ def escala_1a5(key: str) -> int:
     if key not in st.session_state:
         st.session_state[key] = 1 
     
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -540,7 +580,6 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ Numeração controlada (nativa escondida no CSS)
     st.markdown(
         """
         <div class="scale-numbers-5">
@@ -554,7 +593,6 @@ def escala_1a5(key: str) -> int:
         unsafe_allow_html=True,
     )
 
-    # ✅ Labels agora SEM número (só texto)
     st.markdown(
         """
         <div class="scale-labels-5">
@@ -577,7 +615,6 @@ def escala_0a10(key: str) -> int:
     if key not in st.session_state:
         st.session_state[key] = 0
 
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -699,6 +736,9 @@ elif 2 <= step <= 6:
 
 # -------- PÁGINA NPS --------
 elif step == 7:
+    # ✅ wrapper para aplicar CSS SOMENTE na página NPS
+    st.markdown("<div class='nps-page'>", unsafe_allow_html=True)
+
     st.markdown("<h2>NPS</h2>", unsafe_allow_html=True)
     st.markdown(
         """
@@ -774,6 +814,9 @@ elif step == 7:
             st.session_state["step"] = 8
             st.rerun()
 
+    # ✅ fecha wrapper do NPS
+    st.markdown("</div>", unsafe_allow_html=True)
+
 # -------- CONFIRMAÇÃO FINAL --------
 elif step == 8:
     st.markdown("<h2>✅ Resposta enviada com sucesso</h2>", unsafe_allow_html=True)
@@ -809,4 +852,4 @@ elif step == 8:
 st.markdown("</div>", unsafe_allow_html=True)
 
 # -------- RODAPÉ FIXO --------
-st.markdown("<div class='footer-fixed'>© Jera Capital — Todos os direitos reservados.</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer-fixed'>
