@@ -81,6 +81,9 @@ st.markdown(
   --jera-bg:#052B38;
   --jera-light:#FFFFFF;
   --muted:#6b7c85;
+
+  /* ✅ precisa bater com o padding do slider no seu CSS */
+  --slider-pad: 0.75rem;
 }
 
 /* ===================== RESET / BACKGROUND ===================== */
@@ -217,7 +220,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS (AJUSTE FINO) ===================== */
+/* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
@@ -245,18 +248,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   color: var(--muted);
   font-size: 0.95rem !important;
 }
-.scale-numbers-5 div {
-  white-space: nowrap !important;
-  text-align: center;
-}
-.scale-numbers-5 div:nth-child(1) {
-  text-align: left;
-  padding-left: 0.5rem;
-}
-.scale-numbers-5 div:nth-child(5) {
-  text-align: right;
-  padding-right: 0.5rem;
-}
+.scale-numbers-5 div { white-space: nowrap !important; text-align: center; }
+.scale-numbers-5 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
+.scale-numbers-5 div:nth-child(5) { text-align: right; padding-right: 0.5rem; }
 
 /* ✅ 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
 .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
@@ -271,36 +265,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.35rem;
   text-align: center;
 }
-.scale-labels-5 div {
-  white-space: nowrap !important;
-  font-size: 1.0rem !important;
-  text-align: center;
-}
-
-/* Péssimo */
-.scale-labels-5 div:nth-child(1) {
-  transform: translateX(-0.5cm);
-  text-align: left;
-  padding-left: 0.7rem;
-}
-
-/* Ruim */
+.scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; text-align: center; }
+.scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); text-align: left; padding-left: 0.7rem; }
 .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
-
-/* Regular */
 .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
-
-/* Bom */
 .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
+.scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); text-align: right; padding-right: 0.7rem; }
 
-/* Excelente */
-.scale-labels-5 div:nth-child(5) {
-  transform: translateX(0.5cm);
-  text-align: right;
-  padding-right: 0.7rem;
-}
-
-/* ===================== AJUSTE PARA 0-10 (PADRÃO / NÃO MEXER) ===================== */
+/* ===================== 0-10 (base) ===================== */
 .scale-labels-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
@@ -309,22 +281,10 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.4rem;
   text-align: center;
 }
-.scale-labels-11 div {
-  white-space: nowrap !important;
-  font-size: 1.0rem !important;
-}
-.scale-labels-11 div:nth-child(1) {
-  text-align: left;
-  padding-left: 0.5rem;
-}
-.scale-labels-11 div:nth-child(11) {
-  text-align: right;
-  padding-right: 0.5rem;
-}
+.scale-labels-11 div { white-space: nowrap !important; font-size: 1.0rem !important; }
 
-/* ===================== ✅ NPS: AJUSTE SÓ NA PÁGINA DO NPS (REFATORADO) ===================== */
-/* A lógica aqui é: no NPS, os números 0-10 ficam ABSOLUTAMENTE posicionados.
-   Assim, mexer em alguns NÃO desregula os outros. */
+/* ===================== ✅ NPS: POSICIONAMENTO IGUAL À TRILHA REAL ===================== */
+/* A trilha real do slider começa depois do padding (0.75rem). */
 .nps-wrap .scale-labels-11 {
   display: block !important;
   position: relative !important;
@@ -332,34 +292,35 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: 0.65rem !important;
 }
 
+/* todos absolutos */
 .nps-wrap .scale-labels-11 div {
   position: absolute !important;
   top: 0 !important;
   transform: translateX(-50%) !important;
   text-align: center !important;
   padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* 0, 5 e 10 ficam como base (SEM ajuste) */
-.nps-wrap .scale-labels-11 div:nth-child(1)  { left: 0%   !important; transform: translateX(0) !important; }      /* 0 */
-.nps-wrap .scale-labels-11 div:nth-child(6)  { left: 50%  !important; }                                         /* 5 */
-.nps-wrap .scale-labels-11 div:nth-child(11) { left: 100% !important; transform: translateX(-100%) !important; } /* 10 */
-
-/* 1–4: meio centímetro pra ESQUERDA */
-.nps-wrap .scale-labels-11 div:nth-child(2) { left: calc(10% - 0.5cm) !important; } /* 1 */
-.nps-wrap .scale-labels-11 div:nth-child(3) { left: calc(20% - 0.5cm) !important; } /* 2 */
-.nps-wrap .scale-labels-11 div:nth-child(4) { left: calc(30% - 0.5cm) !important; } /* 3 */
-.nps-wrap .scale-labels-11 div:nth-child(5) { left: calc(40% - 0.5cm) !important; } /* 4 */
-
-/* 6–9: meio centímetro pra DIREITA */
-.nps-wrap .scale-labels-11 div:nth-child(7)  { left: calc(60% + 0.5cm) !important; } /* 6 */
-.nps-wrap .scale-labels-11 div:nth-child(8)  { left: calc(70% + 0.5cm) !important; } /* 7 */
-.nps-wrap .scale-labels-11 div:nth-child(9)  { left: calc(80% + 0.5cm) !important; } /* 8 */
-.nps-wrap .scale-labels-11 div:nth-child(10) { left: calc(90% + 0.5cm) !important; } /* 9 */
+/* helper: largura útil da trilha = 100% - 2*pad */
+.nps-wrap .scale-labels-11 div:nth-child(1)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.0) !important; }  /* 0 */
+.nps-wrap .scale-labels-11 div:nth-child(2)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.1) !important; }  /* 1 */
+.nps-wrap .scale-labels-11 div:nth-child(3)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.2) !important; }  /* 2 */
+.nps-wrap .scale-labels-11 div:nth-child(4)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.3) !important; }  /* 3 */
+.nps-wrap .scale-labels-11 div:nth-child(5)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.4) !important; }  /* 4 */
+.nps-wrap .scale-labels-11 div:nth-child(6)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.5) !important; }  /* 5 */
+.nps-wrap .scale-labels-11 div:nth-child(7)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.6) !important; }  /* 6 */
+.nps-wrap .scale-labels-11 div:nth-child(8)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.7) !important; }  /* 7 */
+.nps-wrap .scale-labels-11 div:nth-child(9)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.8) !important; }  /* 8 */
+.nps-wrap .scale-labels-11 div:nth-child(10) { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.9) !important; }  /* 9 */
+.nps-wrap .scale-labels-11 div:nth-child(11) { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 1.0) !important; }  /* 10 */
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+div[data-testid="stSlider"] > div {
+  padding-left: var(--slider-pad) !important;
+  padding-right: var(--slider-pad) !important;
+}
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
@@ -385,7 +346,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] span {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
+/* ===================== TELA 1: AJUSTES DO TÍTULO ===================== */
 .tela-1 .h1-tela1{
   margin-top: -70px !important;
   margin-bottom: 0.5rem !important;
@@ -533,7 +494,6 @@ def escala_1a5(key: str) -> int:
     if key not in st.session_state:
         st.session_state[key] = 1
 
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -552,29 +512,19 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ Numeração controlada (nativa escondida no CSS)
     st.markdown(
         """
         <div class="scale-numbers-5">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
+          <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # ✅ Labels SEM número (só texto)
     st.markdown(
         """
         <div class="scale-labels-5">
-          <div>Péssimo</div>
-          <div>Ruim</div>
-          <div>Regular</div>
-          <div>Bom</div>
-          <div>Excelente</div>
+          <div>Péssimo</div><div>Ruim</div><div>Regular</div><div>Bom</div><div>Excelente</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -583,11 +533,6 @@ def escala_1a5(key: str) -> int:
     return val
 
 def escala_0a10(key: str) -> int:
-    """
-    ✅ ATENÇÃO: aqui foi refatorado para NÃO desregular.
-    A escala (0..10) é a mesma, mas no NPS ela é envolvida por .nps-wrap,
-    e o CSS de .nps-wrap posiciona os números com estabilidade.
-    """
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
 
@@ -599,7 +544,7 @@ def escala_0a10(key: str) -> int:
     else:
         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ wrapper exclusivo do NPS (para não afetar outras páginas)
+    # ✅ wrapper exclusivo do NPS
     st.markdown("<div class='nps-wrap'>", unsafe_allow_html=True)
 
     st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
@@ -615,10 +560,10 @@ def escala_0a10(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # (mantém os extremos 0 e 10 como referência — isso você já tinha)
+    # mantém os extremos 0 e 10 acima
     st.markdown("<div class='scale-ends'><span>0</span><span>10</span></div>", unsafe_allow_html=True)
 
-    # ✅ numeração 0..10 completa (agora controlada pelo CSS .nps-wrap)
+    # números 0..10 (alinhados na trilha real via CSS)
     st.markdown(
         """
         <div class="scale-labels-11">
@@ -629,8 +574,8 @@ def escala_0a10(key: str) -> int:
         unsafe_allow_html=True,
     )
 
-    st.markdown("</div>", unsafe_allow_html=True)   # scale-wrap
-    st.markdown("</div>", unsafe_allow_html=True)   # nps-wrap
+    st.markdown("</div>", unsafe_allow_html=True)  # scale-wrap
+    st.markdown("</div>", unsafe_allow_html=True)  # nps-wrap
     return val
 
 # ===================== FLUXO DAS TELAS =====================
@@ -739,7 +684,6 @@ elif step == 7:
         unsafe_allow_html=True,
     )
 
-    # ✅ NPS (refatorado)
     nps = escala_0a10("nps_score")
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
