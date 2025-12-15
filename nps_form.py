@@ -6,17 +6,16 @@ import pandas as pd
 from datetime import datetime
 
 # ===================== CONFIGURAÇÃO: Excel local =====================
-# ATENÇÃO: Verifique e ajuste este caminho para onde o arquivo realmente está no seu ambiente de execução
 LOCAL_XLSX_PATH = r"C:\\Users\\AnaSilvaJeraCapital\\OneDrive - JERA CAPITAL GESTAO DE RECURSOS LTDA\\Comercial - Documentos\\NPS\\Pesquisa_NPS.xlsx"
 SHOW_INTERNAL_NPS = False
 
-# ===================== PÁGINA + CSS (AJUSTADO) =====================
+# ===================== PÁGINA + CSS =====================
 st.set_page_config(page_title="PESQUISA DE SATISFAÇÃO", layout="wide")
 
 st.markdown(
     """
 <style>
-/* ===================== FONTES (REVISADO) ===================== */
+/* ===================== FONTES ===================== */
 
 /* Ofelia Display Medium (Peso 500) */
 @font-face {
@@ -81,9 +80,6 @@ st.markdown(
   --jera-bg:#052B38;
   --jera-light:#FFFFFF;
   --muted:#6b7c85;
-
-  /* ✅ precisa bater com o padding do slider no seu CSS */
-  --slider-pad: 0.75rem;
 }
 
 /* ===================== RESET / BACKGROUND ===================== */
@@ -97,7 +93,7 @@ html, body, .stApp {
   overflow-x: hidden !important;
 }
 
-/* ===================== CAIXA BRANCA (TODAS AS TELAS) ===================== */
+/* ===================== CAIXA BRANCA ===================== */
 div.block-container {
   background: rgba(255, 255, 255, 0.95) !important;
   border-radius: 22px !important;
@@ -132,7 +128,7 @@ div.block-container {
   }
 }
 
-/* ===================== TIPOGRAFIA RESPONSIVA ===================== */
+/* ===================== TIPOGRAFIA ===================== */
 h1, h2, h3 {
   font-family: 'Ofelia Display', sans-serif !important;
   color: var(--jera-dark);
@@ -149,7 +145,7 @@ p, div, span, label {
   line-height: 1.65 !important;
 }
 
-/* ===================== INPUT DA TELA 1 ===================== */
+/* ===================== INPUT TELA 1 ===================== */
 .codigo-cliente {
   font-family: 'Ofelia Display', sans-serif !important;
   font-size: 1.2rem !important;
@@ -189,7 +185,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   display: none !important;
 }
 
-/* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
+/* ===================== BOTÕES ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
   font-weight: 400 !important;
@@ -220,14 +216,13 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
+/* ===================== SLIDER / ESCALAS (1–5 MANTIDO) ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
   margin: 0.6rem auto 1.4rem auto;
 }
 
-/* (mantido para 0–10, etc.) */
 .scale-ends {
   display:flex;
   justify-content: space-between;
@@ -236,7 +231,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
-/* ✅ NUMERAÇÃO COMPLETA 1–5 */
+/* NUMERAÇÃO COMPLETA 1–5 */
 .scale-numbers-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -248,15 +243,18 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   color: var(--muted);
   font-size: 0.95rem !important;
 }
-.scale-numbers-5 div { white-space: nowrap !important; text-align: center; }
+.scale-numbers-5 div {
+  white-space: nowrap !important;
+  text-align: center;
+}
 .scale-numbers-5 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
 .scale-numbers-5 div:nth-child(5) { text-align: right; padding-right: 0.5rem; }
 
-/* ✅ 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
+/* 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
 .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
 .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-/* ⬇️ LABELS 1-5 (SÓ TEXTO) */
+/* LABELS 1–5 (SEM NÚMERO) */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -266,61 +264,21 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   text-align: center;
 }
 .scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; text-align: center; }
+
+/* Péssimo */
 .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); text-align: left; padding-left: 0.7rem; }
+/* Ruim */
 .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
+/* Regular */
 .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
+/* Bom */
 .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
+/* Excelente */
 .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); text-align: right; padding-right: 0.7rem; }
-
-/* ===================== 0-10 (base) ===================== */
-.scale-labels-11 {
-  display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  gap: 0;
-  width: 100%;
-  margin-top: 0.4rem;
-  text-align: center;
-}
-.scale-labels-11 div { white-space: nowrap !important; font-size: 1.0rem !important; }
-
-/* ===================== ✅ NPS: POSICIONAMENTO IGUAL À TRILHA REAL ===================== */
-/* A trilha real do slider começa depois do padding (0.75rem). */
-.nps-wrap .scale-labels-11 {
-  display: block !important;
-  position: relative !important;
-  height: 26px !important;
-  margin-top: 0.65rem !important;
-}
-
-/* todos absolutos */
-.nps-wrap .scale-labels-11 div {
-  position: absolute !important;
-  top: 0 !important;
-  transform: translateX(-50%) !important;
-  text-align: center !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* helper: largura útil da trilha = 100% - 2*pad */
-.nps-wrap .scale-labels-11 div:nth-child(1)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.0) !important; }  /* 0 */
-.nps-wrap .scale-labels-11 div:nth-child(2)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.1) !important; }  /* 1 */
-.nps-wrap .scale-labels-11 div:nth-child(3)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.2) !important; }  /* 2 */
-.nps-wrap .scale-labels-11 div:nth-child(4)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.3) !important; }  /* 3 */
-.nps-wrap .scale-labels-11 div:nth-child(5)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.4) !important; }  /* 4 */
-.nps-wrap .scale-labels-11 div:nth-child(6)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.5) !important; }  /* 5 */
-.nps-wrap .scale-labels-11 div:nth-child(7)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.6) !important; }  /* 6 */
-.nps-wrap .scale-labels-11 div:nth-child(8)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.7) !important; }  /* 7 */
-.nps-wrap .scale-labels-11 div:nth-child(9)  { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.8) !important; }  /* 8 */
-.nps-wrap .scale-labels-11 div:nth-child(10) { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 0.9) !important; }  /* 9 */
-.nps-wrap .scale-labels-11 div:nth-child(11) { left: calc(var(--slider-pad) + (100% - (2 * var(--slider-pad))) * 1.0) !important; }  /* 10 */
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
-div[data-testid="stSlider"] > div {
-  padding-left: var(--slider-pad) !important;
-  padding-right: var(--slider-pad) !important;
-}
+div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
 
 div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
   border-color: var(--jera-primary) !important;
@@ -329,9 +287,82 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
 }
 
-/* ✅ esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
+/* esconder numeração NATIVA do slider */
 div[data-testid="stSlider"] [data-baseweb="slider"] span {
   display: none !important;
+}
+
+/* ===================== NOVO: NPS CUSTOM (SÓ USADO NO NPS) ===================== */
+.nps-wrap{
+  width: 100%;
+  max-width: 860px;
+  margin: 0.6rem auto 1.2rem auto;
+  position: relative;
+}
+
+.nps-bar {
+  height: 4px;
+  background: rgba(0,193,173,0.35);
+  border-radius: 999px;
+  position: relative;
+  margin: 0.7rem 0 0.85rem 0;
+}
+
+.nps-bar-fill{
+  height: 4px;
+  background: var(--jera-primary);
+  border-radius: 999px;
+  width: 0%;
+}
+
+.nps-knob{
+  width: 18px;
+  height: 18px;
+  background: var(--jera-primary);
+  border-radius: 999px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
+.nps-axis{
+  position: relative;
+  height: 28px;
+}
+
+.nps-tick{
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.95rem !important;
+  color: var(--jera-dark);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.nps-tick.selected{
+  color: #fff !important;
+  background: var(--jera-primary);
+  font-weight: 700 !important;
+}
+
+.nps-tick:hover{
+  background: rgba(0,193,173,0.15);
+}
+
+/* Slider do NPS invisível (mas funcional) */
+.nps-hidden-slider{
+  position:absolute;
+  left:-99999px;
+  top:-99999px;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
 }
 
 /* ===================== RODAPÉ FIXO ===================== */
@@ -352,7 +383,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] span {
   margin-bottom: 0.5rem !important;
 }
 
-/* ===================== NOVO ESTILO PARA INSTRUÇÃO DE SLIDER ===================== */
+/* ===================== INSTRUÇÃO DE SLIDER ===================== */
 .slider-instruction {
   text-align: center;
   color: #00C1AD;
@@ -524,7 +555,11 @@ def escala_1a5(key: str) -> int:
     st.markdown(
         """
         <div class="scale-labels-5">
-          <div>Péssimo</div><div>Ruim</div><div>Regular</div><div>Bom</div><div>Excelente</div>
+          <div>Péssimo</div>
+          <div>Ruim</div>
+          <div>Regular</div>
+          <div>Bom</div>
+          <div>Excelente</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -532,6 +567,7 @@ def escala_1a5(key: str) -> int:
     st.markdown("</div>", unsafe_allow_html=True)
     return val
 
+# ======= NPS (REFATORADO APENAS AQUI) =======
 def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
@@ -544,10 +580,8 @@ def escala_0a10(key: str) -> int:
     else:
         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
-    # ✅ wrapper exclusivo do NPS
-    st.markdown("<div class='nps-wrap'>", unsafe_allow_html=True)
-
-    st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
+    # Slider invisível (somente para manter o valor e permitir arrastar via teclado/acessibilidade)
+    st.markdown("<div class='nps-hidden-slider'>", unsafe_allow_html=True)
     val = st.slider(
         label="",
         min_value=0,
@@ -559,23 +593,64 @@ def escala_0a10(key: str) -> int:
         args=(key,),
         label_visibility="collapsed",
     )
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    # mantém os extremos 0 e 10 acima
-    st.markdown("<div class='scale-ends'><span>0</span><span>10</span></div>", unsafe_allow_html=True)
+    # UI custom do NPS
+    pct = (val / 10) * 100.0
 
-    # números 0..10 (alinhados na trilha real via CSS)
-    st.markdown(
-        """
-        <div class="scale-labels-11">
-          <div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
-          <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+    ticks_html = []
+    for n in range(0, 11):
+        left = (n / 10) * 100.0
+        cls = "nps-tick selected" if n == val else "nps-tick"
+        ticks_html.append(f"<span class='{cls}' style='left:{left:.4f}%' data-n='{n}'>{n}</span>")
+    ticks_html = "\n".join(ticks_html)
+
+    st.components.v1.html(
+        f"""
+        <div class="nps-wrap" id="nps-wrap">
+          <div class="nps-bar">
+            <div class="nps-bar-fill" style="width:{pct:.4f}%"></div>
+            <div class="nps-knob" style="left:{pct:.4f}%"></div>
+          </div>
+          <div class="nps-axis">
+            {ticks_html}
+          </div>
         </div>
+
+        <script>
+          (function() {{
+            const root = document.currentScript.parentElement;
+            const ticks = root.querySelectorAll('.nps-tick');
+
+            // tenta achar o input range do Streamlit (o slider invisível ainda existe no DOM)
+            function findSliderInput() {{
+              // pega o primeiro input[type="range"] anterior no DOM
+              const ranges = window.parent.document.querySelectorAll('input[type="range"]');
+              // usa o último, normalmente é o mais recente renderizado
+              return ranges[ranges.length - 1] || null;
+            }}
+
+            const slider = findSliderInput();
+
+            function setValue(n) {{
+              if (!slider) return;
+              slider.value = n;
+              slider.dispatchEvent(new Event('input', {{ bubbles: true }}));
+              slider.dispatchEvent(new Event('change', {{ bubbles: true }}));
+            }}
+
+            ticks.forEach(t => {{
+              t.addEventListener('click', () => {{
+                const n = parseInt(t.getAttribute('data-n'));
+                setValue(n);
+              }});
+            }});
+          }})();
+        </script>
         """,
-        unsafe_allow_html=True,
+        height=120,
     )
 
-    st.markdown("</div>", unsafe_allow_html=True)  # scale-wrap
-    st.markdown("</div>", unsafe_allow_html=True)  # nps-wrap
     return val
 
 # ===================== FLUXO DAS TELAS =====================
@@ -635,7 +710,7 @@ if step == 1:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# -------- TELAS 2–6 (PERGUNTAS) --------
+# -------- TELAS 2–6 --------
 elif 2 <= step <= 6:
     idx = step - 2
     titulo, perguntas = BLOCOS[idx]
