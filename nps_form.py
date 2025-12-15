@@ -216,7 +216,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   max-width: 1050px !important;
 }
 
-/* ===================== SLIDER / ESCALAS (1–5 MANTIDO) ===================== */
+/* ===================== SLIDER 1–5 (MANTIDO) ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
@@ -231,7 +231,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
-/* NUMERAÇÃO COMPLETA 1–5 */
+/* NUMERAÇÃO 1–5 */
 .scale-numbers-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -243,18 +243,13 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   color: var(--muted);
   font-size: 0.95rem !important;
 }
-.scale-numbers-5 div {
-  white-space: nowrap !important;
-  text-align: center;
-}
+.scale-numbers-5 div { white-space: nowrap !important; text-align: center; }
 .scale-numbers-5 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
 .scale-numbers-5 div:nth-child(5) { text-align: right; padding-right: 0.5rem; }
-
-/* 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
 .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
 .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-/* LABELS 1–5 (SEM NÚMERO) */
+/* LABELS 1–5 */
 .scale-labels-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -264,106 +259,20 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   text-align: center;
 }
 .scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; text-align: center; }
-
-/* Péssimo */
 .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); text-align: left; padding-left: 0.7rem; }
-/* Ruim */
 .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
-/* Regular */
 .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
-/* Bom */
 .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
-/* Excelente */
 .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); text-align: right; padding-right: 0.7rem; }
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
 div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
-
-div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
-  border-color: var(--jera-primary) !important;
-}
-div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
-  background-color: var(--jera-primary) !important;
-}
+div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] { border-color: var(--jera-primary) !important; }
+div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div { background-color: var(--jera-primary) !important; }
 
 /* esconder numeração NATIVA do slider */
-div[data-testid="stSlider"] [data-baseweb="slider"] span {
-  display: none !important;
-}
-
-/* ===================== NOVO: NPS CUSTOM (SÓ USADO NO NPS) ===================== */
-.nps-wrap{
-  width: 100%;
-  max-width: 860px;
-  margin: 0.6rem auto 1.2rem auto;
-  position: relative;
-}
-
-.nps-bar {
-  height: 4px;
-  background: rgba(0,193,173,0.35);
-  border-radius: 999px;
-  position: relative;
-  margin: 0.7rem 0 0.85rem 0;
-}
-
-.nps-bar-fill{
-  height: 4px;
-  background: var(--jera-primary);
-  border-radius: 999px;
-  width: 0%;
-}
-
-.nps-knob{
-  width: 18px;
-  height: 18px;
-  background: var(--jera-primary);
-  border-radius: 999px;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
-}
-
-.nps-axis{
-  position: relative;
-  height: 28px;
-}
-
-.nps-tick{
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  font-size: 0.95rem !important;
-  color: var(--jera-dark);
-  cursor: pointer;
-  user-select: none;
-  line-height: 1;
-  padding: 2px 6px;
-  border-radius: 10px;
-}
-
-.nps-tick.selected{
-  color: #fff !important;
-  background: var(--jera-primary);
-  font-weight: 700 !important;
-}
-
-.nps-tick:hover{
-  background: rgba(0,193,173,0.15);
-}
-
-/* Slider do NPS invisível (mas funcional) */
-.nps-hidden-slider{
-  position:absolute;
-  left:-99999px;
-  top:-99999px;
-  width:1px;
-  height:1px;
-  opacity:0;
-  pointer-events:none;
-}
+div[data-testid="stSlider"] [data-baseweb="slider"] span { display: none !important; }
 
 /* ===================== RODAPÉ FIXO ===================== */
 .footer-fixed {
@@ -383,7 +292,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] span {
   margin-bottom: 0.5rem !important;
 }
 
-/* ===================== INSTRUÇÃO DE SLIDER ===================== */
+/* ===================== INSTRUÇÃO ===================== */
 .slider-instruction {
   text-align: center;
   color: #00C1AD;
@@ -411,7 +320,6 @@ if "step" not in st.session_state:
 if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -521,7 +429,6 @@ def _append_to_excel(row_values):
 def escala_1a5(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
-
     if key not in st.session_state:
         st.session_state[key] = 1
 
@@ -567,11 +474,10 @@ def escala_1a5(key: str) -> int:
     st.markdown("</div>", unsafe_allow_html=True)
     return val
 
-# ======= NPS (REFATORADO APENAS AQUI) =======
+# ===================== NPS (REFATORADO / CSS DENTRO DO IFRAME) =====================
 def escala_0a10(key: str) -> int:
     if f"{key}__touched" not in st.session_state:
         st.session_state[f"{key}__touched"] = False
-
     if key not in st.session_state:
         st.session_state[key] = 0
 
@@ -580,8 +486,8 @@ def escala_0a10(key: str) -> int:
     else:
         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
-    # Slider invisível (somente para manter o valor e permitir arrastar via teclado/acessibilidade)
-    st.markdown("<div class='nps-hidden-slider'>", unsafe_allow_html=True)
+    # slider "real" (invisível via container fora da tela)
+    st.markdown("<div style='position:absolute; left:-99999px; top:-99999px; width:1px; height:1px; overflow:hidden;'>", unsafe_allow_html=True)
     val = st.slider(
         label="",
         min_value=0,
@@ -595,22 +501,95 @@ def escala_0a10(key: str) -> int:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # UI custom do NPS
     pct = (val / 10) * 100.0
 
     ticks_html = []
     for n in range(0, 11):
         left = (n / 10) * 100.0
         cls = "nps-tick selected" if n == val else "nps-tick"
-        ticks_html.append(f"<span class='{cls}' style='left:{left:.4f}%' data-n='{n}'>{n}</span>")
+        ticks_html.append(
+            f"<span class='{cls}' style='left:{left:.6f}%' data-n='{n}'>{n}</span>"
+        )
     ticks_html = "\n".join(ticks_html)
 
+    # ✅ CSS DO NPS DENTRO DO COMPONENT (NÃO DEPENDE DO CSS GLOBAL)
     st.components.v1.html(
         f"""
+        <style>
+          :root {{
+            --jera-primary:#00C1AD;
+            --jera-dark:#052B38;
+          }}
+
+          .nps-wrap {{
+            width: 100%;
+            max-width: 860px;
+            margin: 0.6rem auto 0.2rem auto;
+            position: relative;
+            font-family: Arial, sans-serif;
+          }}
+
+          .nps-bar {{
+            height: 4px;
+            background: rgba(0,193,173,0.35);
+            border-radius: 999px;
+            position: relative;
+            margin: 0.7rem 0 0.9rem 0;
+          }}
+
+          .nps-bar-fill {{
+            height: 4px;
+            background: var(--jera-primary);
+            border-radius: 999px;
+            width: {pct:.6f}%;
+          }}
+
+          .nps-knob {{
+            width: 18px;
+            height: 18px;
+            background: var(--jera-primary);
+            border-radius: 999px;
+            position: absolute;
+            top: 50%;
+            left: {pct:.6f}%;
+            transform: translate(-50%,-50%);
+            box-shadow: 0 6px 14px rgba(0,0,0,.18);
+          }}
+
+          .nps-axis {{
+            position: relative;
+            height: 28px;
+          }}
+
+          .nps-tick {{
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: var(--jera-dark);
+            cursor: pointer;
+            user-select: none;
+            line-height: 1;
+            padding: 2px 7px;
+            border-radius: 10px;
+            white-space: nowrap;
+          }}
+
+          .nps-tick.selected {{
+            color: #fff !important;
+            background: var(--jera-primary);
+            font-weight: 700;
+          }}
+
+          .nps-tick:hover {{
+            background: rgba(0,193,173,0.15);
+          }}
+        </style>
+
         <div class="nps-wrap" id="nps-wrap">
           <div class="nps-bar">
-            <div class="nps-bar-fill" style="width:{pct:.4f}%"></div>
-            <div class="nps-knob" style="left:{pct:.4f}%"></div>
+            <div class="nps-bar-fill"></div>
+            <div class="nps-knob"></div>
           </div>
           <div class="nps-axis">
             {ticks_html}
@@ -619,18 +598,18 @@ def escala_0a10(key: str) -> int:
 
         <script>
           (function() {{
-            const root = document.currentScript.parentElement;
-            const ticks = root.querySelectorAll('.nps-tick');
-
-            // tenta achar o input range do Streamlit (o slider invisível ainda existe no DOM)
+            // encontra o "último" slider do Streamlit (o NPS acabou de renderizar)
             function findSliderInput() {{
-              // pega o primeiro input[type="range"] anterior no DOM
-              const ranges = window.parent.document.querySelectorAll('input[type="range"]');
-              // usa o último, normalmente é o mais recente renderizado
+              const doc = window.parent.document;
+              const ranges = doc.querySelectorAll('input[type="range"]');
               return ranges[ranges.length - 1] || null;
             }}
 
             const slider = findSliderInput();
+            const root = document.getElementById("nps-wrap");
+            if (!root) return;
+
+            const ticks = root.querySelectorAll(".nps-tick");
 
             function setValue(n) {{
               if (!slider) return;
@@ -640,15 +619,15 @@ def escala_0a10(key: str) -> int:
             }}
 
             ticks.forEach(t => {{
-              t.addEventListener('click', () => {{
-                const n = parseInt(t.getAttribute('data-n'));
+              t.addEventListener("click", () => {{
+                const n = parseInt(t.getAttribute("data-n"), 10);
                 setValue(n);
               }});
             }});
           }})();
         </script>
         """,
-        height=120,
+        height=110,
     )
 
     return val
