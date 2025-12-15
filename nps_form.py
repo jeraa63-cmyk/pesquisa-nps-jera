@@ -224,7 +224,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin: 0.6rem auto 1.4rem auto;
 }
 
-/* (mantido para 0–10, etc.) */
+/* (mantido para outros usos, mas no NPS não vamos renderizar o scale-ends) */
 .scale-ends {
   display:flex;
   justify-content: space-between;
@@ -300,7 +300,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   padding-right: 0.7rem;
 }
 
-/* ===================== NPS (0–10) NUMERAÇÃO CONTROLADA (SÓ NPS) ===================== */
+/* ===================== NPS (0–10) NUMERAÇÃO CONTROLADA ===================== */
 .scale-numbers-11 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
@@ -312,22 +312,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   font-size: 0.95rem !important;
 }
 
-/* 0 a 4 → 1cm para esquerda */
-.scale-numbers-11 div:nth-child(1),
-.scale-numbers-11 div:nth-child(2),
-.scale-numbers-11 div:nth-child(3),
-.scale-numbers-11 div:nth-child(4),
-.scale-numbers-11 div:nth-child(5) { transform: translateX(-1cm); }
+/* ✅ base: nada mexe */
+.scale-numbers-11 div { transform: translateX(0) !important; }
 
-/* 5 → centro */
-.scale-numbers-11 div:nth-child(6) { transform: translateX(0); }
+/* ✅ ajustes finos pedidos */
+.scale-numbers-11 div:nth-child(3) { transform: translateX(0.3cm) !important; } /* 2 */
+.scale-numbers-11 div:nth-child(4) { transform: translateX(0.3cm) !important; } /* 3 */
+.scale-numbers-11 div:nth-child(5) { transform: translateX(0.5cm) !important; } /* 4 */
 
-/* 6 a 10 → 1cm para direita */
-.scale-numbers-11 div:nth-child(7),
-.scale-numbers-11 div:nth-child(8),
-.scale-numbers-11 div:nth-child(9),
-.scale-numbers-11 div:nth-child(10),
-.scale-numbers-11 div:nth-child(11) { transform: translateX(1cm); }
+.scale-numbers-11 div:nth-child(7) { transform: translateX(-0.5cm) !important; } /* 6 */
+.scale-numbers-11 div:nth-child(8) { transform: translateX(-0.3cm) !important; } /* 7 */
+.scale-numbers-11 div:nth-child(9) { transform: translateX(-0.3cm) !important; } /* 8 */
 
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
@@ -342,20 +337,14 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
   .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
-  /* mantém também no mobile o ajuste NPS */
-  .scale-numbers-11 div:nth-child(1),
-  .scale-numbers-11 div:nth-child(2),
-  .scale-numbers-11 div:nth-child(3),
-  .scale-numbers-11 div:nth-child(4),
-  .scale-numbers-11 div:nth-child(5) { transform: translateX(-1cm); }
-
-  .scale-numbers-11 div:nth-child(6) { transform: translateX(0); }
-
-  .scale-numbers-11 div:nth-child(7),
-  .scale-numbers-11 div:nth-child(8),
-  .scale-numbers-11 div:nth-child(9),
-  .scale-numbers-11 div:nth-child(10),
-  .scale-numbers-11 div:nth-child(11) { transform: translateX(1cm); }
+  /* mantém no mobile os ajustes finos do NPS */
+  .scale-numbers-11 div { transform: translateX(0) !important; }
+  .scale-numbers-11 div:nth-child(3) { transform: translateX(0.3cm) !important; }
+  .scale-numbers-11 div:nth-child(4) { transform: translateX(0.3cm) !important; }
+  .scale-numbers-11 div:nth-child(5) { transform: translateX(0.5cm) !important; }
+  .scale-numbers-11 div:nth-child(7) { transform: translateX(-0.5cm) !important; }
+  .scale-numbers-11 div:nth-child(8) { transform: translateX(-0.3cm) !important; }
+  .scale-numbers-11 div:nth-child(9) { transform: translateX(-0.3cm) !important; }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
@@ -534,7 +523,6 @@ def escala_1a5(key: str) -> int:
     if key not in st.session_state:
         st.session_state[key] = 1
 
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -553,7 +541,6 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # Numeração controlada
     st.markdown(
         """
         <div class="scale-numbers-5">
@@ -567,7 +554,6 @@ def escala_1a5(key: str) -> int:
         unsafe_allow_html=True,
     )
 
-    # Labels SEM número (só texto)
     st.markdown(
         """
         <div class="scale-labels-5">
@@ -591,7 +577,6 @@ def escala_0a10(key: str) -> int:
     if key not in st.session_state:
         st.session_state[key] = 0
 
-    # Texto de instrução "Deslize"
     if not st.session_state.get(f"{key}__touched", False):
         st.markdown("<p class='slider-instruction'>Deslize para responder</p>", unsafe_allow_html=True)
     else:
@@ -610,8 +595,6 @@ def escala_0a10(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ AQUI ESTÁ A MUDANÇA: removi o scale-ends (0 e 10 nas pontas)
-    # e deixei somente a numeração completa 0–10
     st.markdown(
         """
         <div class="scale-numbers-11">
