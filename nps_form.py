@@ -257,9 +257,10 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   text-align: right;
   padding-right: 0.5rem;
 }
-/* ✅ AJUSTE FINAL: SOMENTE 2 e 4 */
-.scale-numbers-5 div:nth-child(2) { transform: translateX(-1cm); }
-.scale-numbers-5 div:nth-child(4) { transform: translateX(1cm); }
+
+/* ✅ AJUSTE FINO PEDIDO (FORÇADO): 2 vai 1cm para esquerda e 4 vai 1cm para direita */
+.scale-numbers-5 > div:nth-child(2) { transform: translateX(-1cm) !important; }
+.scale-numbers-5 > div:nth-child(4) { transform: translateX( 1cm) !important; }
 
 /* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
@@ -341,9 +342,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 
-  /* Mantém também no mobile o ajuste dos números 2 e 4 */
-  .scale-numbers-5 div:nth-child(2) { transform: translateX(-1cm); }
-  .scale-numbers-5 div:nth-child(4) { transform: translateX(1cm); }
+  /* Mantém também no mobile o ajuste dos números 2 e 4 (FORÇADO) */
+  .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1cm) !important; }
+  .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1cm) !important; }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
@@ -536,7 +537,7 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ numeração 1–5 em todos os pontos
+    # ✅ NOVO: numeração 1–5 em todos os pontos
     st.markdown(
         """
         <div class="scale-numbers-5">
