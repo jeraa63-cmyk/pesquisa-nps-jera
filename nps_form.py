@@ -258,9 +258,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   padding-right: 0.5rem;
 }
 
-/* ✅ AJUSTE FINO PEDIDO (FORÇADO): 2 vai 1cm para esquerda e 4 vai 1cm para direita */
-.scale-numbers-5 > div:nth-child(2) { transform: translateX(-1cm) !important; }
-.scale-numbers-5 > div:nth-child(4) { transform: translateX( 1cm) !important; }
+/* ✅ AJUSTE FINO PEDIDO (DEFINITIVO): 2 -1cm e 4 +1cm */
+.scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
+.scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
 
 /* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
@@ -342,9 +342,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 
-  /* Mantém também no mobile o ajuste dos números 2 e 4 (FORÇADO) */
-  .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1cm) !important; }
-  .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1cm) !important; }
+  /* Mantém também no mobile o ajuste dos números 2 e 4 (DEFINITIVO) */
+  .scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
+  .scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
