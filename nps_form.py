@@ -161,14 +161,8 @@ p, div, span, label {
 
 p strong { font-weight: 650 !important; }
 
-.stTextInput {
-  display: flex !important;
-  justify-content: center !important;
-}
-.stTextInput > div {
-  width: fit-content !important;
-  margin: 0 auto !important;
-}
+.stTextInput { display: flex !important; justify-content: center !important; }
+.stTextInput > div { width: fit-content !important; margin: 0 auto !important; }
 .stTextInput input {
   font-family: 'Ofelia Text', sans-serif !important;
   font-size: 1.05rem !important;
@@ -178,13 +172,8 @@ p strong { font-weight: 650 !important; }
   background-color: #f6f6f6 !important;
   width: 285px !important;
 }
-.stTextInput input::placeholder {
-  color: #a0a0a0 !important;
-  opacity: 1 !important;
-}
-div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
-  display: none !important;
-}
+.stTextInput input::placeholder { color: #a0a0a0 !important; opacity: 1 !important; }
+div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child { display: none !important; }
 
 /* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
 .stButton > button {
@@ -203,7 +192,6 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   box-shadow: 0 8px 18px rgba(0,0,0,.12) !important;
   transition: transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-
 .stButton > button:hover {
   background: var(--jera-primary) !important;
   border-color: var(--jera-primary) !important;
@@ -212,122 +200,96 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 
 /* ===================== BLOCO DE CONTEÚDO ===================== */
-.page {
-  width: 100% !important;
-  max-width: 1050px !important;
-}
+.page { width: 100% !important; max-width: 1050px !important; }
 
-/* ===================== SLIDER COM RÓTULOS ALINHADOS (AJUSTE FINO) ===================== */
+/* ===================== SLIDER COM RÓTULOS ALINHADOS ===================== */
 .scale-wrap {
   width: 100%;
   max-width: 760px;
   margin: 0.6rem auto 1.4rem auto;
 }
 
-/* ✅ NUMERAÇÃO COMPLETA 1–5 */
-.scale-numbers-5 {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  width: 100%;
-  margin-top: -0.35rem;
-  margin-bottom: 0.15rem;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.95rem !important;
+/* ✅ NUMERAÇÃO 1–5 */
+.scale-numbers-5{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  width:100%;
+  margin-top:-0.35rem;
+  margin-bottom:0.15rem;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.95rem !important;
 }
-.scale-numbers-5 div { white-space: nowrap !important; text-align: center; }
-.scale-numbers-5 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
-.scale-numbers-5 div:nth-child(5) { text-align: right; padding-right: 0.5rem; }
-/* ✅ 2 alinhado com "Ruim" e 4 alinhado com "Bom" */
-.scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
-.scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
+.scale-numbers-5 div{ white-space:nowrap !important; text-align:center; }
+.scale-numbers-5 div:nth-child(1){ text-align:left; padding-left:0.5rem; }
+.scale-numbers-5 div:nth-child(5){ text-align:right; padding-right:0.5rem; }
+.scale-numbers-5 > div:nth-child(2){ transform: translateX(-1.5cm) !important; }
+.scale-numbers-5 > div:nth-child(4){ transform: translateX( 1.5cm) !important; }
 
-/* ⬇️ LABELS 1-5 (SEM NÚMERO, SÓ TEXTO) */
-.scale-labels-5 {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  width: 100%;
-  margin-top: 0.35rem;
-  text-align: center;
+/* ✅ LABELS 1–5 (SEM NÚMERO) */
+.scale-labels-5{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  width:100%;
+  margin-top:0.35rem;
+  text-align:center;
 }
-.scale-labels-5 div { white-space: nowrap !important; font-size: 1.0rem !important; text-align: center; }
-.scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); text-align: left; padding-left: 0.7rem; }
-.scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
-.scale-labels-5 div:nth-child(3) { transform: translateX(0); }
-.scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
-.scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); text-align: right; padding-right: 0.7rem; }
+.scale-labels-5 div{ white-space:nowrap !important; font-size:1.0rem !important; text-align:center; }
+.scale-labels-5 div:nth-child(1){ transform:translateX(-0.5cm); text-align:left; padding-left:0.7rem; }
+.scale-labels-5 div:nth-child(2){ transform:translateX(-1.5cm); }
+.scale-labels-5 div:nth-child(3){ transform:translateX(0); }
+.scale-labels-5 div:nth-child(4){ transform:translateX(1.5cm); }
+.scale-labels-5 div:nth-child(5){ transform:translateX(0.5cm); text-align:right; padding-right:0.7rem; }
 
-/* ===================== NPS (0–10) — NUMERAÇÃO CONTROLADA ===================== */
-.scale-numbers-11 {
-  display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  gap: 0;
-  width: 100%;
-  margin-top: -0.35rem;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.95rem !important;
+/* ===================== NPS 0–10: NUMERAÇÃO CONTROLADA (SÓ NPS) ===================== */
+.scale-nps { width:100%; }
+
+.scale-nps .scale-numbers-11{
+  display:grid;
+  grid-template-columns:repeat(11,1fr);
+  width:100%;
+  margin-top:-0.35rem;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.95rem !important;
+  /* 0,5cm ≈ 19px na tela (muito mais estável que cm) */
+  --nps-shift: 19px;
 }
-.scale-numbers-11 div { white-space: nowrap !important; text-align: center; }
+.scale-nps .scale-numbers-11 div{ white-space:nowrap !important; text-align:center; }
+.scale-nps .scale-numbers-11 div[data-v="0"]{ text-align:left; padding-left:0.5rem; transform:none !important; }
+.scale-nps .scale-numbers-11 div[data-v="10"]{ text-align:right; padding-right:0.5rem; transform:none !important; }
+.scale-nps .scale-numbers-11 div[data-v="5"]{ transform:none !important; }
 
-/* Extremidades (0 e 10) */
-.scale-numbers-11 div:nth-child(1) { text-align: left; padding-left: 0.5rem; }
-.scale-numbers-11 div:nth-child(11){ text-align: right; padding-right: 0.5rem; }
+/* ✅ pedido: 1–4 para esquerda */
+.scale-nps .scale-numbers-11 div[data-v="1"],
+.scale-nps .scale-numbers-11 div[data-v="2"],
+.scale-nps .scale-numbers-11 div[data-v="3"],
+.scale-nps .scale-numbers-11 div[data-v="4"]{
+  transform: translateX(calc(-1 * var(--nps-shift))) !important;
+}
 
-/* ✅ AJUSTE FINAL (como você pediu pela imagem):
-   1–4: -0,5cm   |  6–9: +0,5cm  | 0,5,10 sem mexer
-   índices: 0->1, 1->2, 2->3, 3->4, 4->5, 5->6, 6->7, 7->8, 8->9, 9->10, 10->11
+/* ✅ pedido: 6–9 para direita */
+.scale-nps .scale-numbers-11 div[data-v="6"],
+.scale-nps .scale-numbers-11 div[data-v="7"],
+.scale-nps .scale-numbers-11 div[data-v="8"],
+.scale-nps .scale-numbers-11 div[data-v="9"]{
+  transform: translateX(var(--nps-shift)) !important;
+}
+
+/* (se precisar micro-ajuste por número, descomente e ajuste px)
+.scale-nps .scale-numbers-11 div[data-v="2"]{ transform: translateX(-16px) !important; }
+.scale-nps .scale-numbers-11 div[data-v="8"]{ transform: translateX( 22px) !important; }
 */
-.scale-numbers-11 div:nth-child(2)  { transform: translateX(-0.5cm) !important; } /* 1 */
-.scale-numbers-11 div:nth-child(3)  { transform: translateX(-0.5cm) !important; } /* 2 */
-.scale-numbers-11 div:nth-child(4)  { transform: translateX(-0.5cm) !important; } /* 3 */
-.scale-numbers-11 div:nth-child(5)  { transform: translateX(-0.5cm) !important; } /* 4 */
-.scale-numbers-11 div:nth-child(8)  { transform: translateX( 0.5cm) !important; } /* 7 */
-.scale-numbers-11 div:nth-child(9)  { transform: translateX( 0.5cm) !important; } /* 8 */
-.scale-numbers-11 div:nth-child(10) { transform: translateX( 0.5cm) !important; } /* 9 */
-.scale-numbers-11 div:nth-child(7)  { transform: translateX( 0.5cm) !important; } /* 6 */
-
-@media (max-width: 700px){
-  .scale-wrap { max-width: 100%; }
-  .scale-labels-5 div { font-size: 0.95rem !important; }
-
-  .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
-  .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
-  .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
-  .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
-  .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
-
-  .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
-  .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
-
-  /* Mantém o ajuste do NPS no mobile também */
-  .scale-numbers-11 div:nth-child(2)  { transform: translateX(-0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(3)  { transform: translateX(-0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(4)  { transform: translateX(-0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(5)  { transform: translateX(-0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(7)  { transform: translateX( 0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(8)  { transform: translateX( 0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(9)  { transform: translateX( 0.5cm) !important; }
-  .scale-numbers-11 div:nth-child(10) { transform: translateX( 0.5cm) !important; }
-}
 
 /* ===================== ESTILO DO SLIDER ===================== */
 div[data-testid="stSlider"] { width: 100% !important; }
 div[data-testid="stSlider"] > div { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
 
-div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
-  border-color: var(--jera-primary) !important;
-}
-div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
-  background-color: var(--jera-primary) !important;
-}
+div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] { border-color: var(--jera-primary) !important; }
+div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div { background-color: var(--jera-primary) !important; }
 
-/* ✅ esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
-div[data-testid="stSlider"] [data-baseweb="slider"] span {
-  display: none !important;
-}
+/* ✅ esconder numeração NATIVA do slider */
+div[data-testid="stSlider"] [data-baseweb="slider"] span { display: none !important; }
 
 /* ===================== RODAPÉ FIXO ===================== */
 .footer-fixed {
@@ -341,20 +303,17 @@ div[data-testid="stSlider"] [data-baseweb="slider"] span {
   pointer-events: none;
 }
 
-/* ===================== TELA 1: AJUSTES DO TÍTULO (somente tela 1) ===================== */
-.tela-1 .h1-tela1{
-  margin-top: -70px !important;
-  margin-bottom: 0.5rem !important;
-}
+/* ===================== TELA 1: AJUSTES DO TÍTULO ===================== */
+.tela-1 .h1-tela1{ margin-top: -70px !important; margin-bottom: 0.5rem !important; }
 
-/* ===================== NOVO ESTILO PARA INSTRUÇÃO DE SLIDER ===================== */
+/* ===================== INSTRUÇÃO DE SLIDER ===================== */
 .slider-instruction {
-    text-align: center;
-    color: #00C1AD;
-    font-weight: 600;
-    margin-top: -1.0rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.0rem !important;
+  text-align: center;
+  color: #00C1AD;
+  font-weight: 600;
+  margin-top: -1.0rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.0rem !important;
 }
 </style>
 """,
@@ -375,7 +334,6 @@ if "step" not in st.session_state:
 if "client_code" not in st.session_state:
     st.session_state["client_code"] = ""
 
-# flags de “mexeu no slider”
 def _touch(key: str):
     st.session_state[f"{key}__touched"] = True
 
@@ -384,66 +342,46 @@ BLOCOS = [
     (
         "Qualidade do Relacionamento com a Equipe Jera",
         [
-            (
-                "Tempo de resolução às solicitações",
-                "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?",
-            ),
-            (
-                "Proatividade na comunicação",
-                "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?",
-            ),
+            ("Tempo de resolução às solicitações",
+             "De 01 a 05, quanto você está satisfeito(a) com a agilidade e disponibilidade da equipe ao atender suas solicitações?"),
+            ("Proatividade na comunicação",
+             "De 01 a 05, quanto a equipe se antecipa às suas necessidades e se comunica de forma proativa?"),
         ],
     ),
     (
         "Clareza e Relevância das Informações Prestadas",
         [
-            (
-                "Clareza das informações apresentadas",
-                "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?",
-            ),
-            (
-                "Compreensão dos resultados",
-                "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?",
-            ),
+            ("Clareza das informações apresentadas",
+             "De 01 a 05, o quanto as informações e o detalhamento dos relatórios atendem às suas expectativas?"),
+            ("Compreensão dos resultados",
+             "De 01 a 05, o quanto os relatórios ajudam você a entender se a carteira está caminhando conforme seus objetivos?"),
         ],
     ),
     (
         "Efetividade dos Encontros e Alinhamentos",
         [
-            (
-                "Frequência, formato e duração das reuniões",
-                "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?",
-            ),
-            (
-                "Relevância e efetividade das reuniões",
-                "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?",
-            ),
+            ("Frequência, formato e duração das reuniões",
+             "De 01 a 05, como você avalia a adequação da frequência, do formato e da duração das reuniões?"),
+            ("Relevância e efetividade das reuniões",
+             "De 01 a 05, o quanto as reuniões apresentam conteúdos relevantes, claros e bem organizados?"),
         ],
     ),
     (
         "Percepção sobre o Desempenho da Carteira",
         [
-            (
-                "Satisfação com o retorno obtido",
-                "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?",
-            ),
-            (
-                "Alinhamento entre retorno e perfil de risco",
-                "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?",
-            ),
+            ("Satisfação com o retorno obtido",
+             "De 01 a 05, o quanto você está satisfeito com o retorno da sua carteira nos últimos meses?"),
+            ("Alinhamento entre retorno e perfil de risco",
+             "De 01 a 05, o quanto o retorno da carteira está compatível com seu perfil de risco e objetivos financeiros?"),
         ],
     ),
     (
         "Compromisso com a Transparência e Integridade",
         [
-            (
-                "Independência nas recomendações",
-                "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?",
-            ),
-            (
-                "Transparência sobre custos e remunerações",
-                "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?",
-            ),
+            ("Independência nas recomendações",
+             "De 01 a 05, o quanto você percebe independência e isenção nas recomendações feitas pela equipe?"),
+            ("Transparência sobre custos e remunerações",
+             "De 01 a 05, o quanto você sente clareza nas informações sobre custos, taxas e formas de remuneração?"),
         ],
     ),
 ]
@@ -524,7 +462,6 @@ def escala_1a5(key: str) -> int:
         """,
         unsafe_allow_html=True,
     )
-
     st.markdown("</div>", unsafe_allow_html=True)
     return val
 
@@ -540,7 +477,8 @@ def escala_0a10(key: str) -> int:
     else:
         st.markdown("<div style='height: 1.0rem;'></div>", unsafe_allow_html=True)
 
-    st.markdown("<div class='scale-wrap'>", unsafe_allow_html=True)
+    st.markdown("<div class='scale-wrap scale-nps'>", unsafe_allow_html=True)
+
     val = st.slider(
         label="",
         min_value=0,
@@ -553,12 +491,21 @@ def escala_0a10(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ NPS: numeração completa 0–10 (controlada)
+    # ✅ NPS: numeração completa 0–10 controlada (não depende da numeração nativa)
     st.markdown(
         """
         <div class="scale-numbers-11">
-          <div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
-          <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+          <div data-v="0">0</div>
+          <div data-v="1">1</div>
+          <div data-v="2">2</div>
+          <div data-v="3">3</div>
+          <div data-v="4">4</div>
+          <div data-v="5">5</div>
+          <div data-v="6">6</div>
+          <div data-v="7">7</div>
+          <div data-v="8">8</div>
+          <div data-v="9">9</div>
+          <div data-v="10">10</div>
         </div>
         """,
         unsafe_allow_html=True,
