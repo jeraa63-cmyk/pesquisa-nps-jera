@@ -285,19 +285,13 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 }
 
 /* Ruim: -1,5cm */
-.scale-labels-5 div:nth-child(2) {
-  transform: translateX(-1.5cm);
-}
+.scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
 
 /* Regular: centro */
-.scale-labels-5 div:nth-child(3) {
-  transform: translateX(0);
-}
+.scale-labels-5 div:nth-child(3) { transform: translateX(0); }
 
 /* Bom: +1,5cm */
-.scale-labels-5 div:nth-child(4) {
-  transform: translateX(1.5cm);
-}
+.scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
 
 /* Excelente: 0,5cm para a direita */
 .scale-labels-5 div:nth-child(5) {
@@ -323,23 +317,17 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 .scale-numbers-11 div:nth-child(2),
 .scale-numbers-11 div:nth-child(3),
 .scale-numbers-11 div:nth-child(4),
-.scale-numbers-11 div:nth-child(5) {
-  transform: translateX(-1cm);
-}
+.scale-numbers-11 div:nth-child(5) { transform: translateX(-1cm); }
 
-/* 5 → centro (não mexe) */
-.scale-numbers-11 div:nth-child(6) {
-  transform: translateX(0);
-}
+/* 5 → centro */
+.scale-numbers-11 div:nth-child(6) { transform: translateX(0); }
 
 /* 6 a 10 → 1cm para direita */
 .scale-numbers-11 div:nth-child(7),
 .scale-numbers-11 div:nth-child(8),
 .scale-numbers-11 div:nth-child(9),
 .scale-numbers-11 div:nth-child(10),
-.scale-numbers-11 div:nth-child(11) {
-  transform: translateX(1cm);
-}
+.scale-numbers-11 div:nth-child(11) { transform: translateX(1cm); }
 
 @media (max-width: 700px){
   .scale-wrap { max-width: 100%; }
@@ -565,7 +553,7 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # Numeração controlada (nativa escondida no CSS)
+    # Numeração controlada
     st.markdown(
         """
         <div class="scale-numbers-5">
@@ -622,10 +610,8 @@ def escala_0a10(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # (mantém as extremidades 0 e 10)
-    st.markdown("<div class='scale-ends'><span>0</span><span>10</span></div>", unsafe_allow_html=True)
-
-    # ✅ NOVO (SÓ NPS): numeração 0–10 com deslocamento 0–4 / 6–10
+    # ✅ AQUI ESTÁ A MUDANÇA: removi o scale-ends (0 e 10 nas pontas)
+    # e deixei somente a numeração completa 0–10
     st.markdown(
         """
         <div class="scale-numbers-11">
