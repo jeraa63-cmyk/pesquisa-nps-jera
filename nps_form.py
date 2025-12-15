@@ -233,7 +233,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
-/* ✅ NUMERAÇÃO COMPLETA 1–5 (controlada por você) */
+/* ✅ NUMERAÇÃO COMPLETA 1–5 */
 .scale-numbers-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -258,9 +258,9 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   padding-right: 0.5rem;
 }
 
-/* ✅ AJUSTE EFICAZ: mover o 2 e o 4 */
-.scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
-.scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
+/* ✅ AGORA: 2 exatamente na mesma direção do "2 - Ruim" e 4 do "4 - Bom" */
+.scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
+.scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 
 /* ⬇️ AJUSTE PARA 1-5 */
 .scale-labels-5 {
@@ -284,7 +284,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     padding-left: 0.7rem;
 }
 
-/* 2 - Ruim: mais 0,5cm para a esquerda (total -1,5cm) */
+/* 2 - Ruim: -1,5cm */
 .scale-labels-5 div:nth-child(2) {
     transform: translateX(-1.5cm);
 }
@@ -294,7 +294,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
     transform: translateX(0);
 }
 
-/* 4 - Bom: mais 0,5cm para a direita (total +1,5cm) */
+/* 4 - Bom: +1,5cm */
 .scale-labels-5 div:nth-child(4) {
     transform: translateX(1.5cm);
 }
@@ -335,16 +335,16 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-11 div { font-size: 0.9rem !important; }
   .scale-labels-5 div { font-size: 0.95rem !important; }
 
-  /* Mantém os ajustes internos principais (labels) */
+  /* Mantém os ajustes dos labels */
   .scale-labels-5 div:nth-child(1) { transform: translateX(-0.5cm); }
   .scale-labels-5 div:nth-child(2) { transform: translateX(-1.5cm); }
   .scale-labels-5 div:nth-child(3) { transform: translateX(0); }
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 
-  /* Mantém também no mobile o ajuste EFICAZ dos números 2 e 4 */
-  .scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
-  .scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
+  /* Mantém também os ajustes dos números */
+  .scale-numbers-5 > div:nth-child(2) { transform: translateX(-1.5cm) !important; }
+  .scale-numbers-5 > div:nth-child(4) { transform: translateX( 1.5cm) !important; }
 }
 
 /* ===================== ESTILO DO SLIDER ===================== */
@@ -358,7 +358,7 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
 }
 
-/* ✅ CORREÇÃO EFICAZ: esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
+/* ✅ esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
 div[data-testid="stSlider"] [data-baseweb="slider"] span {
   display: none !important;
 }
@@ -542,7 +542,7 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ Numeração controlada (a única que aparece, pois a nativa foi escondida)
+    # ✅ Numeração controlada (nativa escondida no CSS)
     st.markdown(
         """
         <div class="scale-numbers-5">
@@ -740,7 +740,6 @@ elif step == 7:
 
     with col3:
         if st.button("Enviar respostas ✅"):
-            
             code = st.session_state["client_code"].strip()
             if not code:
                 st.error("O campo CÓDIGO DO CLIENTE é obrigatório.")
