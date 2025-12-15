@@ -189,7 +189,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
 /* ===================== BOTÕES — OfeliaDisplay-Regular (400) ===================== */
 .stButton > button {
   font-family: 'Ofelia Display', sans-serif !important;
-  font-weight: 400 !important;    /* ✅ Regular conforme manual */
+  font-weight: 400 !important;
   font-size: 1.02rem !important;
   min-width: 220px !important;
   min-height: 48px !important;
@@ -233,7 +233,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   margin-top: -0.35rem;
 }
 
-/* ✅ NOVO: NUMERAÇÃO COMPLETA 1–5 */
+/* ✅ NUMERAÇÃO COMPLETA 1–5 (controlada por você) */
 .scale-numbers-5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -258,7 +258,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   padding-right: 0.5rem;
 }
 
-/* ✅ AJUSTE FINO PEDIDO (DEFINITIVO): 2 -1cm e 4 +1cm */
+/* ✅ AJUSTE EFICAZ: mover o 2 e o 4 */
 .scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
 .scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
 
@@ -342,7 +342,7 @@ div[data-testid="stTextInput"] > div > div:nth-child(1) > div:last-child {
   .scale-labels-5 div:nth-child(4) { transform: translateX(1.5cm); }
   .scale-labels-5 div:nth-child(5) { transform: translateX(0.5cm); }
 
-  /* Mantém também no mobile o ajuste dos números 2 e 4 (DEFINITIVO) */
+  /* Mantém também no mobile o ajuste EFICAZ dos números 2 e 4 */
   .scale-numbers-5 > div:nth-child(2) { margin-left: -1cm !important; }
   .scale-numbers-5 > div:nth-child(4) { margin-left:  1cm !important; }
 }
@@ -356,6 +356,11 @@ div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
 }
 div[data-testid="stSlider"] [data-baseweb="slider"] div:nth-child(1) > div {
   background-color: var(--jera-primary) !important;
+}
+
+/* ✅ CORREÇÃO EFICAZ: esconder numeração NATIVA do slider (BaseWeb/Streamlit) */
+div[data-testid="stSlider"] [data-baseweb="slider"] span {
+  display: none !important;
 }
 
 /* ===================== RODAPÉ FIXO ===================== */
@@ -537,7 +542,7 @@ def escala_1a5(key: str) -> int:
         label_visibility="collapsed",
     )
 
-    # ✅ NOVO: numeração 1–5 em todos os pontos
+    # ✅ Numeração controlada (a única que aparece, pois a nativa foi escondida)
     st.markdown(
         """
         <div class="scale-numbers-5">
